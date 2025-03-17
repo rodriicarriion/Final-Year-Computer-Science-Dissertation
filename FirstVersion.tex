@@ -1,0 +1,338 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb}
+\usepackage[numbers]{natbib}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage{float}
+\geometry{margin=1in}
+
+\title{\textbf{Comparative Study of Delaunay Path Planner and RRT/RRT* for Path Planning in Autonomous Racing}}
+\author{Rodrigo Carri\'on Caro}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+\newpage
+
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+\chapter*{Glossary}
+\addcontentsline{toc}{chapter}{Glossary}
+\begin{itemize}
+    \item \textbf{RRT} - Rapidly-Exploring Random Tree
+    \item \textbf{ROS2} - Robot Operating System 2
+    \item \textbf{Unity} - Motor de simulación
+    \item \textbf{Path Planning} - Planificación de rutas
+\end{itemize}
+\newpage
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\section*{0.1 Contexto}
+Escribe aquí el contexto del problema.
+
+\section*{0.2 Objetivo}
+Escribe aquí la descripción clara del propósito del proyecto.
+
+\section*{0.3 Metodología}
+Describe el enfoque de desarrollo y herramientas utilizadas.
+
+\section*{0.4 Resultados principales}
+Explica los principales hallazgos y comparación entre métodos.
+
+\section*{0.5 Conclusión}
+Menciona el impacto del estudio y posibles mejoras.
+\newpage
+
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+Escribe aquí los agradecimientos al supervisor, equipo OBRA, etc.
+\newpage
+
+\chapter{Introduction}
+\section{Background}
+In autonomous vehicles, path planning is essential, as it allows for efficient and safe route
+planning in real time. Specifically, the RRT algorithm \textquotedblleft RRT Rapidly exploring Random
+Tree\textquotedblright can explore large spaces efficiently. This makes it ideal for dynamic environments,
+such as an autonomous car race. These characteristics make it widely used in the field
+of robotics. The RRT (Rapidly exploring Random Tree) algorithm is a search method
+used to efficiently find paths in large spaces \cite{reference1}. It is particularly useful in dynamic
+environments where viable paths need to be found quickly in real-time. Currently, the
+Oxford Brookes Racing Autonomous (OBRA) team uses a neural network path planner.
+A Delaunay path planner is being developed but has not yet been implemented. These
+approaches present some limitations in real-time situations. The development and implementation of an RRT \cite{reference2} will allow for greater flexibility and adaptability. Ideally, this
+will improve the team’s path planning capabilities. In addition to developing the RRT,
+this project will compare its performance with the current Delaunay path planner. By
+evaluating their efficiency and adaptability in dynamic scenarios, the goal is to determine
+which algorithm provides better results for autonomous racing.
+
+\section{Aim}
+The aim of this project is to develop and optimize two advanced path planning algorithms for autonomous racing: an improved Delaunay-based planner and an optimized RRT* algorithm. These planners will be designed to enhance adaptability, computational efficiency, and trajectory optimization in high-speed, dynamic environments. 
+
+This project also aims to conduct a detailed comparative analysis of both algorithms, evaluating their performance across key metrics such as computation time, path efficiency, adaptability to dynamic obstacles, and robustness under racing conditions. 
+
+By implementing and testing these algorithms within a ROS2-based simulation environment using Unity, this research seeks to identify the most effective path planning solution for the OBRA team's autonomous racing vehicle. The insights gained from this study will contribute to both the OBRA competition strategy and the broader field of autonomous vehicle navigation.
+
+
+\section{Objectives}
+\begin{itemize}
+    \item To conduct a comprehensive study of path planning techniques used in autonomous vehicle navigation, analyzing their advantages, limitations, and applications in high-speed racing scenarios. \cite{reference3}
+    \item To develop and implement an improved Delaunay-based path planner that enhances adaptability, computational efficiency, and trajectory smoothness in dynamic environments.
+    \item To develop and implement an RRT algorithm from scratch for real-time path planning in autonomous vehicles, ensuring compatibility with the OBRA car's ROS2 framework.
+    \item To optimize the RRT algorithm by integrating RRT* \cite{reference4}, improving its ability to generate efficient and dynamically adaptable routes.
+    \item To validate both the optimized Delaunay and RRT* algorithms in a controlled simulation environment using Unity, testing their performance under varying racing conditions.
+    \item To conduct a detailed comparative analysis of the optimized Delaunay and RRT* algorithms, evaluating key performance metrics such as computation time, path efficiency, adaptability to dynamic obstacles, and robustness in high-speed scenarios.
+    \item To identify and address potential limitations of each algorithm, proposing refinements or hybrid approaches that could further enhance their performance.
+    \item To integrate the most effective path planner into the OBRA team's autonomous racing pipeline, ensuring real-world applicability and alignment with competition requirements.
+\end{itemize}
+
+
+\section{Product Overview}
+\subsection{Scope}
+The objective of this project is to develop and optimize two new path planners for autonomous racing:
+\begin{itemize}
+    \item Optimized Delaunay Path Planner – A modified version of the traditional Delaunay-based planner, improving its efficiency and adaptability for dynamic racing environments.
+    \item RRT* – An enhanced Rapidly-exploring Random Tree algorithm that generates smoother and more efficient paths by reducing randomness and refining route selection.
+\end{itemize}
+Both planners will be developed in Python, ensuring seamless integration with the ROS2 framework used in the OBRA autonomous car. The testing and validation process will be conducted in simulation environments using Unity, allowing for extensive evaluation before potential real-world implementation.
+Once developed, these two new planners will be compared to determine which provides better performance in terms of adaptability, computational efficiency, and trajectory smoothness under high-speed, dynamic conditions.
+
+\subsection{Audience}
+The primary audience for this study is the Oxford Brookes Racing Autonomous (OBRA) team, as the improved path planning algorithms will directly contribute to their autonomous racing performance.
+Additionally, this research is relevant to the academic community, particularly in robotics, AI, and autonomous vehicle navigation, by providing insights into optimization strategies for real-time path planning.
+From an industry perspective, this study holds significance for autonomous systems professionals, particularly those developing path planning solutions for high-speed and dynamic environments, such as self-driving vehicles, robotics, and UAV navigation.
+
+
+\newpage
+
+\chapter{Background Review}
+\section{Related Literature}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{3cm}|p{10cm}|}
+        \hline
+        \textbf{Reference} & Zhao, H., Wu, Z., Li, Y., \& Wang, J. (2021) ‘Improved Bidirectional RRT* Path Planning Method for Smart Vehicle’, Mathematical Problems in Engineering, pp. 1-14. doi: 10.1155/2021/6669728. \\ \hline
+        \textbf{Title} & Improved Bidirectional RRT* Path Planning Method for Smart Vehicle \\ \hline
+        \textbf{Summary} & The study proposes an improvement to the bidirectional RRT* algorithm to optimize route planning in intelligent vehicles, aiming for shorter and more efficient routes. \\ \hline
+        \textbf{Evaluation} & The approach is useful for static environments, but it does not sufficiently address the challenges in dynamic environments, which may limit its applicability in competitive vehicles. \\ \hline
+        \textbf{Reflection} & The proposed improvements could be applied to optimize the RRT* algorithm in my project, particularly in reducing computation time and optimizing routes. \\ \hline
+        \textbf{Main Themes} & RRT* optimization, route planning, autonomous vehicles. \\ \hline
+    \end{tabular}
+    \caption{Summary of Zhao et al. (2021)}
+    \label{tab:zhao2021}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{3cm}|p{10cm}|}
+        \hline
+        \textbf{Reference} & Gasparetto, A., Boscariol, P., Lanzutti, A., \& Vidoni, R. (2015) ‘Path Planning and Trajectory Planning Algorithms: A General Overview’, Journal of Intelligent \& Robotic Systems, pp. 1-33. doi: 10.1007/978-3-319-14705-5\_1. \\ \hline
+        \textbf{Title} & Path Planning and Trajectory Planning Algorithms: A General Overview \\ \hline
+        \textbf{Summary} & The article provides an overview of the main trajectory and route planning algorithms in robotics. It analyses methods such as Roadmap, Cell Decomposition, and RRT, as well as their applications in industrial and autonomous environments. \\ \hline
+        \textbf{Evaluation} & The study offers a comprehensive overview of the algorithms but focuses more on static industrial systems, limiting its applicability to dynamic environments. However, the review of RRT is useful for improving my project. \\ \hline
+        \textbf{Reflection} & This article will be key to contextualizing my work, as it provides a solid foundation on traditional methods and suggests possible areas for improvement, such as applying them in more dynamic environments. \\ \hline
+        \textbf{Main Themes} & Route planning, RRT, optimization algorithms, autonomous robotics. \\ \hline
+    \end{tabular}
+    \caption{Summary of Gasparetto et al. (2015)}
+    \label{tab:gasparetto2015}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{3cm}|p{10cm}|}
+        \hline
+        \textbf{Reference} & Wang, H., Li, G., Hou, J., Chen, L., \& Hu, N. (2022) ‘A Path Planning Method for Underground Intelligent Vehicles Based on an Improved RRT* Algorithm,’ Electronics, vol. 11, no. 3, p. 294. doi: 10.3390/electronics11030294. \\ \hline
+        \textbf{Title} & A Path Planning Method for Underground Intelligent Vehicles Based on an Improved RRT* Algorithm \\ \hline
+        \textbf{Summary} & The study proposes an improved RRT* method for route planning in underground intelligent vehicles, adjusting the dynamic step size and turn angle constraints. \\ \hline
+        \textbf{Evaluation} & The approach is innovative for underground environments and offers improvements in efficiency and safety, but it is limited to controlled spaces and does not address navigation in fully dynamic environments. \\ \hline
+        \textbf{Reflection} & This study is relevant to my project, as the proposed RRT* improvements could be applied to optimize the algorithm in more complex scenarios, such as autonomous racing. \\ \hline
+        \textbf{Main Themes} & RRT*, underground autonomous vehicles, route planning, optimization. \\ \hline
+    \end{tabular}
+    \caption{Summary of Wang et al. (2022)}
+    \label{tab:wang2022}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{3cm}|p{10cm}|}
+        \hline
+        \textbf{Reference} & Sánchez-Ibáñez, J.R., Pérez-del-Pulgar, C.J., \& García-Cerezo, A. (2021) ‘Path Planning for Autonomous Mobile Robots: A Review’, Sensors 2021, 21, 7898. doi: 10.3390/s21237898. \\ \hline
+        \textbf{Title} & Path Planning for Autonomous Mobile Robots: A Review. \\ \hline
+        \textbf{Summary} & The article reviews route planning algorithms for mobile robots, focusing on their classification and applicability in autonomous environments. \\ \hline
+        \textbf{Evaluation} & It provides a very useful overview of the main approaches, but it focuses on controlled scenarios and may be limited for dynamic environments such as competitions. \\ \hline
+        \textbf{Reflection} & This article provides a good foundation for comparing different approaches, which will help me justify the choice of RRT in my project. \\ \hline
+        \textbf{Main Themes} & Route planning, mobile robots, path search algorithms. \\ \hline
+    \end{tabular}
+    \caption{Summary of Sánchez-Ibáñez et al. (2021)}
+    \label{tab:sanchez2021}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{3cm}|p{10cm}|}
+        \hline
+        \textbf{Reference} & C. Messer, A. T. Mathew, N. Mladenovic and F. Renda, "CTR DaPP: A Python Application for Design and Path Planning of Variable-strain Concentric Tube Robots," 2022 IEEE 5th International Conference on Soft Robotics (RoboSoft), Edinburgh, United Kingdom, 2022, pp. 14-20, doi: 10.1109/RoboSoft54090.2022.9762088. \\ \hline
+        \textbf{Title} & CTR DaPP: A Python Application for Design and Path Planning of Variable-strain Concentric Tube Robots. \\ \hline
+        \textbf{Summary} & The study presents a modular platform in Python that uses the RRT* algorithm for route planning and design optimization in concentric tube robots. It focuses on trajectory planning in environments with torsion and curvature constraints. \\ \hline
+        \textbf{Evaluation} & The implementation in Python is relevant to my project, as it allows for the flexible use of planning and optimization algorithms. \\ \hline
+        \textbf{Reflection} & This article supports the use of Python in my project, demonstrating that it is an effective option for developing and testing algorithms like RRT*. \\ \hline
+        \textbf{Main Themes} & RRT*, route planning, concentric tube robots, design optimization, use of Python. \\ \hline
+    \end{tabular}
+    \caption{Summary of Messer et al. (2022)}
+    \label{tab:messer2022}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{3cm}|p{10cm}|}
+        \hline
+        \textbf{Reference} & Kolski, S., Ferguson, D., Stachniss, C., \& Siegwart, R. (2006) 'Autonomous Driving in Dynamic Environments', Proceedings of the 2006 IEEE/RSJ International Conference on Intelligent Robots and Systems, pp. 1-10. doi: 10.3929/ethz-a-010079481. \\ \hline
+        \textbf{Title} & Autonomous Driving in Dynamic Environments. \\ \hline
+        \textbf{Summary} & The study presents a hybrid autonomous navigation system that operates in both structured and unstructured environments, handling dynamic obstacles like pedestrians and other vehicles. \\ \hline
+        \textbf{Evaluation} & Unlike many approaches focused on static environments, this system is highly relevant for dynamic settings, such as autonomous car competitions, where real-time adjustments to moving obstacles are critical. \\ \hline
+        \textbf{Reflection} & This study is essential for my project as it highlights the importance of dynamic environments and provides useful insights for improving my route planning system. \\ \hline
+        \textbf{Main Themes} & Autonomous navigation, dynamic environments, route planning, moving obstacles, autonomous vehicles. \\ \hline
+    \end{tabular}
+    \caption{Summary of Kolski et al. (2006)}
+    \label{tab:kolski2006}
+\end{table}
+
+\chapter{Methodology}
+\section{Research and Software Development Process}
+\subsection{Application of Agile Methodology}
+Explanation of how Agile is applied in the development process.
+
+\subsection{Development Phases}
+\begin{itemize}
+    \item Phase 1: Implementation of the optimized Delaunay path planner.
+    \item Phase 2: Development of the RRT* algorithm from scratch.
+    \item Phase 3: Testing and comparison of both algorithms.
+\end{itemize}
+
+\section{Technology}
+\subsection{Implementation Tools and Resources}
+\begin{itemize}
+    \item Programming Languages: Python.
+    \item Frameworks: ROS2 for robotic integration.
+    \item Simulation Environment: Unity for path planning validation.
+\end{itemize}
+
+\subsection{Simulation and Testing Tools}
+Details on how Unity and ROS2 are used for validation.
+
+\section{Version Management}
+\subsection{Source Code Control with GitHub/GitLab}
+Version control and repository structure.
+
+\subsection{Data and Version Storage in Google Drive}
+How project logs, datasets, and backups are stored.
+
+\subsection{Source Code Repository Link}
+URL or reference to the project repository.
+
+\newpage
+
+\chapter{Results}
+\section{Results and Testing}
+\subsection{Simulation Setup}
+Explanation of the Unity + ROS2 environment configuration.
+
+\subsection{Test Scenarios}
+List of simulated scenarios used for validation.
+
+\section{Performance Metrics}
+\subsection{Computation Time Evaluation}
+Data on execution times.
+
+\subsection{Path Quality Analysis}
+Metrics evaluating the efficiency and smoothness of generated paths.
+
+\subsection{Adaptability to Dynamic Obstacles}
+Explanation of testing under dynamic conditions.
+
+\section{Experimental Results}
+\subsection{Comparison of Metrics Between Optimized Delaunay and RRT*}
+Presentation of comparative data.
+
+\subsection{Visualization of Results Through Graphs}
+Graphs and their interpretation.
+
+\newpage
+
+\chapter{Professionalism}
+\section{Project Management}
+\subsection{Development Activities and Schedule}
+Project logs, reports, and Gantt charts.
+
+\subsection{Data Management}
+Storage and organization of research documents.
+
+\subsection{Project Deliverables}
+Summary of key milestones.
+
+\section{Risk Analysis}
+\subsection{Identified Risks and Mitigation Strategies}
+Discussion of risks encountered and strategies used.
+
+\subsection{Updated Project Plan Based on Risk Evaluation}
+Adjustments made due to identified risks.
+
+\section{Legal, Ethical, and Environmental Considerations}
+\subsection{Compliance with Professional Codes of Conduct}
+References to BCS, ACM, and industry standards.
+
+\subsection{Ethical and Environmental Impact of the Project}
+Analysis of social and environmental implications.
+
+\newpage
+
+\chapter{Conclusion}
+\section{Summary of Findings}
+\subsection{Key Insights from the Algorithm Comparison}
+Main takeaways from testing and evaluation.
+
+\section{Future Work}
+\subsection{Improvements in RRT* Implementation}
+Potential refinements to enhance algorithm performance.
+
+\subsection{Real-World Applications}
+Application of findings to actual autonomous vehicle scenarios.
+
+\newpage
+
+\chapter{Bibliography}
+\bibliographystyle{IEEEtran}
+\begin{thebibliography}{4}
+
+    \bibitem{reference1} LaValle, S. (2006) 'Rapidly exploring Random Trees: Overview', Available at: \url{https://lavalle.pl/rrt} (Accessed: 10 October 2024).
+    
+    \bibitem{reference2} Bécsi, T. (2024) 'RRT-guided experience generation for reinforcement learning in autonomous lane keeping', Scientific Reports, 14, Article number: 24059. Available at: \url{https://www.nature.com/articles/s41598-024-73881-z} (Accessed: 16 October 2024).
+    
+    \bibitem{reference3} Muhsen, D.K., Raheem, F.A., and Sadiq, A.T. (2024) 'A Systematic Review of Rapidly Exploring Random Tree RRT Algorithm for Single and Multiple Robots', Cybernetics and Information Technologies, 24(3), pp. 78-101. Available at: \url{https://doi.org/10.2478/cait-2024-0026} (Accessed: 19 September 2024).
+    
+    \bibitem{reference4} Fan, H., Huang, J., Huang, X., Zhu, H., and Su, H. (2024) 'BI-RRT*: An improved path planning algorithm for secure and trustworthy mobile robots systems', Heliyon, 24(e26403). Available at: \url{https://doi.org/10.1016/j.heliyon.2024.e26403} (Accessed: 10 October 2024).
+    
+\end{thebibliography}
+
+\newpage
+ 
+\chapter{Appendices}
+\section{Supplementary Data}
+\subsection{Source Code Repository (GitHub/GitLab)}
+Reference link to the source code.
+
+\subsection{ROS2 + Unity Configuration Details}
+Technical setup instructions.
+
+\subsection{Raw Simulation Results}
+Unprocessed data from testing and evaluation.
+
+\end{document}

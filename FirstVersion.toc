@@ -1,0 +1,57 @@
+\contentsline {chapter}{Glossary}{1}{chapter*.2}%
+\contentsline {chapter}{Abstract}{2}{chapter*.3}%
+\contentsline {chapter}{Acknowledgements}{3}{chapter*.9}%
+\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Background}{4}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Aim}{4}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objectives}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Product Overview}{5}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Scope}{5}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Audience}{6}{subsection.1.4.2}%
+\contentsline {chapter}{\numberline {2}Background Review}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Related Literature}{7}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Methodology}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Research and Software Development Process}{11}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Application of Agile Methodology}{11}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Development Phases}{11}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Technology}{11}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Implementation Tools and Resources}{11}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Simulation and Testing Tools}{11}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Version Management}{11}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Source Code Control with GitHub/GitLab}{11}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Data and Version Storage in Google Drive}{11}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Source Code Repository Link}{12}{subsection.3.3.3}%
+\contentsline {chapter}{\numberline {4}Results}{13}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Results and Testing}{13}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Simulation Setup}{13}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Test Scenarios}{13}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Performance Metrics}{13}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Computation Time Evaluation}{13}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Path Quality Analysis}{13}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Adaptability to Dynamic Obstacles}{13}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Experimental Results}{13}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Comparison of Metrics Between Optimized Delaunay and RRT*}{13}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Visualization of Results Through Graphs}{13}{subsection.4.3.2}%
+\contentsline {chapter}{\numberline {5}Professionalism}{14}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Project Management}{14}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Development Activities and Schedule}{14}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Data Management}{14}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Project Deliverables}{14}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Risk Analysis}{14}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Identified Risks and Mitigation Strategies}{14}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Updated Project Plan Based on Risk Evaluation}{14}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Legal, Ethical, and Environmental Considerations}{14}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Compliance with Professional Codes of Conduct}{14}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Ethical and Environmental Impact of the Project}{14}{subsection.5.3.2}%
+\contentsline {chapter}{\numberline {6}Conclusion}{15}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Summary of Findings}{15}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Key Insights from the Algorithm Comparison}{15}{subsection.6.1.1}%
+\contentsline {section}{\numberline {6.2}Future Work}{15}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Improvements in RRT* Implementation}{15}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Real-World Applications}{15}{subsection.6.2.2}%
+\contentsline {chapter}{\numberline {7}Bibliography}{16}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Appendices}{18}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Supplementary Data}{18}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Source Code Repository (GitHub/GitLab)}{18}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}ROS2 + Unity Configuration Details}{18}{subsection.8.1.2}%
+\contentsline {subsection}{\numberline {8.1.3}Raw Simulation Results}{18}{subsection.8.1.3}%
