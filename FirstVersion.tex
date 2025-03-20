@@ -1,5 +1,8 @@
-\documentclass[a4paper,12pt]{report}
+\documentclass[a4paper,11pt]{report}
+
+% Paquetes de idioma y codificación
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{amsmath, amssymb}
@@ -7,7 +10,32 @@
 \usepackage{listings}
 \usepackage{geometry}
 \usepackage{float}
-\geometry{margin=1in}
+\usepackage{caption}
+
+% Configuración de márgenes según las especificaciones
+\geometry{
+    top=1in,
+    bottom=1in,
+    left=1.25in,
+    right=1.25in
+}
+
+% Fuente Arial 11pt
+\renewcommand{\familydefault}{\sfdefault}
+
+% Espaciado de línea de 1.5
+\renewcommand{\baselinestretch}{1.5}
+
+% Configurar numeración de páginas
+\pagenumbering{arabic}
+
+% Configuración de pies de figura y tablas
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    justification=centering,
+    singlelinecheck=false
+}
 
 \title{\textbf{Comparative Study of Delaunay Path Planner and RRT/RRT* for Path Planning in Autonomous Racing}}
 \author{Rodrigo Carri\'on Caro}
@@ -16,13 +44,9 @@
 \begin{document}
 
 \maketitle
-\pagenumbering{gobble}
-\newpage
-
 \tableofcontents
 \newpage
 
-\pagenumbering{arabic}
 \chapter*{Glossary}
 \addcontentsline{toc}{chapter}{Glossary}
 \begin{itemize}
@@ -207,33 +231,117 @@ From an industry perspective, this study holds significance for autonomous syste
 
 \chapter{Methodology}
 \section{Research and Software Development Process}
-\subsection{Application of Agile Methodology}
-Explanation of how Agile is applied in the development process.
 
-\subsection{Development Phases}
+\subsection{Application of Agile Methodology, aqui meto el diagrama de Agile}
+The project follows an Agile methodology, allowing for iterative progress and continuous refinement of the algorithms. This approach ensures flexibility and adaptability to changing requirements. Agile was chosen over traditional models such as Waterfall, as the latter requires a rigid, sequential structure that does not accommodate modifications once development begins.
+
+Given the dynamic nature of this project, the Agile framework supports the parallel development of:
 \begin{itemize}
-    \item Phase 1: Implementation of the optimized Delaunay path planner.
-    \item Phase 2: Development of the RRT* algorithm from scratch.
-    \item Phase 3: Testing and comparison of both algorithms.
+    \item Optimization and rewriting of the existing \textbf{Delaunay path planner}.
+    \item Development of a new \textbf{RRT* algorithm} from scratch.
+    \item Comparative testing and analysis of both approaches.
 \end{itemize}
+
+The project is structured into multiple iterations, ensuring continuous validation and improvement of the implemented methods.
+
+\section{Development Phases}
+
+\subsection{Preparation Phase}
+Before development, the project involved:
+\begin{itemize}
+    \item \textbf{Topic selection and meetings} with OBRA to align the objectives.
+    \item \textbf{Proposal submission and feedback} to refine the scope.
+    \item \textbf{System and environment preparation}, including setting up Unity and ROS2.
+    \item \textbf{Progress report submission} to document early findings.
+    \item \textbf{Research and design for Delaunay optimization}, establishing the baseline for improvements.
+\end{itemize}
+
+\subsection{Iteration 1: Delaunay Optimization and Rewriting}
+This phase focused on improving the existing Delaunay-based path planner:
+\begin{itemize}
+    \item \textbf{Algorithm rewriting} to enhance efficiency and adaptability.
+    \item \textbf{Implementation of the optimized Delaunay path planner}.
+    \item \textbf{Testing and validation in simulation}, ensuring improved path generation.
+    \item \textbf{Demo presentation} of Delaunay results before moving to RRT.
+\end{itemize}
+
+\subsection{Iteration 2: RRT Development}
+The second iteration introduced the development of RRT:
+\begin{itemize}
+    \item \textbf{Theoretical study of RRT} to understand its principles and limitations.
+    \item \textbf{Research and design for basic RRT}.
+    \item \textbf{Implementation of the basic RRT algorithm}.
+    \item \textbf{Testing and validation in simulation} to compare with Delaunay.
+\end{itemize}
+
+\subsection{Iteration 3: RRT* Optimization and Comparison}
+Once the basic RRT was implemented, optimization and comparative analysis followed:
+\begin{itemize}
+    \item \textbf{Research and design for RRT*}, improving route efficiency.
+    \item \textbf{Comparative analysis of Delaunay and RRT*}, evaluating performance under racing conditions.
+\end{itemize}
+
+\subsection{Final Validation and Integration}
+After comparative testing, the final phase focused on integration:
+\begin{itemize}
+    \item \textbf{Integration into the OBRA car}, ensuring real-world applicability.
+\end{itemize}
+
+\subsection{Final Report and Presentation}
+The last step involved documentation and dissemination:
+\begin{itemize}
+    \item \textbf{Final report draft} summarizing findings and results.
+    \item \textbf{Final presentation preparation} for project submission.
+\end{itemize}
+
 
 \section{Technology}
 \subsection{Implementation Tools and Resources}
-\begin{itemize}
-    \item Programming Languages: Python.
-    \item Frameworks: ROS2 for robotic integration.
-    \item Simulation Environment: Unity for path planning validation.
-\end{itemize}
+The development of this project relies on several key technologies and tools to ensure efficient implementation and testing. The primary programming language used is Python, which serves as the backbone of the implementation. Python is used to develop the path-planning algorithms, integrate them into ROS2, and manage the necessary data processing tasks. Its extensive libraries and compatibility with machine learning and robotic frameworks make it ideal for rapid prototyping and testing.
+
+For robotic integration, we utilize ROS2 (Humble), which facilitates seamless communication between different components of the autonomous system. ROS2 manages sensor data processing, real-time control, and path planning, ensuring that all modules operate in a synchronized manner. The middleware's efficiency in handling multiple nodes is crucial for real-time decision-making within the autonomous vehicle.
+
+The project runs on Ubuntu 22.04, which provides a stable and well-supported environment for ROS2, Python-based applications, and simulation tools. Ubuntu ensures compatibility with the robotic frameworks used in this project and offers an extensive community for troubleshooting and optimization.
+
+For version control, Git and GitLab serve as the central repository for managing code changes. The OBRA workspace on GitLab stores previous developments and is used to track new implementations through branches. Frequent commits help maintain a structured development workflow.
+
+Simulation and testing are conducted using a structured environment that combines Unity for scenario modeling and Foxglove for real-time visualization of vehicle states and planned paths. The simulation outputs, along with test results, are stored in Google Drive, ensuring efficient data management and accessibility for analysis.
+
+To maintain an organized workflow, Notion is used for task management and Agile planning, ensuring that development is well-structured and efficiently executed.
+
+By integrating these technologies, we aim to develop a robust and scalable path-planning solution that seamlessly integrates with the OBRA autonomous vehicle.
+
+\subsection{Workspace, aquí puedo meter el graphq del ecosistema de OBRA}
+The OBRA workspace is structured to maintain a modular approach, ensuring that different path-planning algorithms can be developed and tested without interfering with the overall system architecture.
 
 \subsection{Simulation and Testing Tools}
-Details on how Unity and ROS2 are used for validation.
+
+The simulation and testing phase plays a crucial role in validating the path-planning algorithms before deployment in the real OBRA autonomous vehicle. The core of the simulation environment is built using Unity, which provides a controlled and highly customizable setting where different track conditions, obstacles, and environmental variations can be modeled. Unity allows us to evaluate the performance of the algorithms under high-speed driving scenarios, tight turns, and unexpected obstacles, ensuring that the vehicle can navigate efficiently and safely.
+
+To complement the simulation process, we use Foxglove for real-time visualization and analysis of key system data. Since our project is built on ROS2 (Humble), Foxglove acts as an interface to monitor ROS2 topics, displaying critical information such as vehicle state, planned trajectories, sensor readings, and dynamic obstacle detection. This visualization is essential for debugging, performance assessment, and fine-tuning the parameters of our path-planning algorithms.
+
+The validation process is structured around a set of performance metrics, ensuring that each algorithm is assessed based on objective criteria. These metrics include:
+\begin{itemize}
+    \item Path efficiency: Measuring the distance and curvature of the generated trajectory.
+    \item Computational speed: Evaluating how quickly the algorithm produces a valid path.
+    \item Adaptability to dynamic environments: Testing how well the planner reacts to changes such as moving obstacles or shifting track conditions.
+\end{itemize}
+
+Once the simulations are completed, the results, including logs, performance data, and video recordings, are stored in Google Drive for further analysis and comparison. This repository allows the team to track improvements over time and make data-driven decisions when optimizing the algorithms.
+
+By integrating Unity for simulation, Foxglove for real-time monitoring, and Google Drive for data storage, we establish a structured and efficient testing framework. This ensures that our path-planning algorithms are rigorously validated before integration into the OBRA vehicle, minimizing risks and maximizing system reliability.
 
 \section{Version Management}
-\subsection{Source Code Control with GitHub/GitLab}
-Version control and repository structure.
 
-\subsection{Data and Version Storage in Google Drive}
-How project logs, datasets, and backups are stored.
+\subsection{Source Code and Data Management, aquí puedo meter la estructura del GitLab}
+
+Version control plays a crucial role in the development of this project, ensuring efficient collaboration, structured code management, and reliable tracking of modifications. For this purpose, we utilize Git alongside GitLab, where the OBRA team's centralized workspace is hosted. GitLab serves as the primary repository, storing all project files, code implementations, and historical data from previous years.
+
+At the beginning of the project, the entire existing workspace was cloned from GitLab, providing access to all prior developments, including path-planning algorithms and other essential components used by the team in past seasons. This initial setup allowed us to build upon a solid foundation while ensuring compatibility with the existing autonomous system. Throughout the development process, every modification and improvement to the path planners has been systematically managed using branches within our GitLab repository. Each time a new version of a path-planning algorithm was implemented—whether modifications to the Delaunay planner or the development of the RRT/RRT* algorithm—a dedicated branch was created. This approach enabled parallel development and testing of different versions while preserving the stability of the main codebase.
+
+To maintain an organized and up-to-date repository, commits have been made regularly, ensuring that every iteration and refinement is properly documented. This frequent commit practice has allowed us to track changes efficiently, revert to previous versions when necessary, and collaborate seamlessly within the team. By leveraging GitLab's version control features, we have established a structured workflow that facilitates code reviews, debugging, and continuous integration, ultimately enhancing the reliability of our path-planning system.
+
+In addition to code management, we use Notion to coordinate team tasks and maintain an Agile workflow. Notion enables us to assign responsibilities, track progress, and ensure development efforts remain aligned with project goals. Furthermore, all generated data, including test results, simulation outputs, and performance evaluations, are stored in Google Drive. This provides a centralized location for data accessibility, allowing for efficient documentation and analysis of algorithm performance over time.
 
 \subsection{Source Code Repository Link}
 URL or reference to the project repository.

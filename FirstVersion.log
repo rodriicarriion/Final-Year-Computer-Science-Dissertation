@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.7)  17 MAR 2025 14:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.3.7)  18 MAR 2025 18:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -9,8 +9,8 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
 (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
 Document Class: report 2023/05/17 v1.4n Standard LaTeX document class
-(C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/base\size12.clo
-File: size12.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+(C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo
+File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count187
 \c@chapter=\count188
@@ -28,6 +28,8 @@ File: size12.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 Package: inputenc 2021/02/14 v1.3d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
+) (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
  (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
@@ -280,43 +282,66 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box55
 \@float@everytoks=\toks28
 \@floatcapt=\box56
+) (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+ (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen168
+\captionmargin=\dimen169
+\caption@leftmargin=\dimen170
+\caption@rightmargin=\dimen171
+\caption@width=\dimen172
+\caption@indent=\dimen173
+\caption@parindent=\dimen174
+\caption@hangindent=\dimen175
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count299
+\c@continuedfloat=\count300
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+Package caption Info: listings package is loaded.
+)
+LaTeX Font Info:    Trying to load font information for T1+cmss on input line 44.
+ (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmss.fd
+File: t1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 ) (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count299
+\l__color_backend_stack_int=\count301
 \l__pdf_internal_box=\box57
 ) (FirstVersion.aux)
 \openout1 = `FirstVersion.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
  (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count300
-\scratchdimen=\dimen168
+\scratchcounter=\count302
+\scratchdimen=\dimen176
 \scratchbox=\box58
-\nofMPsegments=\count301
-\nofMParguments=\count302
+\nofMPsegments=\count303
+\nofMParguments=\count304
 \everyMPshowfont=\toks29
-\MPscratchCnt=\count303
-\MPscratchDim=\dimen169
-\MPnumerator=\count304
-\makeMPintoPDFobject=\count305
+\MPscratchCnt=\count305
+\MPscratchDim=\dimen177
+\MPnumerator=\count306
+\makeMPintoPDFobject=\count307
 \everyMPtoPDFconversion=\toks30
 ) (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -324,12 +349,12 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 16.
+Package hyperref Info: Link coloring OFF on input line 44.
  (FirstVersion.out) (FirstVersion.out)
 \@outlinefile=\write3
 \openout3 = `FirstVersion.out'.
 
-\c@lstlisting=\count306
+\c@lstlisting=\count308
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -339,23 +364,23 @@ Package hyperref Info: Link coloring OFF on input line 16.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(72.26999pt, 452.9679pt, 72.26999pt)
+* h-part:(L,W,R)=(90.3375pt, 416.83289pt, 90.3375pt)
 * v-part:(T,H,B)=(72.26999pt, 700.50687pt, 72.26999pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=452.9679pt
+* \textwidth=416.83289pt
 * \textheight=700.50687pt
-* \oddsidemargin=0.0pt
-* \evensidemargin=0.0pt
+* \oddsidemargin=18.0675pt
+* \evensidemargin=18.0675pt
 * \topmargin=-37.0pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=12.0pt
+* \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=35.0pt
+* \marginparwidth=50.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -365,110 +390,80 @@ Package hyperref Info: Link coloring OFF on input line 16.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 19.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 47.
 (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 19.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 47.
  (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{C:/Users/rodri/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (FirstVersion.toc [1
-
-])
-\tf@toc=\write4
-\openout4 = `FirstVersion.toc'.
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.23 \newpage
-              [2]
+{C:/Users/rodri/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (FirstVersion.toc
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.34 \newpage
-              [1
+l.25 ... ecosistema de OBRA}{19}{subsection.3.3.2}
+                                                  % [1
 
-] [2
+] [2])
+\tf@toc=\write4
+\openout4 = `FirstVersion.toc'.
 
-] [3
+ [3]
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 53.
+ (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmss.fd
+File: ts1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+) [4
+
+] [5
+
+] [6
 
 ]
 Chapter 1.
-[4
-
-] [5] [6]
-Chapter 2.
 [7
 
-
-pdfTeX warning (ext4): destination with the same identifier (name{table.2.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.147 
-      ] [8
-pdfTeX warning (ext4): destination with the same identifier (name{table.2.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.177 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{table.2.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.177 
-      ]
-Underfull \hbox (badness 2970) in paragraph at lines 182--182
-\OT1/cmr/m/n/12 tric Tube Robots," 2022 IEEE 5th In-ter-na-tional
+] [8]
+Overfull \hbox (2.9098pt too wide) in paragraph at lines 126--127
+[]\T1/cmss/m/n/10.95 RRT* ^^U An en-hanced Rapidly-exploring Ran-dom Tree al-go-rithm that gen-er-ates smoother
  []
 
-[9
-pdfTeX warning (ext4): destination with the same identifier (name{table.2.4}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.207 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{table.2.5}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.207 
-      ] [10
-pdfTeX warning (ext4): destination with the same identifier (name{table.2.6}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.208 \chapter
-              {Methodology}]
+[9]
+Chapter 2.
+[10
+
+] [11] [12] [13] [14] [15]
 Chapter 3.
-[11
+[16
 
-] [12]
+] [17] [18] [19] [20] [21]
 Chapter 4.
-[13
+[22
 
-]
+] [23]
 Chapter 5.
+[24
 
-Overfull \hbox (7.15182pt too wide) in paragraph at lines 288--288
-[]\OT1/cmr/bx/n/17.28 Legal, Eth-i-cal, and En-vi-ron-men-tal Con-sid-er-a-tions 
- []
-
-[14
-
-]
+] [25]
 Chapter 6.
-[15
+[26
 
 ]
 Chapter 7.
-[16
+[27
 
-] [17
+]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 423.
+ (C:\Users\rodri\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmtt.fd
+File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+) [28
 
 ]
 Chapter 8.
-[18
+[29
 
 ] (FirstVersion.aux)
  ***********
@@ -476,20 +471,20 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `FirstVersion.out' has not changed.
-(rerunfilecheck)             Checksum: 35E363511D44574BAF4193ABC7494DB2;10129.
+(rerunfilecheck)             Checksum: 7EB186E27C4D087AE302C8E8163DDAE9;12043.
  ) 
 Here is how much of TeX's memory you used:
- 12055 strings out of 474486
- 183742 string characters out of 5743756
- 1940542 words of memory out of 5000000
- 34108 multiletter control sequences out of 15000+600000
- 568251 words of font info for 75 fonts, out of 8000000 for 9000
+ 13646 strings out of 474486
+ 213273 string characters out of 5743756
+ 1938542 words of memory out of 5000000
+ 35652 multiletter control sequences out of 15000+600000
+ 576461 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,513b,509s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><C:/Users/rodri/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rodri/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rodri/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on FirstVersion.pdf (21 pages, 129066 bytes).
+ 75i,10n,79p,983b,509s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1000.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1000.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1200.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx2074.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1440.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1095.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1095.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1095.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx2488.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecss1200.pk> <C:\Users\rodri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsx1728.pk>
+Output written on FirstVersion.pdf (30 pages, 248608 bytes).
 PDF statistics:
- 445 PDF objects out of 1000 (max. 8388607)
- 94 named destinations out of 1000 (max. 500000)
- 457 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 981 PDF objects out of 1000 (max. 8388607)
+ 110 named destinations out of 1000 (max. 500000)
+ 505 words of extra memory for PDF output out of 10000 (max. 10000000)
 
