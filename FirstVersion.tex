@@ -11,6 +11,10 @@
 \usepackage{geometry}
 \usepackage{float}
 \usepackage{caption}
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter.}{1em}{}
+\usepackage[utf8]{inputenc}
+
 
 % Configuración de márgenes según las especificaciones
 \geometry{
@@ -82,6 +86,7 @@ Escribe aquí los agradecimientos al supervisor, equipo OBRA, etc.
 
 \chapter{Introduction}
 \section{Background}
+
 In autonomous vehicles, path planning is essential, as it allows for efficient and safe route
 planning in real time. Specifically, the RRT algorithm \textquotedblleft RRT Rapidly exploring Random
 Tree\textquotedblright can explore large spaces efficiently. This makes it ideal for dynamic environments,
@@ -245,58 +250,23 @@ Given the dynamic nature of this project, the Agile framework supports the paral
 The project is structured into multiple iterations, ensuring continuous validation and improvement of the implemented methods.
 
 \section{Development Phases}
+The preparation phase involved selecting the topic and conducting meetings with OBRA to align the project's objectives. A proposal was submitted and refined based on feedback, followed by setting up the required system and environment, including Unity and ROS2. An initial progress report was submitted to document early findings, and research was conducted to establish a baseline for optimising the Delaunay path planner.
 
-\subsection{Preparation Phase}
-Before development, the project involved:
-\begin{itemize}
-    \item \textbf{Topic selection and meetings} with OBRA to align the objectives.
-    \item \textbf{Proposal submission and feedback} to refine the scope.
-    \item \textbf{System and environment preparation}, including setting up Unity and ROS2.
-    \item \textbf{Progress report submission} to document early findings.
-    \item \textbf{Research and design for Delaunay optimization}, establishing the baseline for improvements.
-\end{itemize}
+The first iteration focused on enhancing the Delaunay-based path planner by rewriting the algorithm to improve its efficiency and adaptability. An optimised version was implemented and tested in a simulation environment to validate improvements in path generation. The results were then demonstrated before proceeding with the development of the RRT algorithm.
 
-\subsection{Iteration 1: Delaunay Optimization and Rewriting}
-This phase focused on improving the existing Delaunay-based path planner:
-\begin{itemize}
-    \item \textbf{Algorithm rewriting} to enhance efficiency and adaptability.
-    \item \textbf{Implementation of the optimized Delaunay path planner}.
-    \item \textbf{Testing and validation in simulation}, ensuring improved path generation.
-    \item \textbf{Demo presentation} of Delaunay results before moving to RRT.
-\end{itemize}
+In the second iteration, work began on the RRT algorithm by conducting a theoretical study to understand its principles and limitations. This was followed by research and design for a basic implementation, which was then developed and tested in a simulated environment to compare its performance with the Delaunay approach.
 
-\subsection{Iteration 2: RRT Development}
-The second iteration introduced the development of RRT:
-\begin{itemize}
-    \item \textbf{Theoretical study of RRT} to understand its principles and limitations.
-    \item \textbf{Research and design for basic RRT}.
-    \item \textbf{Implementation of the basic RRT algorithm}.
-    \item \textbf{Testing and validation in simulation} to compare with Delaunay.
-\end{itemize}
+Once the basic RRT implementation was completed, the third iteration concentrated on optimising it using RRT*. This involved refining the algorithm to enhance route efficiency and conducting a comparative analysis between Delaunay and RRT* under racing conditions to assess their performance.
 
-\subsection{Iteration 3: RRT* Optimization and Comparison}
-Once the basic RRT was implemented, optimization and comparative analysis followed:
-\begin{itemize}
-    \item \textbf{Research and design for RRT*}, improving route efficiency.
-    \item \textbf{Comparative analysis of Delaunay and RRT*}, evaluating performance under racing conditions.
-\end{itemize}
+Following the comparative tests, the project progressed to the final validation and integration phase. The selected algorithm was integrated into the OBRA car to ensure its applicability in real-world racing scenarios.
 
-\subsection{Final Validation and Integration}
-After comparative testing, the final phase focused on integration:
-\begin{itemize}
-    \item \textbf{Integration into the OBRA car}, ensuring real-world applicability.
-\end{itemize}
-
-\subsection{Final Report and Presentation}
-The last step involved documentation and dissemination:
-\begin{itemize}
-    \item \textbf{Final report draft} summarizing findings and results.
-    \item \textbf{Final presentation preparation} for project submission.
-\end{itemize}
+The final stage of the project involved preparing a comprehensive report summarising the findings, results, and technical contributions. Additionally, a final presentation was developed to communicate the project's outcomes and submit the final deliverables.
 
 
-\section{Technology}
-\subsection{Implementation Tools and Resources}
+
+
+\chapter{Technology}
+\section{Implementation Tools and Resources}
 The development of this project relies on several key technologies and tools to ensure efficient implementation and testing. The primary programming language used is Python, which serves as the backbone of the implementation. Python is used to develop the path-planning algorithms, integrate them into ROS2, and manage the necessary data processing tasks. Its extensive libraries and compatibility with machine learning and robotic frameworks make it ideal for rapid prototyping and testing.
 
 For robotic integration, we utilize ROS2 (Humble), which facilitates seamless communication between different components of the autonomous system. ROS2 manages sensor data processing, real-time control, and path planning, ensuring that all modules operate in a synchronized manner. The middleware's efficiency in handling multiple nodes is crucial for real-time decision-making within the autonomous vehicle.
@@ -311,10 +281,47 @@ To maintain an organized workflow, Notion is used for task management and Agile 
 
 By integrating these technologies, we aim to develop a robust and scalable path-planning solution that seamlessly integrates with the OBRA autonomous vehicle.
 
-\subsection{Workspace, aquí puedo meter el graphq del ecosistema de OBRA}
-The OBRA workspace is structured to maintain a modular approach, ensuring that different path-planning algorithms can be developed and tested without interfering with the overall system architecture.
+\section{Workspace}
 
-\subsection{Simulation and Testing Tools}
+To visualize the structure of the OBRA ecosystem, we can execute the following command in the Ubuntu terminal:
+
+\begin{verbatim}
+rqt_graph
+\end{verbatim}
+
+This command generates a graphical representation of the ROS2 nodes and topics in execution. To obtain a visualization similar to the one shown in Figure \ref{fig:obra_graph}, it is necessary to have the simulator and the workspace running and properly configured.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{Images/wsgraph.png}
+    \caption{Ecosystem of nodes and topics in OBRA generated with rqt\_graph}
+    \label{fig:obra_graph}
+\end{figure}
+
+The OBRA workspace consists of multiple nodes that interact through ROS2 topics, enabling communication between different modules of the autonomous system. In the graph generated by \texttt{rqt\_graph}, we can observe how the different components are organized and communicate.
+
+The \texttt{/status} node provides system information and connects with other key modules. Within the perception subsystem, the \texttt{/perception/yolov5} node processes images and generates bounding boxes, which are sent to \texttt{/perception/boxes} and subsequently converted into positions through \texttt{/perception/position}. This information is used by other modules such as path planning and localization.
+
+The cone detection module processes position data through the \texttt{/cones/positions} topic, integrating this data into route planning via \texttt{/local\_planner} and lap counting via \texttt{/lapcount}. Additionally, the GPS module handles localization data through \texttt{/gps/lapcount}, \texttt{/gps/position}, and \texttt{/gps/distance}, providing essential information for autonomous navigation.
+
+Finally, the control module processes all this information and transmits it to \texttt{/motion}, enabling movement execution in the autonomous vehicle. The communication between these modules ensures the proper operation of the system in a simulation environment or in the real vehicle.
+
+The following subsections describe the various system modules in detail:
+
+\subsection{Cones}
+
+\subsection{Perception}
+
+\subsection{Localization \& Mapping}
+
+\subsection{Path Planning}
+
+\subsection{Control}
+
+
+
+
+\section{Simulation and Testing Tools}
 
 The simulation and testing phase plays a crucial role in validating the path-planning algorithms before deployment in the real OBRA autonomous vehicle. The core of the simulation environment is built using Unity, which provides a controlled and highly customizable setting where different track conditions, obstacles, and environmental variations can be modeled. Unity allows us to evaluate the performance of the algorithms under high-speed driving scenarios, tight turns, and unexpected obstacles, ensuring that the vehicle can navigate efficiently and safely.
 
@@ -331,9 +338,308 @@ Once the simulations are completed, the results, including logs, performance dat
 
 By integrating Unity for simulation, Foxglove for real-time monitoring, and Google Drive for data storage, we establish a structured and efficient testing framework. This ensures that our path-planning algorithms are rigorously validated before integration into the OBRA vehicle, minimizing risks and maximizing system reliability.
 
-\section{Version Management}
 
-\subsection{Source Code and Data Management, aquí puedo meter la estructura del GitLab}
+
+
+
+\chapter{Code Development}
+
+\section{Path Planning Folder Structure}
+
+To understand the overall structure of the path planning folder, we can refer to the diagram in Figure \ref{fig:path_planning_structure}. This structure organises different components responsible for planning the vehicle's path using either the Delaunay triangulation method or the RRT* algorithm.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{Images/local_planner.png}
+    \caption{Path planning folder structure}
+    \label{fig:path_planning_structure}
+\end{figure}
+
+The main entry point of the path planning system is the \texttt{local\_planner.py} script. This module connects all components and manages the overall planning process. Within \texttt{local\_planner}, the function \texttt{change\_state(self)} determines whether to use Delaunay or RRT* based on the detected environment. The selection is made using the following lines of code:
+
+\begin{verbatim}
+self.state = RRTStarState(self)  # Uses RRT* for path planning
+self.state = Delaunay(self)      # Uses Delaunay for path inference
+\end{verbatim}
+
+\subsection{Local Planner (local\_planner.py)}
+The \texttt{local\_planner.py} script serves as the core component of the path planning system. It is responsible for subscribing to relevant ROS2 topics, processing incoming data, and determining the appropriate path planning algorithm. The script maintains real-time vehicle position updates and cone detection to adjust its planning method dynamically.
+
+A key function in \texttt{local\_planner.py} is \texttt{change\_state(self)}, which decides whether to use the RRT* or Delaunay algorithm based on the available cone data:
+
+\begin{verbatim}
+def change_state(self):
+    """
+    Determines the path planning method based on detected cones.
+    """
+    if count_blue > 0 and count_yellow > 0 and count_blue + count_yellow > 2:
+        self.state = RRTStarState(self)  # Selects RRT* for complex scenarios
+    else:
+        self.state = Delaunay(self)  # Defaults to Delaunay triangulation
+\end{verbatim}
+
+The function first verifies if the system has detected both blue and yellow cones. If a sufficient number of cones are present, it selects \texttt{RRTStarState}, as the RRT* algorithm is better suited for handling complex, dynamic paths. If fewer cones are detected, it defaults to Delaunay triangulation, which relies on precomputed track midpoints for a stable and structured path.
+
+\subsection{State Management (new\_states.py)}
+The \texttt{new\_states.py} module defines the behaviour of different path planning strategies. It manages vehicle states and allows seamless switching between planning methods depending on the track conditions. The state management system is based on an abstract class \texttt{LocalPlannerState}, which enforces the implementation of a \texttt{plan\_path} method in all subclasses.
+
+One of the primary states is \texttt{RRTStarState}, which utilises the RRT* algorithm for adaptive path generation:
+
+\begin{verbatim}
+class RRTStarState(LocalPlannerState):
+    def plan_path(self):
+        """Implements the RRT* algorithm for path planning."""
+        try:
+            # Ensure car position is defined
+            if not hasattr(self.context, "car_position") or self.context.car_position is None:
+                print("Warning: `car_position` is not defined.")
+                return self.context.last_path
+
+            # Extract cone positions from the local track
+            cones_blue = cones_to_tuple_list(self.context.local_track.blue)
+            cones_yellow = cones_to_tuple_list(self.context.local_track.yellow)
+            
+            # Instantiate the RRT* planner
+            rrt_planner = RRTStarPlanner(cones_blue, cones_yellow)
+            
+            # Generate the path using RRT*
+            path = rrt_planner.plan_path(start=self.context.car_position, goal=self.context.target_position)
+            
+            if path is None:
+                print("Warning: RRT* did not find a path, using last known path.")
+                return self.context.last_path
+
+            return path
+        except Exception as e:
+            print(f"Warning: RRT* encountered an error: {e}")
+            return self.context.last_path
+\end{verbatim}
+
+This function first ensures that the car's position is known. It then extracts cone locations and passes them to the \texttt{RRTStarPlanner}, which attempts to compute an optimal path. If the planner fails, it defaults to the last successful path to maintain stability.
+
+\subsection{Utility Functions (utils.py)}
+The \texttt{utils.py} module provides helper functions for sorting cone data, smoothing paths, and handling data conversions.
+
+\begin{verbatim}
+def sort_cone_chain(cones):
+    """Sorts cones into a continuous chain for path planning."""
+    return sorted(cones, key=lambda c: c.x)
+\end{verbatim}
+
+By integrating these components, the path planning system dynamically selects the best algorithm for any given scenario, ensuring optimal performance in autonomous racing conditions.
+
+
+\section{Initial Path Planner: Old Delaunay Implementation}
+The initial path planner used by the OBRA autonomous vehicle during FSUK 2024 was based on the Delaunay triangulation method. This path planner was developed by the team throughout 2023 and 2024 and served as the foundation for autonomous navigation in the competition. The system relied on the detection of blue and yellow cones to generate a track boundary and compute a smooth path through the midpoints of the triangulated structure. By leveraging Delaunay triangulation, the planner provided a stable and predictable route, ensuring the vehicle could navigate efficiently. The initial Delaunay-based path planner lacks adaptability in dynamic environments, as it relies on static triangulation of detected cones. It struggles with inconsistent cone placement, cannot handle sudden obstacles efficiently, and lacks path smoothing, leading to suboptimal trajectories. Additionally, it does not optimise paths for minimal turns or distance.This implementation, while effective, had limitations in dynamic obstacle avoidance and adaptability, leading to further refinements in subsequent iterations.
+
+\section{Delaunay Path Planner Optimization and Rewriting}
+
+The optimization of the Delaunay path planner resulted in a significant reduction in complexity, improving both efficiency and maintainability. The previous implementation contained over 750 lines of code, relying on a complex graph-based approach to manage cone connections and extract midpoints. The new implementation, reduced to under 200 lines, introduces a streamlined structure based on the \texttt{TrackNavMesh} class, which efficiently handles the Delaunay triangulation and simplifies the extraction of midpoints.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{Images/delaunay.png}
+    \caption{Optimized Delaunay Path Planning System}
+    \label{fig:delaunay_optimization}
+\end{figure}
+
+Figure \ref{fig:delaunay_optimization} illustrates the restructured Delaunay path planner, highlighting key components and their interactions. The new system is structured around four main elements: \texttt{PathPlanner}, \texttt{TrackNavMesh}, \texttt{Delaunay}, and \texttt{UtilityFunctions}.
+
+\subsection{Structural Simplification}
+Previously, the planner relied on a manually managed graph structure to connect cones and determine midpoints. The new approach abstracts these operations into \texttt{TrackNavMesh}, which directly utilizes the \texttt{Delaunay} class from SciPy to establish relationships between cones.
+
+\begin{verbatim}
+def get_inner_midpoints(self):
+    result = []
+    for triangle in self.delaunay.simplices:
+        for cone_idx in triangle:
+            for other_cone_idx in triangle:
+                if self.get_cone_color(cone_idx) != self.get_cone_color(other_cone_idx):
+                    self.add_connection(cone_idx, other_cone_idx)
+\end{verbatim}
+
+By leveraging Delaunay triangulation directly, the system no longer requires redundant connection management, reducing computational overhead.
+
+\subsection{Efficient Midpoint Calculation}
+In the previous version, midpoint calculations involved multiple nested loops and redundant filtering. The optimized implementation directly extracts necessary midpoints from the triangulation and computes distances efficiently:
+
+\begin{verbatim}
+def get_distance_between(position_1, position_2):
+    return math.hypot(position_1[0] - position_2[0], position_1[1] - position_2[1])
+\end{verbatim}
+
+This approach consolidates distance calculations into a single function, removing unnecessary recalculations.
+
+\subsection{Enhanced Cone Clustering for Smoother Paths}
+The old system inconsistently merged closely positioned cones, sometimes leading to erratic paths. The new implementation introduces \texttt{cluster\_cones\_together}, which ensures cones within a threshold distance are merged systematically.
+
+\begin{verbatim}
+def cluster_cones_together(cones_to_cluster):
+    any_cone_within_max_cluster_distance = True
+    while any_cone_within_max_cluster_distance:
+        any_cone_within_max_cluster_distance = False
+        for cone in cones_to_cluster:
+            for next_cone in cones_to_cluster:
+                if cone == next_cone: continue
+                if get_distance_between(cone, next_cone) < MAX_CLUSTER_DISTANCE:
+                    cones_to_cluster.append(get_midpoint(cone, next_cone))
+                    cones_to_cluster.remove(cone)
+                    cones_to_cluster.remove(next_cone)
+                    any_cone_within_max_cluster_distance = True
+\end{verbatim}
+
+This method ensures smooth trajectories by preventing unnecessary sharp turns in the generated paths.
+
+\subsection{Comparison of Old vs. New Implementation}
+The table below highlights key improvements in the optimized Delaunay path planner:
+
+\begin{table}[h]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Feature} & \textbf{Old Delaunay (750+ lines)} & \textbf{New Delaunay (Under 200 lines)} \\
+        \hline
+        \textbf{Structure} & Complex graph-based approach & Simplified \texttt{TrackNavMesh} \\
+        \hline
+        \textbf{Midpoint Calculation} & Multiple iterations, redundant checks & Extracted directly from Delaunay triangulation \\
+        \hline
+        \textbf{Distance Calculations} & Scattered and repeated & Centralized and reusable \\
+        \hline
+        \textbf{Cone Clustering} & Handled inconsistently & \texttt{cluster\_cones\_together} ensures proper merging \\
+        \hline
+        \textbf{Maintainability} & Hard to debug and modify & Cleaner, modular, and efficient \\
+        \hline
+    \end{tabular}}
+    \caption{Comparison between the old and new Delaunay path planners.}
+    \label{tab:delaunay_comparison}
+\end{table}
+
+By simplifying the architecture, eliminating redundant computations, and leveraging Delaunay triangulation more effectively, the new implementation is significantly more efficient, adaptable, and maintainable for future improvements.
+
+\section{Development of RRT*}
+\subsection{Motivation for Switching from Delaunay to RRT*}
+
+The transition from the Delaunay-based path planner to RRT* was driven by the limitations observed in the previous system and the need for a more adaptive planning method. The Delaunay algorithm, while effective in generating stable midpoints, struggled with dynamic cone layouts and track variations. Since it relies on a predefined triangulation structure, it was unable to effectively handle missing cones, sharp turns, or sudden changes in track conditions.
+
+RRT*, on the other hand, offers a more flexible approach to path planning. It incrementally expands a search tree, allowing the system to adapt to different track layouts in real time. This adaptability ensures that the vehicle can navigate through complex turns while maintaining an optimal trajectory. The planner also provides collision avoidance by sampling points that maximize clearance from cones, improving vehicle stability.
+
+Given these advantages, the implementation of RRT* in the real vehicle aims to enhance performance in racing conditions, ensuring the car remains within track limits while dynamically adjusting to varying environments. The computational cost of RRT* was carefully optimized to ensure real-time execution without overloading the vehicle’s onboard processing power.
+
+\begin{table}[h]
+    \centering
+    \small
+    \begin{tabular}{|p{4cm}|p{6cm}|p{6cm}|}
+        \hline
+        \textbf{Feature} & \textbf{Delaunay Path Planner} & \textbf{RRT* Path Planner} \\
+        \hline
+        \textbf{Structure} & Uses fixed triangulation based on detected cones & Incrementally expands a tree to explore possible paths \\
+        \hline
+        \textbf{Adaptability} & Limited to predefined cone connections & Dynamically adjusts to missing cones and track variations \\
+        \hline
+        \textbf{Handling of Sharp Turns} & Struggles with tight corners due to fixed structure & Can generate alternative paths to optimize turning radius \\
+        \hline
+        \textbf{Collision Avoidance} & Midpoints are generated without explicit collision checking & Samples points that ensure safe clearance from cones \\
+        \hline
+        \textbf{Computational Load} & Lower but lacks adaptability & Higher but optimized to maintain real-time performance \\
+        \hline
+        \textbf{Implementation in Real Car} & Previously used in FSUK 2024 but had limitations & Being tested for improved race performance and track adaptation \\
+        \hline
+    \end{tabular}
+    \caption{Comparison between Delaunay and RRT* path planners.}
+    \label{tab:delaunay_vs_rrt}
+\end{table}
+
+Figure \ref{fig:rrtstar_structure} illustrates the core components of the RRT* planner, breaking down its functionality into node management, collision detection, and path smoothing.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{Images/rrt.png}
+    \caption{RRT* Path Planning Structure}
+    \label{fig:rrtstar_structure}
+\end{figure}
+
+RRT* was chosen due to its ability to generate adaptive paths in dynamic environments while ensuring path optimization over iterations. The planner consists of key modules that handle node expansion, collision avoidance, and final path smoothing.
+
+\subsection{Node Expansion and Distance Selection}
+The RRT* planner expands nodes in the direction of randomly sampled points to explore the space efficiently. The step size is set to \textbf{5 units} to balance coverage and computational efficiency:
+
+\begin{verbatim}
+def steer(self, nearest_node, random_point):
+    """
+    Generates a new node in the direction of `random_point`, limited by `step_size`.
+    """
+    direction = (random_point - nearest_node) / np.linalg.norm(random_point - nearest_node)
+    new_node = nearest_node + direction * self.step_size
+    return new_node
+\end{verbatim}
+
+Increasing the number of nodes significantly improves path resolution but also introduces computational overhead. If too many nodes are generated per iteration, the planner overloads the CPU, leading to a \textbf{delayed response} from the car. This delay causes the vehicle to react too late, making it difficult to follow the planned trajectory, ultimately leading to deviations from the track. Through empirical testing, a balance was found where \textbf{25 iterations} provide a good trade-off between accuracy and real-time performance.
+
+\subsection{Collision Detection and Safety Constraints}
+To ensure the vehicle avoids obstacles, a collision-checking mechanism was implemented. Each new node is validated against the detected cones to ensure a \textbf{safe clearance distance} of at least \textbf{2.5 units}:
+
+\begin{verbatim}
+def is_collision_free(self, new_node):
+    """
+    Returns `True` if `new_node` does not collide with any cone.
+    """
+    safe_distance = 2.5  # Min clearance from cones
+    distances = np.linalg.norm(self.all_cones - new_node, axis=1)
+    return np.all(distances > safe_distance)
+\end{verbatim}
+
+By maintaining a safe distance from cones, the planner prevents situations where the vehicle may clip obstacles due to minor inaccuracies in perception.
+
+\subsection{Path Retracing and Smoothing}
+Once a set of valid nodes has been generated, the planner reconstructs the path from the last node back to the start using a retracing mechanism:
+
+\begin{verbatim}
+def retrace_path(self):
+    """
+    Reconstructs the path from the last node to the start.
+    """
+    last_node = self.nodes[-1]
+    path = [last_node]
+    while tuple(path[-1]) in self.edges:
+        path.append(self.edges[tuple(path[-1])])
+    path.reverse()
+    return np.array(path)
+\end{verbatim}
+
+To further refine the trajectory, a \textbf{spline-based smoothing algorithm} is applied. This ensures the path is continuous and minimizes abrupt steering changes:
+
+\begin{verbatim}
+def smooth_path(self, path, smoothing_factor=0.5, num_points=50):
+    """
+    Uses spline interpolation to generate a smoother trajectory.
+    """
+    tck, u = splprep([path[:, 0], path[:, 1]], s=smoothing_factor, k=min(3, len(path)-1))  
+    x_smooth, y_smooth = splev(np.linspace(0, 1, num_points), tck)
+    return np.vstack((x_smooth, y_smooth)).T
+\end{verbatim}
+
+Smoothing eliminates unnecessary oscillations in the path, reducing the load on the vehicle's steering system and improving driving stability.
+
+\subsection{Final Considerations}
+The RRT* planner has been carefully tuned to maximize efficiency while ensuring safe and optimal path generation. The \textbf{step size (5 units)} and \textbf{max iterations (25)} were chosen after extensive testing to prevent CPU overload while maintaining real-time performance. The integration of collision detection and path smoothing ensures the vehicle follows an optimized and safe trajectory. The new implementation provides a more adaptive and reliable solution compared to previous approaches.
+
+\subsection{Final Considerations}
+The RRT* planner has been carefully tuned to maximize efficiency while ensuring safe and optimal path generation. The **step size (5 units)** and **max iterations (25)** were chosen after extensive testing to prevent CPU overload while maintaining real-time performance. The integration of collision detection and path smoothing ensures the vehicle follows an optimized and safe trajectory. The new implementation provides a more adaptive and reliable solution compared to previous approaches.
+
+
+\subsection{Final Considerations}
+The RRT* planner has been carefully tuned to maximize efficiency while ensuring safe and optimal path generation. The **step size (5 units)** and **max iterations (25)** were chosen after extensive testing to prevent CPU overload while maintaining real-time performance. The integration of collision detection and path smoothing ensures the vehicle follows an optimized and safe trajectory. The new implementation provides a more adaptive and reliable solution compared to previous approaches.
+
+
+
+
+\newpage
+
+
+\chapter {Version Management}
+
+\section{Source Code and Data Management}
 
 Version control plays a crucial role in the development of this project, ensuring efficient collaboration, structured code management, and reliable tracking of modifications. For this purpose, we utilize Git alongside GitLab, where the OBRA team's centralized workspace is hosted. GitLab serves as the primary repository, storing all project files, code implementations, and historical data from previous years.
 
@@ -342,6 +648,8 @@ At the beginning of the project, the entire existing workspace was cloned from G
 To maintain an organized and up-to-date repository, commits have been made regularly, ensuring that every iteration and refinement is properly documented. This frequent commit practice has allowed us to track changes efficiently, revert to previous versions when necessary, and collaborate seamlessly within the team. By leveraging GitLab's version control features, we have established a structured workflow that facilitates code reviews, debugging, and continuous integration, ultimately enhancing the reliability of our path-planning system.
 
 In addition to code management, we use Notion to coordinate team tasks and maintain an Agile workflow. Notion enables us to assign responsibilities, track progress, and ensure development efforts remain aligned with project goals. Furthermore, all generated data, including test results, simulation outputs, and performance evaluations, are stored in Google Drive. This provides a centralized location for data accessibility, allowing for efficient documentation and analysis of algorithm performance over time.
+
+\subsection{GitLab Repository Structure (Aquí puedes incluir una imagen del esquema del repositorio)}
 
 \subsection{Source Code Repository Link}
 URL or reference to the project repository.
@@ -367,11 +675,13 @@ Metrics evaluating the efficiency and smoothness of generated paths.
 Explanation of testing under dynamic conditions.
 
 \section{Experimental Results}
-\subsection{Comparison of Metrics Between Optimized Delaunay and RRT*}
+\subsection{Comparison of Metrics Between Optimized Delaunay and RRT*, or all planners}
 Presentation of comparative data.
 
 \subsection{Visualization of Results Through Graphs}
 Graphs and their interpretation.
+
+\subsection{Code Efficiency and Optimization Metrics}
 
 \newpage
 
