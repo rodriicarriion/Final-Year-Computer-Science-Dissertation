@@ -14,6 +14,8 @@
 \usepackage{titlesec}
 \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter.}{1em}{}
 \usepackage[utf8]{inputenc}
+\setcounter{tocdepth}{3}
+
 
 
 % Configuración de márgenes según las especificaciones
@@ -81,8 +83,21 @@ Menciona el impacto del estudio y posibles mejoras.
 
 \chapter*{Acknowledgements}
 \addcontentsline{toc}{chapter}{Acknowledgements}
-Escribe aquí los agradecimientos al supervisor, equipo OBRA, etc.
+
+I would like to express my sincere gratitude to my supervisor, \textbf{Muhammad Younas}, for his guidance, support, and continuous feedback throughout this project. His insights were fundamental in shaping the structure and direction of the research.
+
+My heartfelt thanks also go to the entire \textbf{Oxford Brookes Racing Autonomous (OBRA)} team for creating an environment of collaboration and technical excellence. In particular, I am especially grateful to \textbf{Aduén Benjumea} and \textbf{Mihir Gohad}, who served as project leads and played a crucial role in defining the vision and objectives of the team throughout the year.
+
+I would also like to thank \textbf{Sebastian Donnelly}, whose deep experience within OBRA was invaluable—always available to solve doubts and provide practical advice during key stages of development. 
+
+A special mention goes to \textbf{Dorian Amaritei}, who supported the development and optimization of the Delaunay path planner and contributed significantly to its refinement.
+
+Finally, I am very thankful to \textbf{Pablo Gutiérrez}, lead of the simulation subteam, who assisted me in running and validating the simulations used to compare the planners. His help ensured that the performance of each algorithm could be observed under realistic and controlled scenarios.
+
+This project would not have been possible without the collaborative effort and technical excellence of everyone involved.
+
 \newpage
+
 
 \chapter{Introduction}
 \section{Background}
@@ -561,7 +576,44 @@ Figure \ref{fig:rrtstar_structure} illustrates the core components of the RRT* p
 
 RRT* was chosen due to its ability to generate adaptive paths in dynamic environments while ensuring path optimization over iterations. The planner consists of key modules that handle node expansion, collision avoidance, and final path smoothing.
 
-\subsection{Node Expansion and Distance Selection}
+\subsection{RRT vs. RRT*: Key Differences}
+
+Although both RRT (Rapidly-exploring Random Tree) and RRT* (RRT Star) belong to the same family of sampling-based path planning algorithms, they serve different purposes when applied to real-world autonomous systems. RRT is designed to quickly find any feasible path from a start to a goal state. It is computationally efficient and particularly useful in high-dimensional configuration spaces. However, it does not guarantee path optimality, often producing jagged or unnecessarily long routes. In contrast, RRT* extends RRT by continuously rewiring the tree during expansion, gradually optimizing the path length and smoothness.
+
+In the context of our autonomous racing vehicle, optimality and continuity are not just desired—they are essential. The OBRA car operates in a constrained and dynamic workspace defined by cones that may vary in density, spacing, and even presence due to sensor limitations. In such conditions, simply finding a valid path, as RRT does, is insufficient. We require paths that are not only collision-free but also minimize sharp steering inputs, maximize smoothness, and stay close to the racing line to reduce lap time.
+
+RRT* addresses these requirements directly. By incrementally improving the path as new nodes are added, it creates trajectories that are smoother and more centered. This reduces mechanical stress on the car's steering system and increases overall stability, especially in high-speed sections or tight turns. Furthermore, the ability of RRT* to adapt to local changes in the environment makes it more robust for real-time racing, where missing cones or sudden layout shifts may occur. 
+
+Although RRT* incurs a slightly higher computational cost due to its optimization phase, we mitigated this by carefully tuning key parameters such as step size and maximum iterations. The result is a planner that operates within the real-time constraints of our onboard system while producing higher-quality paths than its predecessor. For this reason, RRT* was selected as the foundation for our planner, offering a balance between flexibility, efficiency, and trajectory quality that aligns with the specific demands of the OBRA car and the racing domain.
+
+
+\subsection{Initial RRT* Planner: Centerline Trajectory}
+
+In order to perform a meaningful comparison between the RRT* planner and the existing Delaunay-based planner, the first version of RRT* was designed to follow a trajectory biased toward the center of the track. This decision was motivated by the behavior of the Delaunay planner, which inherently produces paths that pass through the midpoints of adjacent cones. Therefore, centering the initial RRT* implementation enables a direct evaluation in terms of smoothness, adaptability, and precision under similar constraints.
+
+To achieve this central bias, the sampling function \texttt{sample\_point()} was engineered to generate random points with a preference for the geometric center between blue and yellow cones. This is implemented by calculating the average position of cones on both sides of the track and biasing new random points toward that mean:
+
+\begin{verbatim}
+track_center_x = (np.mean(self.blue_cones[:, 0]) + np.mean(self.yellow_cones[:, 0])) / 2
+track_center_y = (np.mean(self.blue_cones[:, 1]) + np.mean(self.yellow_cones[:, 1])) / 2
+track_center = np.array([track_center_x, track_center_y])
+...
+random_point = random_point * (1 - bias_factor) + track_center * bias_factor
+\end{verbatim}
+
+A \texttt{bias\_factor} of 0.2 ensures that, while points retain some randomness to enable exploration, they are gently pulled toward the central path. Additionally, a slight outward shift is applied to increase spacing from the cones and reduce the risk of near-collisions:
+
+\begin{verbatim}
+shift_distance = 1.2
+random_point += shift_distance * (random_point - track_center) / np.linalg.norm(random_point - track_center)
+\end{verbatim}
+
+As a result, the generated tree grows in a way that naturally follows the middle of the corridor defined by the cones, producing paths that are smoother and more aligned with the behavior of the Delaunay planner. This configuration is essential for isolating the specific benefits of RRT*, such as adaptability to missing cones or sharper turns, without introducing bias due to fundamentally different target trajectories.
+
+Future versions of the planner, discussed in the next section, will explore more aggressive strategies focused on minimizing lap time rather than maintaining central alignment.
+
+
+\subsubsection{Node Expansion and Distance Selection}
 The RRT* planner expands nodes in the direction of randomly sampled points to explore the space efficiently. The step size is set to \textbf{5 units} to balance coverage and computational efficiency:
 
 \begin{verbatim}
@@ -576,7 +628,7 @@ def steer(self, nearest_node, random_point):
 
 Increasing the number of nodes significantly improves path resolution but also introduces computational overhead. If too many nodes are generated per iteration, the planner overloads the CPU, leading to a \textbf{delayed response} from the car. This delay causes the vehicle to react too late, making it difficult to follow the planned trajectory, ultimately leading to deviations from the track. Through empirical testing, a balance was found where \textbf{25 iterations} provide a good trade-off between accuracy and real-time performance.
 
-\subsection{Collision Detection and Safety Constraints}
+\subsubsection{Collision Detection and Safety Constraints}
 To ensure the vehicle avoids obstacles, a collision-checking mechanism was implemented. Each new node is validated against the detected cones to ensure a \textbf{safe clearance distance} of at least \textbf{2.5 units}:
 
 \begin{verbatim}
@@ -591,7 +643,7 @@ def is_collision_free(self, new_node):
 
 By maintaining a safe distance from cones, the planner prevents situations where the vehicle may clip obstacles due to minor inaccuracies in perception.
 
-\subsection{Path Retracing and Smoothing}
+\subsubsection{Path Retracing and Smoothing}
 Once a set of valid nodes has been generated, the planner reconstructs the path from the last node back to the start using a retracing mechanism:
 
 \begin{verbatim}
@@ -621,18 +673,60 @@ def smooth_path(self, path, smoothing_factor=0.5, num_points=50):
 
 Smoothing eliminates unnecessary oscillations in the path, reducing the load on the vehicle's steering system and improving driving stability.
 
-\subsection{Final Considerations}
-The RRT* planner has been carefully tuned to maximize efficiency while ensuring safe and optimal path generation. The \textbf{step size (5 units)} and \textbf{max iterations (25)} were chosen after extensive testing to prevent CPU overload while maintaining real-time performance. The integration of collision detection and path smoothing ensures the vehicle follows an optimized and safe trajectory. The new implementation provides a more adaptive and reliable solution compared to previous approaches.
+
+\subsection{Final RRT* Planner: Fastest Trajectory}
+
+This version of the RRT* planner is considered the final and most optimal implementation for the OBRA car, as it is explicitly designed to follow the fastest possible trajectory through the track rather than simply maintaining a central line. While the initial RRT* was biased toward the center to enable direct comparison with the Delaunay planner, this version prioritizes performance, speed, and aggressive maneuvering—factors critical in a competitive racing environment.
+
+The core difference lies in the sampling strategy. Instead of sampling points biased toward the geometric center of the track, this planner favors points further ahead along the driving axis (positive X-direction), encouraging the vehicle to progress rapidly while minimizing lateral deviation. This is reflected in the following line within the \texttt{sample\_point()} method:
+
+\begin{verbatim}
+rand_x = np.random.uniform(5, 10)  # Prioritize forward sampling
+rand_y = np.random.uniform(-3, 3)  # Allow lateral flexibility
+random_point = np.array([car_x + rand_x, car_y + rand_y])
+\end{verbatim}
+
+To further enhance safety and maintain aggressive yet reliable driving, sampled points are rejected if they fall too close to any cone:
+
+\begin{verbatim}
+distances = np.linalg.norm(self.all_cones - random_point, axis=1)
+if np.any(distances < 2.5):
+    return self.sample_point()
+\end{verbatim}
+
+This ensures that the trajectory not only favors speed but also remains within safe operational margins.
+
+Additionally, this version uses an alignment-weighted nearest node search that prioritizes expansion in the forward direction (X-axis), reinforcing the planner’s bias toward the racing line and avoiding backward or inefficient detours:
+
+\begin{verbatim}
+goal_direction = np.array([1, 0])  # Favors forward motion
+\end{verbatim}
+
+Compared to the initial centerline-focused RRT*, this implementation results in more aggressive paths that cut closer to the apex of turns and reduce total lap distance, while still respecting safety constraints. It is therefore better aligned with the real-world demands of autonomous racing, where maximizing performance per lap is more important than symmetrical navigation.
+
+This final RRT* planner lays the foundation for deployment in the real vehicle, offering a robust balance between real-time feasibility, adaptability, and competitive performance.
 
 \subsection{Final Considerations}
-The RRT* planner has been carefully tuned to maximize efficiency while ensuring safe and optimal path generation. The **step size (5 units)** and **max iterations (25)** were chosen after extensive testing to prevent CPU overload while maintaining real-time performance. The integration of collision detection and path smoothing ensures the vehicle follows an optimized and safe trajectory. The new implementation provides a more adaptive and reliable solution compared to previous approaches.
 
+Throughout this project, four distinct path planners were developed and evaluated to explore the trade-offs between stability, adaptability, and performance in autonomous racing: the initial unoptimized Delaunay planner, the improved Delaunay version, a centerline-biased RRT* planner, and the final optimized RRT* for fastest trajectory.
 
-\subsection{Final Considerations}
-The RRT* planner has been carefully tuned to maximize efficiency while ensuring safe and optimal path generation. The **step size (5 units)** and **max iterations (25)** were chosen after extensive testing to prevent CPU overload while maintaining real-time performance. The integration of collision detection and path smoothing ensures the vehicle follows an optimized and safe trajectory. The new implementation provides a more adaptive and reliable solution compared to previous approaches.
+The initial Delaunay planner was the first implemented solution. Although functional, it lacked the flexibility to handle dynamic track variations. It followed a fixed triangulation logic between cones, often generating stable but suboptimal paths. Its limitations became evident when cones were missing, misplaced, or when sharp turns required more dynamic trajectory adaptation.
 
+The optimized Delaunay version addressed some of these issues by refining the triangulation logic, improving midpoint selection, and adjusting parameters to make the output path more consistent. However, it still suffered from structural rigidity, as its connectivity remained dependent on the presence and layout of detected cones. Despite offering better stability than the original version, its adaptability and response time to sudden track changes remained limited.
 
+To overcome these constraints, the RRT* family of planners was introduced. The first implementation was intentionally biased toward the centerline to mirror the typical behavior of the Delaunay planner. This allowed a fair comparison in terms of precision, smoothness, and structural differences. It demonstrated improved handling of irregularities in cone placement, as well as more consistent collision avoidance.
 
+The final and most performant version is the optimized RRT* planner targeting the fastest possible trajectory. Unlike its predecessors, it no longer follows a geometric centerline but actively searches for paths that minimize total driving distance and improve lap time. Through strategic forward sampling, directionally weighted node expansion, and active cone avoidance, it generates more aggressive and efficient routes. While this introduces higher computational complexity, the parameters were carefully tuned to maintain real-time performance on the OBRA car's onboard system.
+
+In summary, the planners form a clear progression:
+\begin{itemize}
+    \item \textbf{Initial Delaunay}: Basic, stable, but limited and rigid.
+    \item \textbf{Optimized Delaunay}: More stable and refined, yet still constrained by static structure.
+    \item \textbf{Centerline RRT*}: Flexible and robust, ideal for comparison and mid-level adaptation.
+    \item \textbf{Final RRT* (Fastest)}: Optimal in performance, adaptable to real-time racing scenarios, and designed for deployment.
+\end{itemize}
+
+It is expected that the final RRT* planner will significantly outperform the others in dynamic conditions, especially on sharp turns and incomplete cone layouts. Its adaptive nature and path optimization capabilities make it the most promising solution for real-world autonomous racing.
 
 \newpage
 

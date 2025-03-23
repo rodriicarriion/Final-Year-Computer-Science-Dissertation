@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1742519104 "/home/ubunturodri/Documentos/Final-Year-Computer-Science-Dissertation-main/FirstVersion.tex" "FirstVersion.pdf" "FirstVersion" 1742519104
+["pdflatex"] 1742732991 "/home/ubunturodri/Documentos/Final-Year-Computer-Science-Dissertation-main/FirstVersion.tex" "FirstVersion.pdf" "FirstVersion" 1742732992
   "/etc/texmf/web2c/texmf.cnf" 1742506103 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/ubunturodri/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1000.600pk" 1742507701 19908 595049ed1e7c7267bf089547685c87b4 ""
   "/home/ubunturodri/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1095.600pk" 1742507710 21792 52378e2a488dd1bd3620d64cd2944118 ""
@@ -13,7 +13,7 @@
   "/home/ubunturodri/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk" 1742507699 21952 6e492e8888fd229351ceb35a75f00708 ""
   "/home/ubunturodri/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcss1095.600pk" 1742507709 11620 052918105df546fbbb89db1f2fa419b1 ""
   "/home/ubunturodri/.texlive2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1742507697 1405651 53d561179f725f45b12c0bd0f565a7a1 ""
-  "/home/ubunturodri/Documentos/Final-Year-Computer-Science-Dissertation-main/FirstVersion.tex" 1742519103 50712 64bf7d90db2d80cb719ff7cbb64b54cb ""
+  "/home/ubunturodri/Documentos/Final-Year-Computer-Science-Dissertation-main/FirstVersion.tex" 1742732991 60517 089c01d91f9b1ac9ae15c464553c6471 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1095.tfm" 1136768653 3584 929cdff2b7a8c11bd4d49fd68cb0ae70 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecss1000.tfm" 1136768653 3584 ab55608ad377891510479d34d90acc46 ""
@@ -118,10 +118,10 @@
   "/usr/share/texlive/texmf-dist/tex/latex/url/url.sty" 1388531844 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
-  "FirstVersion.aux" 1742519104 16143 afe335163cd39a825b431b0f350b1b1c "pdflatex"
-  "FirstVersion.out" 1742519104 15917 be1833cf904e4fc65d8e1c2257ff8de4 "pdflatex"
-  "FirstVersion.tex" 1742519103 50712 64bf7d90db2d80cb719ff7cbb64b54cb ""
-  "FirstVersion.toc" 1742519104 7539 50436d191703bc64dbe8f6bde2b5a5b1 "pdflatex"
+  "FirstVersion.aux" 1742732991 16262 0899808660544bc79ea198f1a3c3d0fe "pdflatex"
+  "FirstVersion.out" 1742732992 16359 91fb977e8a67a9418ca2db7e8a990d82 "pdflatex"
+  "FirstVersion.tex" 1742732991 60517 089c01d91f9b1ac9ae15c464553c6471 ""
+  "FirstVersion.toc" 1742732992 7617 d47f9d50e017941d7a7e390b18318cd1 "pdflatex"
   "Images/delaunay.png" 1742517312 52776 3fed63d2cb9682f313b19b87396f8cb1 ""
   "Images/local_planner.png" 1742514963 68459 6f8828c6c0a8f35ba4f45c8b1def10b3 ""
   "Images/rrt.png" 1742518243 45755 313eb4272f0d065f65fcb353301d7695 ""
