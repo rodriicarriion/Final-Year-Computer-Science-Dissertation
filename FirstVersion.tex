@@ -15,6 +15,8 @@
 \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter.}{1em}{}
 \usepackage[utf8]{inputenc}
 \setcounter{tocdepth}{3}
+\usepackage{booktabs}
+
 
 
 
@@ -56,11 +58,29 @@
 \chapter*{Glossary}
 \addcontentsline{toc}{chapter}{Glossary}
 \begin{itemize}
-    \item \textbf{RRT} - Rapidly-Exploring Random Tree
-    \item \textbf{ROS2} - Robot Operating System 2
-    \item \textbf{Unity} - Motor de simulación
-    \item \textbf{Path Planning} - Planificación de rutas
+    \item \textbf{RRT} - Rapidly-Exploring Random Tree, algoritmo de planificación de rutas que explora espacios grandes de forma eficiente.
+    \item \textbf{ROS2} - Robot Operating System 2, framework modular para el desarrollo de software robótico.
+    \item \textbf{Unity} - Motor de simulación utilizado para replicar condiciones reales de conducción en entornos virtuales.
+    \item \textbf{Path Planning} - Planificación de rutas, proceso de calcular trayectorias óptimas evitando obstáculos.
+    \item \textbf{YOLO} - You Only Look Once, arquitectura de deep learning para detección de objetos en tiempo real.
+    \item \textbf{mAP} - Mean Average Precision, métrica para evaluar la precisión de un modelo de detección.
+    \item \textbf{IoU} - Intersection over Union, métrica que mide la superposición entre predicciones y etiquetas reales.
+    \item \textbf{Inference Time} - Tiempo que tarda el modelo en procesar una imagen y devolver resultados.
+    \item \textbf{Dataset} - Conjunto de datos utilizado para entrenar, validar y testear modelos de machine learning.
+    \item \textbf{Annotation} - Proceso de etiquetar imágenes con información relevante (e.g., posición y tipo de objetos).
+    \item \textbf{Roboflow} - Herramienta en línea utilizada para anotar y gestionar datasets de visión por computador.
+    \item \textbf{YOLOv5, YOLOv8, YOLOv11} - Versiones específicas del modelo YOLO con diferentes arquitecturas y mejoras.
+    \item \textbf{mAP@50, mAP@50-95} - Variantes de mAP que evalúan la precisión a diferentes umbrales de IoU.
+    \item \textbf{Precision} - Proporción de verdaderos positivos frente al total de predicciones positivas.
+    \item \textbf{Recall} - Proporción de verdaderos positivos frente al total de elementos reales positivos.
+    \item \textbf{Epoch} - Iteración completa sobre el dataset durante el proceso de entrenamiento de un modelo.
+    \item \textbf{Overfitting} - Problema de generalización en el que un modelo aprende demasiado los datos de entrenamiento.
+    \item \textbf{Data Augmentation} - Técnicas utilizadas para aumentar la variabilidad del dataset mediante transformaciones.
+    \item \textbf{Simulator} - Entorno virtual donde se prueban los modelos de detección de forma controlada.
+    \item \textbf{OBRA} - {\small Oxford Brookes Racing Autonomous, equipo universitario de vehículos autónomos de competición.}
+
 \end{itemize}
+
 \newpage
 
 \chapter*{Abstract}
@@ -86,7 +106,7 @@ Menciona el impacto del estudio y posibles mejoras.
 
 I would like to express my sincere gratitude to my supervisor, \textbf{Muhammad Younas}, for his guidance, support, and continuous feedback throughout this project. His insights were fundamental in shaping the structure and direction of the research.
 
-My heartfelt thanks also go to the entire \textbf{Oxford Brookes Racing Autonomous (OBRA)} team for creating an environment of collaboration and technical excellence. In particular, I am especially grateful to \textbf{Aduén Benjumea} and \textbf{Mihir Gohad}, who served as project leads and played a crucial role in defining the vision and objectives of the team throughout the year.
+My heartfelt thanks also go to the entire \textbf{Oxford Brookes Racing Autonomous (OBRA)} team for creating an environment of collaboration and technical excellence. In particular, I am especially grateful to \textbf{Aduén Benjumea} and\\ \textbf{Mihir Gohad}, who served as project leads and played a crucial role in defining the vision and objectives of the team throughout the year.
 
 I would also like to thank \textbf{Sebastian Donnelly}, whose deep experience within OBRA was invaluable—always available to solve doubts and provide practical advice during key stages of development. 
 
@@ -297,7 +317,23 @@ To maintain an organized workflow, Notion is used for task management and Agile 
 By integrating these technologies, we aim to develop a robust and scalable path-planning solution that seamlessly integrates with the OBRA autonomous vehicle.
 
 \section{Workspace}
+\subsection{OBRA WS}
 
+The Oxford Brookes Racing Autonomous (OBRA) workspace is organised around a modular system architecture, where each major component of the autonomous pipeline is developed by a dedicated subteam. This structure enables parallel development while ensuring each module integrates smoothly into the overall system. Figure~\ref{fig:software_architecture} provides an overview of the autonomous stack, highlighting the data flow between modules and their interaction with both real-world and simulated environments.
+
+The system is divided into key subsystems: Sensors Suite, Perception, Localisation \& Mapping, Trajectory Planning, and Controls. Each subteam is responsible for the development, testing, and integration of one of these subsystems, working collaboratively through shared interfaces and simulation environments. This architecture not only supports scalability and maintainability but also reflects the team's interdisciplinary nature, combining expertise in computer vision, robotics, AI, and control systems.
+
+Development and testing are carried out in both real and simulated environments. The simulation setup replicates the vehicle’s behaviour under various track conditions, providing a safe and flexible way to validate improvements before deploying them on the physical car.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Images/SoftwareArchitecture.png}
+    \caption{Autonomous System Architecture — OBRA workspace modules and interfaces.}
+    \label{fig:software_architecture}
+\end{figure}
+
+
+\subsection{ADS-wsgraph}
 To visualize the structure of the OBRA ecosystem, we can execute the following command in the Ubuntu terminal:
 
 \begin{verbatim}
@@ -323,15 +359,52 @@ Finally, the control module processes all this information and transmits it to \
 
 The following subsections describe the various system modules in detail:
 
-\subsection{Cones}
-
 \subsection{Perception}
 
-\subsection{Localization \& Mapping}
+Perception is the entry point of the autonomous system. Computer vision is used to process images from our stereo camera, the Zed 2i, and the Livox HAP LiDAR. The detection of cones is handled through the YOLO neural network which takes images from the left channel of the camera to infer the position of cones on a 2D map. Depth perception from the camera is handled by taking into account the bounding boxes from both camera channels and comparing the two received frames to estimate a distance to an object getting a midpoint for them to estimate distance. The most suitable base suitable model from Ultralytics was YOLOv11 Nano [1], due to having the fastest inference speed of the offered base models. Detection of small objects such as cones at a distance is challenging due to the resolution limitations of the camera. This led to modifications on the base YOLOv11 neural network to increase its accuracy to detect small objects, making use of the YOLO-Z [2] approach.
+
+To train the model to detect the four cone types, a dataset with manually labelled and gathered data was constructed. A dataset such as this, had to be varied to cover all possible light conditions that could possibly happen at competition. The data was gathered from past runs at Silverstone and testing, and stitched together to create a dataset with variable lighting conditions, locations and weather to be ready for all of the detection challenges presented on a fast moving vehicle. The model trained on this dataset achieves an mAP (mean average precision) score of 87\%, with an inference speed of 2.8 ms. The model was further customised by exporting it to the TensorRT [3] format. The advantages of this approach is the optimisation of the YOLO model on the hardware it is running on, which in this case is the Nvidia Jetson Nano. The optimisation includes techniques such as layer-fusion, precision calibration, dynamic tensor memory management and kernel auto-tuning. The combination of these techniques increase the speed of inference by 46.5\%, making it 1.3ms, while decreasing mAP by 1\%.  
+
+The perception system also makes use of LiDAR in tandem with computer vision techniques. LiDAR works along the depth perception model from the Zed Camera to give an accurate distance estimation of the cones in the path of the vehicle, through point cloud data. The Livox HAP LiDAR also has a detection range of 150 meters. This enables the system to map far away cones, which the object detector and the camera would not be able to detect confidently due to resolution limitations which makes the color of the cones indistinguishable at extreme distances. This level of mapping is needed for SLAM and Trajectory Planning as the position of the cones are placed on a 3D map used by both of these systems. Furthermore, this approach allows the two perception systems to complement each other’s weaknesses, as LiDAR performs poorly in rainy conditions, while the camera performs poorly in extremely sunny or dark conditions.
+
+\subsection{Localisation \& Mapping}
+
+Simultaneous Localisation and Mapping (SLAM) is the module in which an agent constructs an understanding of a previously unexplored environment while simultaneously estimating its own position within the environment. Due to the inherent uncertainties in the sensors and actuators, SLAM is inherently probabilistic and combines the two key tasks : localisation which involves estimating the agent's own position based on the existing map and mapping which entails creating a map given an accurate position. The current SLAM module makes use of the IMU data along with the GPS and wheel speed sensor, to enhance the accuracy and reliability of both localisation and mapping. The inertial measurement unit (IMU) provides data for the agent’s orientation allowing for real time adjustments to its estimated position. The GPS provides data as a global reference point which is useful for the outdoor environments. The wheel speed sensors aid in odometry calculations by tracking all the tracking distances traveled. By integrating these sensors, the SLAM module effectively reduces the uncertainties and improves the reliability of the generated map allowing the agent to navigate the environment with greater precision.
+
+To complement SLAM, additional systems are implemented for tasks like map cleanup, clustering, or loop-closure adjustments based on map conditions. In events where a prior map is provided, the full SLAM system is still launched with a preloaded map to reflect changes in the environment in the system. For the acceleration event, SLAM faces limitations due to the uniform and repetitive pattern of a straight line of cones, which poses challenges for landmark-based systems. In such cases, focus shifts to an Inertial Navigation System (INS), which fuses global positioning with odometry data to measure task progress from the start point while using landmarks for local navigation. For unknown tracks, such as autocross and track drive, the SLAM system plays a critical role in tracking landmark positions to enable robust path planning and control. It also aids in lap counting and monitoring task progress. Specifically, during the track drive event, the SLAM system signals a successful loop closure at the end of a lap. This significantly reduces overall system uncertainty, allowing path planning and control systems to operate at higher performance levels with an extended estimate of the track beyond the exploratory lap. Currently, our system emphasises improving our localisation algorithm with a focus on EKF localisation.
+
+By optimising EKF localisation, we aim to achieve more precise position estimates that complement SLAM's mapping capabilities. This improvement is particularly relevant for events like skidpad and acceleration, where accurate localisation is critical for performance. Additionally, these advancements in EKF localisation contribute to better integration with other subsystems such as path planning and control, ensuring seamless operation across diverse scenarios.
 
 \subsection{Path Planning}
 
+The trajectory planning module assumes the crucial responsibility of generating a viable and efficient path for the vehicle to navigate the track, taking into account the information provided by the perception and localization subsystems. Recognizing the inherent uncertainties associated with SLAM algorithms, particularly during the initial exploration phase, the trajectory planning module employs a robust approach to ensure optimal performance and safety throughout the racing process.
+
+RRT* (Rapidly-exploring Random Trees) has been fully developed and is now the primary trajectory planner. It is an optimized version of RRT that enhances trajectory efficiency by ensuring paths are not only feasible but also near-optimal. Unlike traditional sampling-based methods, RRT* incrementally refines the path as it explores the environment, reducing unnecessary deviations and ensuring smoother, shorter trajectories. This makes it particularly well-suited for autonomous racing, where quick, adaptive decision-making is crucial. Compared to Delaunay, which relies on structured and well-defined cone distributions, RRT* is significantly more flexible, allowing it to adapt to highly dynamic and unpredictable track layouts. Additionally, RRT* is capable of handling sparse or irregular cone distributions more effectively, ensuring that the vehicle maintains a viable trajectory even in challenging conditions.
+
+To validate the RRT* planner, we employ heuristic evaluation methods that analyze path smoothness, computational efficiency, and adaptability to dynamic environments. One of the key reasons for selecting RRT* over alternative methods is its ability to explore large state spaces while continuously refining the path, making it a robust solution for real-time trajectory generation.
+
+While RRT* is the preferred approach, the system retains Delaunay Triangulation as a backup planner. This method constructs non-overlapping triangles between detected cones to estimate track boundaries and generate a valid path. Although computationally efficient, Delaunay is more dependent on structured layouts, making it less reliable in complex scenarios. However, it remains an effective contingency plan for cases where RRT* might fail due to external constraints, ensuring that the vehicle always has a viable path.
+
+Current efforts focus on further optimizing RRT* to reduce computational overhead and to ensure smooth path integration across various driving conditions. Future developments will explore adaptive heuristics to enhance trajectory refinement, allowing for even greater efficiency and responsiveness in high-speed autonomous racing scenarios.
+
 \subsection{Control}
+
+The Control module is responsible for the implementation of advanced control strategies that optimize the performance of vehicles on track. One of the most powerful methodologies is the Model Predictive Control (MPC), which was selected for the OBRA autonomous race car because of its predictive capabilities, optimization-based approach, and ability to handle constraints, unlike traditional controllers like PID. MPC optimizes the car's trajectory over a prediction horizon, allowing it to anticipate future states and make optimal decisions at each time step.
+
+MPC works by solving an optimization problem at each step to find the best control inputs that will minimize the cost function. This cost function typically includes deviation from the desired trajectory, minimization of control efforts and respecting dynamic constraints. One of the key improvements are the Longitudinal Control, adjusting acceleration and braking based on track curvature and vehicle dynamics, ensuring smoother speed transitions, and the Lateral Control that optimized the steering by evaluating multiple future trajectories, improving stability compared to the previous Pure Pursuit Controller (PPC). It works with the Inputs: that are circuit coordinates and vehicle dynamics (mass, inertia, tire stiffness), with MPC Optimization, that Predicts vehicle motion, minimizes trajectory deviation, and optimizes control actions, and Vehicle Simulation that Updates lateral forces and yaw rate via the Bicycle Model for real-time adaptation. Considering the reduction in trajectory error, the decrease in steering control variability, and a faster convergence to the desired path, MPC improves overall performance by approximately 55--65\% compared to the PID-based system.
+
+We say that the MPC is 55--65\% better because of four factors: the first is Trajectory Error Reduction; MPC predicts upcoming turns and maneuvers using a lookahead horizon, whereas PID only reacts to the current error, the second one is Reduced Steering Oscillations; PID tends to cause overshooting and oscillations when correcting large errors, the third one is Smoother Speed Transitions; thanks to the longitudinal control, the MPC adjusts acceleration and braking based on track curvature and vehicle dynamics, reducing abrupt speed changes and the last one is Improved Stability in Dynamic Conditions; In high speed or low margin conditions, MPC maintains stability using dynamic vehicle model.
+
+\subsection{Hardware and Sensors}
+
+The system works on the premise that all required sensor equipment is housed within our Sensor Plate (SP). The SP runs on a limited 10A power supply which forces strategic choice of sensor hardware. The SP can be attached, removed and modified in a quick time. Ease of service has been considered with the body having various access points to ensure functionality.
+
+The placement of each sensor equipment is determined to maximise the performance out of them while adhering to the regulations. The Livox HAP TX LiDAR is placed at the base of the SP and as far forward as allowed by the ADS-DV side view envelope to be able to detect the cones and have an unobstructed field of view. The Zed2i Camera is therefore put on top of the LiDAR to still be centered and field of view obstruction from the LiDAR is minimised by placing it as close to the side view envelope as possible. In addition, the dual GPS antenna setup is placed as far apart as the front view envelope allows for more error correction in the GPS drift.
+
+The system is designed to work as a complete autonomous module via the addition of compute on the SP, this allows for easier installation and use on a variety of vehicles. This is made possible by the use of a CAN bypass which allows direct connection to the vehicle control unit.
+
+To aid software development the team has developed a small scale platform which replicates the IMechE’s ADS-DV as accurately as possible. We call this the ADS-BV (Brookes Vehicle). This platform is ideal for rapid testing and troubleshooting issues in a small confined space where we are limited to 20 km/h. This has led to the development of OBRA-P01 which is the 2014 OBR chassis fitted for autonomous driving. This system works to mimic the ADS-DV and ADS-BV as closely as possible, both testing platforms use an EPAS Microsteer MGU steering motor to allow for autonomous steering. In terms of braking the systems differ. The ADS-BV uses a linear actuator to actuate the mechanical brake pedal and an electromagnetic EBS to ensure maximum safety. The braking system for OBRA-P01 uses the traditional hydraulic system merged with electronic actuators that create a BBW system for autonomous braking. Emergency braking is achieved by an “always on” system which locks the wheels when the system has no signal. Both testing platforms use identical CAN system construction and VCU architecture to the ADS-DV to ensure a seamless transition between the 3 platforms.
+
 
 
 
@@ -753,29 +826,188 @@ URL or reference to the project repository.
 \chapter{Results}
 \section{Results and Testing}
 \subsection{Simulation Setup}
-Explanation of the Unity + ROS2 environment configuration.
+
+The evaluation of the four planners—Original Delaunay, Optimized Delaunay, Central RRT, and Optimized RRT—was conducted in a unified simulation environment to ensure consistency and fairness across tests. The entire setup was built using the Unity game engine, where a custom closed-loop racetrack was designed to simulate realistic driving conditions. This virtual track served as the benchmark environment for assessing the path planning capabilities of each algorithm.
+
+To monitor and validate the system behavior, \texttt{Foxglove Studio} was employed as the main visualization tool. It allowed real-time inspection of topics published during the simulation, such as \texttt{/planned\_path}, \texttt{/vehicle\_pose}, and \texttt{/lap\_timer}.
+
+For data collection, each simulation session was configured to run exactly three complete laps per planner. During execution, positional data (X, Y, Z coordinates) along with timestamps and other relevant metadata were logged at a fixed rate. These logs were captured within Unity and exported in CSV format immediately after the simulation. The resulting CSV files contained high-resolution spatial and temporal information, which enabled accurate offline analysis for computing performance metrics such as execution time, path length, and speed profiles.
+
+In order to further ensure that all planners were evaluated under identical physical conditions, a constant engine force value of \texttt{45} was applied to the vehicle in Unity for every test case. This parameter controls the forward propulsion of the simulated car, and keeping it fixed guarantees that all planners had the same opportunity to accelerate and complete each lap. As a consequence, lap times are expected to fall within a similar range across planners, and any observed variations in execution time can be attributed solely to the performance and efficiency of the path planning algorithm itself.
+
+This standardized setup ensured that all planners operated under identical conditions—same track layout, vehicle dynamics, environmental parameters, and simulation duration—providing a robust foundation for comparative analysis.
+
 
 \subsection{Test Scenarios}
-List of simulated scenarios used for validation.
+
+To ensure a fair and consistent evaluation, all planners were tested under identical conditions in terms of simulation environment, initial state, and configuration parameters. The primary goal of these tests was to isolate the impact of the path planning algorithm itself on performance metrics such as execution time, path efficiency, and trajectory smoothness.
+
+The initial test scenario consisted of a single simulation session per planner, in which each executed three complete laps around a closed-loop racetrack. The planners evaluated in this stage were:
+\begin{itemize}
+  \item Original Delaunay
+  \item Optimized Delaunay
+  \item Central RRT
+  \item Optimized RRT
+\end{itemize}
+
+This track was a simplified representation of a real-world autonomous driving course, inspired by the Silverstone circuit. The simulation was conducted in a fully controlled environment, free from dynamic elements such as moving obstacles, to allow direct comparison of the planners' path generation capabilities.
+
+Following the results of the initial tests, a second, more extensive simulation was conducted to analyze long-term performance and consistency. This test involved 10 consecutive laps and was carried out exclusively for the two top-performing planners from the first round: Optimized Delaunay and Optimized RRT. The objective was to measure stability across multiple laps, identify variations in lap time, and assess the repeatability of the path planning logic over an extended session.
+
+Both simulations were executed within the same Unity–ROS2 environment, ensuring consistency in vehicle dynamics, update rates, and environmental conditions across all test scenarios.
+
 
 \section{Performance Metrics}
 \subsection{Computation Time Evaluation}
-Data on execution times.
+
+To evaluate the execution time performance of each path planner, we measured the time taken to complete each of the three laps during the simulation. The table below summarizes the recorded lap times for the four tested planners.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Planner} & \textbf{Lap 1 (s)} & \textbf{Lap 2 (s)} & \textbf{Lap 3 (s)} \\
+\midrule
+Central RRT & 39.115 & 38.197 & 37.748 \\
+Original Delaunay & 39.202 & 37.777 & 37.682 \\
+Optimized Delaunay & 39.162 & 37.436 & 37.584 \\
+Optimized RRT & 39.420 & 37.630 & 37.093 \\
+\bottomrule
+\end{tabular}
+\caption{Lap times for each planner across three laps.}
+\label{tab:lap-times}
+\end{table}
+
+Figure~\ref{fig:lap-times-plot} provides a visual comparison of the lap times, allowing us to analyze the consistency and performance evolution across laps. All planners exhibit similar total times due to the fixed propulsion force applied during simulation, yet small variations in trajectory length and smoothness, caused by the different planning strategies, account for the differences in lap times.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Images/lap_time_table_plot_colored.png}
+\caption{Comparison of lap times across planners. Delaunay variants are shown in warm tones; RRT variants in cool tones.}
+\label{fig:lap-times-plot}
+\end{figure}
 
 \subsection{Path Quality Analysis}
-Metrics evaluating the efficiency and smoothness of generated paths.
+
+To evaluate the quality of the planned trajectories, two primary metrics were considered: \textbf{average speed} and \textbf{path smoothness}. These metrics are crucial in autonomous racing, where both time efficiency and stability at high speeds are essential.
+
+\subsubsection*{Average Speed}
+
+All planners were tested using the same simulated conditions and speed controller, configured to maintain a consistent target velocity of approximately 31 km/h (8.6 m/s). Due to the path curvature and minor variations in the generated trajectories, the resulting average speeds remain very close across all methods. This ensures a fair comparison focused on the planners' structural differences rather than speed discrepancies.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Planner} & \textbf{Average Speed (m/s)} \\
+\hline
+Delaunay & 4.29 \\
+Delaunay Optimized & 4.32 \\
+RRT & 4.31 \\
+RRT Optimized & 4.30 \\
+\hline
+\end{tabular}
+\caption{Average speed comparison across path planners}
+\end{table}
+
+\subsubsection*{Path Smoothness}
+
+Smoothness was calculated using the average of absolute angular differences between consecutive path segments. This metric reflects the continuity and curvature of the trajectory, with lower values indicating smoother paths and thus better suitability for high-speed navigation. As expected, optimized versions of both planners produced smoother trajectories, especially the RRT Optimized, which yielded the lowest average angular change.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Planner} & \textbf{Average Smoothness (rad)} \\
+\hline
+Delaunay & 0.8405 \\
+Delaunay Optimized & 0.8226 \\
+RRT & 0.8043 \\
+RRT Optimized & 0.7885 \\
+\hline
+\end{tabular}
+\caption{Smoothness comparison of the generated paths}
+\end{table}
+
+Overall, although all planners operate under similar speed constraints, the RRT Optimized algorithm stands out in terms of path smoothness, potentially allowing safer and more efficient performance in dynamic racing scenarios.
+
 
 \subsection{Adaptability to Dynamic Obstacles}
-Explanation of testing under dynamic conditions.
+
+The ability to adapt to dynamic obstacles is a key requirement in real-world autonomous racing, where unexpected changes such as moving cones, debris, or other vehicles can occur. At this stage of the project, none of the implemented planners (Delaunay or RRT variants) incorporate active obstacle re-evaluation or online replanning mechanisms. All path evaluations were conducted in static environments without dynamic interference.
+
+Nevertheless, this capability is highly relevant for future development. The inherent structure of the RRT algorithm lends itself well to dynamic replanning, as new nodes can be rapidly explored in response to changes in the environment. In contrast, the Delaunay planner, which depends on a precomputed triangulation, may require substantial recomputation to adapt in real time.
+
+Therefore, incorporating dynamic obstacle handling—such as local replanning modules, obstacle prediction, or integration with LiDAR-based tracking systems—represents a valuable direction for future work. This would enhance the practical deployment of the proposed planners, especially in competitive or urban autonomous scenarios.
+
+
 
 \section{Experimental Results}
-\subsection{Comparison of Metrics Between Optimized Delaunay and RRT*, or all planners}
-Presentation of comparative data.
+
+The initial comparative tests provided valuable insight into the performance of the four planners. However, the relatively small scale of the evaluation—focused on a single lap under static conditions—limits the generalizability of the findings. To validate whether the observed differences remain consistent under more demanding scenarios, a more extensive experimental setup is proposed.
+
+Based on the previous analysis, the two best-performing planners in terms of average speed and smoothness were the \textbf{Delaunay Optimized} and \textbf{RRT Optimized} versions. Both demonstrated competitive performance and path quality, making them suitable candidates for further testing.
+
+The next phase of the evaluation involves a larger-scale simulation consisting of \textbf{20 consecutive laps} using a detailed replica of a real-world racing circuit. Specifically, the test will take place on the track used during the FSUK 2022 competition. The map of the circuit is shown in Figure~\ref{fig:track}, located in the \texttt{Images/} directory as \texttt{Track.png}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/Track.png}
+    \caption{Circuit used for extended testing — FSUK 2022 layout}
+    \label{fig:track}
+\end{figure}
+
+This setup will allow a more rigorous assessment of consistency, stability, and overall suitability of the planners for real-world deployment. Key metrics such as lap time distribution, route deviation, and failure rates will be logged and compared across the 20-lap session. The outcome will guide the final recommendation for planner integration into the OBRA autonomous vehicle system.
+
 
 \subsection{Visualization of Results Through Graphs}
-Graphs and their interpretation.
+
+To comprehensively understand the performance differences between the optimized Delaunay planner and the optimized RRT, we generated several visual comparisons based on a 20-lap test in the FSUK 2022 track. The following graphs illustrate and support our findings in terms of lap consistency, overall speed, and trajectory behavior.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{Images/Laptimecomparaison.png}
+    \caption{Lap time comparison between Delaunay Optimized and RRT Optimized.}
+\end{figure}
+
+Figure 1 shows the lap times for each of the 20 laps. Both planners exhibit similar average speeds, consistent with the fixed motor speed of approximately 31 km/h across all tests. However, the RRT planner displays more volatility in its lap times. While the Delaunay planner maintains a steady performance, with most laps oscillating around the mean, the RRT planner achieves several significantly faster laps, interspersed with others that are notably slower. This suggests that RRT, by nature of its randomized tree exploration, occasionally discovers highly efficient routes—"lucky branches"—but also suffers from suboptimal paths in some iterations.
+
+This behavior aligns with the theoretical characteristics of RRT. Its randomized sampling enables quick pathfinding and often explores new routes dynamically, which in turn can lead to high performance in certain laps. However, this comes at the cost of consistency, as seen in its broader spread of lap times.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Images/Laptimedistribution.png}
+    \caption{Lap time distribution histogram: comparison of mean, standard deviation, and outliers.}
+\end{figure}
+
+In Figure 2, the histogram illustrates the distribution of lap times for both planners. The Delaunay histogram follows a narrower and more symmetric shape, indicating greater consistency and a lower standard deviation. In contrast, the RRT distribution is wider and less predictable, with a few laps reaching exceptional performance (outliers below 19s), and others exceeding 21s. Quantitatively, the standard deviation for RRT was approximately \textbf{0.73 seconds}, while Delaunay's was lower, at around \textbf{0.43 seconds}. This validates that while RRT can be faster, it also introduces more performance uncertainty.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Images/RRTvsDELAUNAY.png}
+    \caption{Overlay of RRT and Delaunay trajectories across 20 laps.}
+\end{figure}
+
+Finally, Figure 3 presents the actual trajectories of the two planners superimposed over the track layout. The Delaunay planner generates more regular and smooth paths, tightly following a consistent racing line throughout the circuit. This is a direct consequence of its geometry-based structure, which prioritizes predefined connectivity and efficient triangle meshes that promote stability. On the other hand, RRT paths, while feasible and often shorter in distance, show more fluctuations and sharper directional changes. These stem from its exploratory nature, which does not prioritize path smoothness unless specifically constrained.
+
+Overall, the analysis reveals that both planners are valid options for autonomous racing, with comparable average performance. Delaunay offers robust and reliable navigation, ideal for scenarios where predictability and safety are paramount. RRT, however, excels in adaptability and speed potential, especially in less constrained environments. Nonetheless, its variability poses a challenge, and future improvements (such as post-processing smoothing or RRT* optimizations) may be necessary to harness its full capability in competition settings.
+
 
 \subsection{Code Efficiency and Optimization Metrics}
+
+To complement the performance analysis of both planners, it is also important to evaluate their codebase and implementation characteristics, focusing on modularity, execution efficiency, and potential for scalability within the OBRA system.
+
+From a structural standpoint, both the Delaunay and RRT* planners follow the same modular architecture illustrated earlier in Figure~\ref{fig:modular_diagram}. The code for each planner is divided into initialization, planning logic, and path post-processing, making it easy to integrate, test, and maintain within the ROS2-based framework used by the OBRA team.
+
+In terms of code size, the Delaunay optimized planner comprises approximately \textbf{250 lines}, while the RRT* implementation consists of around \textbf{200 lines}. This similarity reflects a shared emphasis on clarity and modular design, with no significant difference in terms of overall complexity or readability. Both codes are well-documented and follow consistent naming conventions, facilitating collaborative development and future updates.
+
+However, regarding runtime efficiency, some differences begin to emerge. The Delaunay planner demonstrates lower CPU usage under our current configuration. In contrast, the RRT* implementation—using parameters such as 25 nodes every 5 meters—incurs higher computational costs. This is expected given the sampling-based nature of RRT*, which involves iterative growth and optimization of a tree structure. Although this increased usage is not excessive, it does make the planner more sensitive to hardware limitations, especially on resource-constrained platforms. It is worth noting that with more capable hardware, the number of nodes and step size could be further refined to improve precision without significantly impacting performance.
+
+From a software maturity perspective, the Delaunay planner has reached a more stable and adapted state. It is currently well-aligned with the OBRA car’s software and hardware stack and has undergone multiple cycles of refinement and tuning. On the other hand, the RRT* planner is still in an early stage of development. This version was implemented from scratch during the current academic year and is undergoing its first rounds of validation. Despite this, it has already achieved performance metrics that in some cases rival and even surpass those of the Delaunay planner. This is a promising sign, suggesting that with continued refinement and tuning, the RRT* algorithm has strong potential to outperform its counterpart in future iterations.
+
+In summary, while both planners exhibit similar levels of code organization and maintainability, the Delaunay planner currently holds a slight advantage in terms of integration and efficiency. Nevertheless, the RRT* planner has demonstrated impressive initial results, and its flexibility offers ample room for optimization, making it a strong candidate for long-term deployment and research exploration.
+
+
 
 \newpage
 
@@ -845,6 +1077,6 @@ Reference link to the source code.
 Technical setup instructions.
 
 \subsection{Raw Simulation Results}
-Unprocessed data from testing and evaluation.
+Unprocessed data from testing and evaluation. Ensure that all mathematical expressions are properly enclosed within `$...$` for inline math or `\[...\]` for display math. For example, write `$x + y = z$` instead of `x + y = z`.
 
 \end{document}
