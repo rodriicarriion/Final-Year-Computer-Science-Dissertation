@@ -13,9 +13,9 @@
 \usepackage{caption}
 \usepackage{titlesec}
 \titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter.}{1em}{}
-\usepackage[utf8]{inputenc}
 \setcounter{tocdepth}{3}
 \usepackage{booktabs}
+\usepackage{alltt}
 
 
 
@@ -45,9 +45,10 @@
     singlelinecheck=false
 }
 
-\title{\textbf{Comparative Study of Delaunay Path Planner and RRT/RRT* for Path Planning in Autonomous Racing}}
+\title{\textbf{Comparative Study of Delaunay Path Planner and RRT* for Path Planning in Autonomous Racing}}
 \author{Rodrigo Carri\'on Caro}
-\date{\today}
+\date{April 4th, 2025}
+
 
 \begin{document}
 
@@ -58,272 +59,277 @@
 \chapter*{Glossary}
 \addcontentsline{toc}{chapter}{Glossary}
 \begin{itemize}
-    \item \textbf{RRT} - Rapidly-Exploring Random Tree, algoritmo de planificación de rutas que explora espacios grandes de forma eficiente.
-    \item \textbf{ROS2} - Robot Operating System 2, framework modular para el desarrollo de software robótico.
-    \item \textbf{Unity} - Motor de simulación utilizado para replicar condiciones reales de conducción en entornos virtuales.
-    \item \textbf{Path Planning} - Planificación de rutas, proceso de calcular trayectorias óptimas evitando obstáculos.
-    \item \textbf{YOLO} - You Only Look Once, arquitectura de deep learning para detección de objetos en tiempo real.
-    \item \textbf{mAP} - Mean Average Precision, métrica para evaluar la precisión de un modelo de detección.
-    \item \textbf{IoU} - Intersection over Union, métrica que mide la superposición entre predicciones y etiquetas reales.
-    \item \textbf{Inference Time} - Tiempo que tarda el modelo en procesar una imagen y devolver resultados.
-    \item \textbf{Dataset} - Conjunto de datos utilizado para entrenar, validar y testear modelos de machine learning.
-    \item \textbf{Annotation} - Proceso de etiquetar imágenes con información relevante (e.g., posición y tipo de objetos).
-    \item \textbf{Roboflow} - Herramienta en línea utilizada para anotar y gestionar datasets de visión por computador.
-    \item \textbf{YOLOv5, YOLOv8, YOLOv11} - Versiones específicas del modelo YOLO con diferentes arquitecturas y mejoras.
-    \item \textbf{mAP@50, mAP@50-95} - Variantes de mAP que evalúan la precisión a diferentes umbrales de IoU.
-    \item \textbf{Precision} - Proporción de verdaderos positivos frente al total de predicciones positivas.
-    \item \textbf{Recall} - Proporción de verdaderos positivos frente al total de elementos reales positivos.
-    \item \textbf{Epoch} - Iteración completa sobre el dataset durante el proceso de entrenamiento de un modelo.
-    \item \textbf{Overfitting} - Problema de generalización en el que un modelo aprende demasiado los datos de entrenamiento.
-    \item \textbf{Data Augmentation} - Técnicas utilizadas para aumentar la variabilidad del dataset mediante transformaciones.
-    \item \textbf{Simulator} - Entorno virtual donde se prueban los modelos de detección de forma controlada.
-    \item \textbf{OBRA} - {\small Oxford Brookes Racing Autonomous, equipo universitario de vehículos autónomos de competición.}
-
+    \item \textbf{RRT} – Rapidly-Exploring Random Tree, a path planning algorithm designed to efficiently explore large search spaces.
+    \item \textbf{ROS2} – Robot Operating System 2, a modular framework for developing robotic software systems.
+    \item \textbf{YOLO} – You Only Look Once, a deep learning architecture for real-time object detection.
+    \item \textbf{mAP} – Mean Average Precision, a metric used to evaluate the accuracy of detection models.
+    \item \textbf{IoU} – Intersection over Union, a metric that measures the overlap between predicted and actual bounding boxes.
+    \item \textbf{YOLOv5, YOLOv8, YOLOv11} – Specific versions of the YOLO model with different architectures and improvements.
+    \item \textbf{mAP@50, mAP@50–95} – Variants of mAP that evaluate precision at different IoU thresholds.
+    \item \textbf{OBRA} – \textit{Oxford Brookes Racing Autonomous}, the university team developing autonomous competition vehicles.
+    \item \textbf{SLAM} – Simultaneous Localisation and Mapping, a technique used to build a map of the environment while tracking the agent’s position within it.
+    \item \textbf{MPC} – Model Predictive Control, an advanced control strategy used to optimise vehicle performance under constraints.
 \end{itemize}
 
 \newpage
 
 \chapter*{Abstract}
-\addcontentsline{toc}{chapter}{Abstract}
-\section*{0.1 Contexto}
-Escribe aquí el contexto del problema.
+Autonomous racing presents a specific challenge to robotics in the field of high-performance 
+decision-making under real-time and dynamically changing environments. Path planning, as a core 
+component of the autonomous stack, must balance computational efficiency and adaptability with optimality of the trajectory. 
+This project addresses these requirements through the design and testing of a modular path planning system for the Oxford Brookes Racing Autonomous (OBRA) car.
 
-\section*{0.2 Objetivo}
-Escribe aquí la descripción clara del propósito del proyecto.
+To begin with, the Delaunay triangulation-based planner used last year was overhauled for improved 
+readability, efficiency, and stability. Next, two new RRT* (Rapidly-exploring Random Tree Star) algorithm 
+implementations were independently coded from scratch: one for midline trajectory consistency and another for racing 
+performance with forward-biased sampling and spline-based smoothing. All planners were tested over numerous laps and scenarios 
+in a realistic Unity-based simulator, allowing for a detailed, metric-based comparison.
 
-\section*{0.3 Metodología}
-Describe el enfoque de desarrollo y herramientas utilizadas.
-
-\section*{0.4 Resultados principales}
-Explica los principales hallazgos y comparación entre métodos.
-
-\section*{0.5 Conclusión}
-Menciona el impacto del estudio y posibles mejoras.
-\newpage
+The results of this work comprise the technical foundation for the deployment of an optimised RRT* 
+planner on the OBRA vehicle this year. Furthermore, the modular strategy and testbed enable generalisability 
+to other autonomous vehicle programs in which adaptive, high-performance planning is required.
 
 \chapter*{Acknowledgements}
 \addcontentsline{toc}{chapter}{Acknowledgements}
 
-I would like to express my sincere gratitude to my supervisor, \textbf{Muhammad Younas}, for his guidance, support, and continuous feedback throughout this project. His insights were fundamental in shaping the structure and direction of the research.
+I would like to express my sincere gratitude to my supervisor, \textbf{Muhammad Younas}, 
+for his guidance, support, and continuous feedback throughout this project. 
 
-My heartfelt thanks also go to the entire \textbf{Oxford Brookes Racing Autonomous (OBRA)} team for creating an environment of collaboration and technical excellence. In particular, I am especially grateful to \textbf{Aduén Benjumea} and\\ \textbf{Mihir Gohad}, who served as project leads and played a crucial role in defining the vision and objectives of the team throughout the year.
+My sincere thanks to the \textbf{Oxford Brookes Racing Autonomous (OBRA)} team for fostering a 
+collaborative and technically driven environment. I am particularly grateful to \textbf{Aduén Benjumea} and 
+\textbf{Mihir Gohad} for their leadership and guidance throughout the year.
 
-I would also like to thank \textbf{Sebastian Donnelly}, whose deep experience within OBRA was invaluable—always available to solve doubts and provide practical advice during key stages of development. 
+Special thanks to \textbf{Sebastian Donnelly} for his continuous support and practical insight, 
+and to \textbf{Dorian Amaritei} for his key contributions to the Delaunay planner’s optimisation.
 
-A special mention goes to \textbf{Dorian Amaritei}, who supported the development and optimization of the Delaunay path planner and contributed significantly to its refinement.
-
-Finally, I am very thankful to \textbf{Pablo Gutiérrez}, lead of the simulation subteam, who assisted me in running and validating the simulations used to compare the planners. His help ensured that the performance of each algorithm could be observed under realistic and controlled scenarios.
-
-This project would not have been possible without the collaborative effort and technical excellence of everyone involved.
+I would like to also show my appreciation towards \textbf{Pablo Gutiérrez}, whose expertise in simulation was essential for validating the planners under realistic conditions.
 
 \newpage
-
-
 \chapter{Introduction}
 \section{Background}
+In the domain of autonomous racing, safe and fast racing relies on efficient and adaptive trajectory planning. 
+Neural networks and geometric planners have traditionally been used, but they often fail to provide the responsiveness needed for rapidly changing environments.
+The Delaunay path planner, developed within Oxford Brookes Racing Autonomous (OBRA), offers deterministic and structured trajectories, though it requires further optimisation under dynamic conditions.
 
-In autonomous vehicles, path planning is essential, as it allows for efficient and safe route
-planning in real time. Specifically, the RRT algorithm \textquotedblleft RRT Rapidly exploring Random
-Tree\textquotedblright can explore large spaces efficiently. This makes it ideal for dynamic environments,
-such as an autonomous car race. These characteristics make it widely used in the field
-of robotics. The RRT (Rapidly exploring Random Tree) algorithm is a search method
-used to efficiently find paths in large spaces \cite{reference1}. It is particularly useful in dynamic
-environments where viable paths need to be found quickly in real-time. Currently, the
-Oxford Brookes Racing Autonomous (OBRA) team uses a neural network path planner.
-A Delaunay path planner is being developed but has not yet been implemented. These
-approaches present some limitations in real-time situations. The development and implementation of an RRT \cite{reference2} will allow for greater flexibility and adaptability. Ideally, this
-will improve the team’s path planning capabilities. In addition to developing the RRT,
-this project will compare its performance with the current Delaunay path planner. By
-evaluating their efficiency and adaptability in dynamic scenarios, the goal is to determine
-which algorithm provides better results for autonomous racing.
+To deal with these issues, this project presents a comparison between two very different planning styles: the Delaunay path planner and the Rapidly-exploring Random Tree (RRT/RRT*) algorithm \cite{reference1}. 
+RRT algorithms are well known for their technique to search complex, high-dimensional areas quickly so they can be used in settings where fast changes are needed \cite{reference2}. Delaunay triangulation methods 
+on the other hand could provide gentler paths at a lower cost when the environment is predictable.
+
+The main objective of this project is twofold: complete the development of an RRT-based planner for OBRA’s system and compare its performance rigorously with the Delaunay planner that exists. 
+The evaluation metrics are adaptability, route quality, and computation time in static and dynamic simulated environments. This comparison will give a clear idea about 
+strengths and weaknesses of each approach, which will ultimately assist the OBRA team in choosing the best appropriate solution for competitive racing scenarios.
 
 \section{Aim}
-The aim of this project is to develop and optimize two advanced path planning algorithms for autonomous racing: an improved Delaunay-based planner and an optimized RRT* algorithm. These planners will be designed to enhance adaptability, computational efficiency, and trajectory optimization in high-speed, dynamic environments. 
 
-This project also aims to conduct a detailed comparative analysis of both algorithms, evaluating their performance across key metrics such as computation time, path efficiency, adaptability to dynamic obstacles, and robustness under racing conditions. 
-
-By implementing and testing these algorithms within a ROS2-based simulation environment using Unity, this research seeks to identify the most effective path planning solution for the OBRA team's autonomous racing vehicle. The insights gained from this study will contribute to both the OBRA competition strategy and the broader field of autonomous vehicle navigation.
-
+The aim of this project is to improve the current Delaunay and to develop the RRT* algorithm. 
+Both will be implemented within OBRA's system to enhance route planning capabilities and performance in dynamic racing environments. 
+Additionally, this project aims to compare the performance of the RRT* algorithm with the  Delaunay path planner to 
+determine the most efficient and adaptable solution. This will enhance the car's route 
+planning capabilities and optimise its performance in dynamic racing scenarios.
 
 \section{Objectives}
 \begin{itemize}
-    \item To conduct a comprehensive study of path planning techniques used in autonomous vehicle navigation, analyzing their advantages, limitations, and applications in high-speed racing scenarios. \cite{reference3}
-    \item To develop and implement an improved Delaunay-based path planner that enhances adaptability, computational efficiency, and trajectory smoothness in dynamic environments.
-    \item To develop and implement an RRT algorithm from scratch for real-time path planning in autonomous vehicles, ensuring compatibility with the OBRA car's ROS2 framework.
-    \item To optimize the RRT algorithm by integrating RRT* \cite{reference4}, improving its ability to generate efficient and dynamically adaptable routes.
-    \item To validate both the optimized Delaunay and RRT* algorithms in a controlled simulation environment using Unity, testing their performance under varying racing conditions.
-    \item To conduct a detailed comparative analysis of the optimized Delaunay and RRT* algorithms, evaluating key performance metrics such as computation time, path efficiency, adaptability to dynamic obstacles, and robustness in high-speed scenarios.
-    \item To identify and address potential limitations of each algorithm, proposing refinements or hybrid approaches that could further enhance their performance.
-    \item To integrate the most effective path planner into the OBRA team's autonomous racing pipeline, ensuring real-world applicability and alignment with competition requirements.
+    \item To conduct a comprehensive study of path planning techniques used in autonomous vehicle 
+    navigation, analysing their advantages, limitations, and applications in high-speed racing scenarios.
+    \item To optimise the existing Delaunay-based path planner that enhances adaptability, 
+    computational efficiency, and trajectory smoothness in dynamic environments.
+    \item To develop a new RRT algorithm from scratch for real-time path planning 
+    in autonomous vehicles, ensuring compatibility with the OBRA car's ROS2 framework.
+    \item To enhance the RRT algorithm by integrating RRT*, improving its 
+    ability to generate efficient and dynamically adaptable routes.
+    \item To validate both the optimised Delaunay and RRT* algorithms in a controlled simulation 
+    environment using Unity, testing their performance under varying racing conditions.
+    \item To conduct a detailed comparative analysis of the optimised Delaunay and RRT* algorithms, 
+    evaluating key performance metrics such as computation time, path efficiency, adaptability to dynamic obstacles, and robustness in high-speed scenarios.
+    \item To identify and address potential limitations of each algorithm, 
+    proposing refinements or hybrid approaches that could further enhance their performance.
+    \item To integrate the most effective path planner into the OBRA team's autonomous racing pipeline, 
+    ensuring real-world applicability and alignment with competition requirements.
 \end{itemize}
 
 
 \section{Product Overview}
 \subsection{Scope}
-The objective of this project is to develop and optimize two new path planners for autonomous racing:
+The objective of this project is to develop and optimise two new path planners for autonomous racing \cite{reference4}:
 \begin{itemize}
-    \item Optimized Delaunay Path Planner – A modified version of the traditional Delaunay-based planner, improving its efficiency and adaptability for dynamic racing environments.
-    \item RRT* – An enhanced Rapidly-exploring Random Tree algorithm that generates smoother and more efficient paths by reducing randomness and refining route selection.
+    \item Optimised Delaunay Path Planner – A modified version of the traditional 
+    Delaunay-based planner, improving its efficiency and adaptability for dynamic racing environments.
+    \item RRT* – An enhanced Rapidly-exploring Random Tree algorithm that generates 
+    smoother and more efficient paths by reducing randomness and refining route selection \cite{reference3}.
 \end{itemize}
-Both planners will be developed in Python, ensuring seamless integration with the ROS2 framework used in the OBRA autonomous car. The testing and validation process will be conducted in simulation environments using Unity, allowing for extensive evaluation before potential real-world implementation.
-Once developed, these two new planners will be compared to determine which provides better performance in terms of adaptability, computational efficiency, and trajectory smoothness under high-speed, dynamic conditions.
+Both planners will be developed in Python to ensure seamless integration with the ROS2 framework 
+used by the OBRA autonomous system. The validation process will be carried out in simumalation environments using Unity, 
+allowing for thorough evaluation before potential real-world deployment.
+
+Once developed, both planners will be evaluated side by side to determine which gives 
+better success in terms of flexibility, computational effectiveness, and path smoothness under high-velocity, dynamic conditions.
 
 \subsection{Audience}
-The primary audience for this study is the Oxford Brookes Racing Autonomous (OBRA) team, as the improved path planning algorithms will directly contribute to their autonomous racing performance.
-Additionally, this research is relevant to the academic community, particularly in robotics, AI, and autonomous vehicle navigation, by providing insights into optimization strategies for real-time path planning.
-From an industry perspective, this study holds significance for autonomous systems professionals, particularly those developing path planning solutions for high-speed and dynamic environments, such as self-driving vehicles, robotics, and UAV navigation.
-
+The project is primarily aimed at the OBRA team. They will be the ones using the 
+algorithms to improve the car's performance in competitions. Additionally, it is a 
+relevant project for the academic community, particularly in the fields of robotics and 
+autonomous vehicles. From a professional perspective, the project holds significance 
+for industry professionals interested in the implementation of path planning techniques 
+in autonomous systems
 
 \newpage
-
 \chapter{Background Review}
+\section{Existing approaches}
+Currently, the OBRA autonomous car uses a Delaunay path planner. This planner is functional in 
+controlled situations but have limitations when it comes to adapting to rapid changes 
+in the environment.   
+For such cases, the RRT algorithm is ideal. It efficiently explores large search spaces 
+in real time. RRT* is its more optimised version, which improves the quality of the routes, 
+making them shorter and more efficient \cite{reference5}. By implementing RRT* from scratch, I aim to 
+enhance the flexibility and optimisation of the car's path planning system.
+
 \section{Related Literature}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{3cm}|p{10cm}|}
-        \hline
-        \textbf{Reference} & Zhao, H., Wu, Z., Li, Y., \& Wang, J. (2021) ‘Improved Bidirectional RRT* Path Planning Method for Smart Vehicle’, Mathematical Problems in Engineering, pp. 1-14. doi: 10.1155/2021/6669728. \\ \hline
-        \textbf{Title} & Improved Bidirectional RRT* Path Planning Method for Smart Vehicle \\ \hline
-        \textbf{Summary} & The study proposes an improvement to the bidirectional RRT* algorithm to optimize route planning in intelligent vehicles, aiming for shorter and more efficient routes. \\ \hline
-        \textbf{Evaluation} & The approach is useful for static environments, but it does not sufficiently address the challenges in dynamic environments, which may limit its applicability in competitive vehicles. \\ \hline
-        \textbf{Reflection} & The proposed improvements could be applied to optimize the RRT* algorithm in my project, particularly in reducing computation time and optimizing routes. \\ \hline
-        \textbf{Main Themes} & RRT* optimization, route planning, autonomous vehicles. \\ \hline
-    \end{tabular}
-    \caption{Summary of Zhao et al. (2021)}
-    \label{tab:zhao2021}
-\end{table}
+A review of the literature indicates a wide range of studies investigating RRT*, its optimisations, and associated applications in autonomous navigation.
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{3cm}|p{10cm}|}
-        \hline
-        \textbf{Reference} & Gasparetto, A., Boscariol, P., Lanzutti, A., \& Vidoni, R. (2015) ‘Path Planning and Trajectory Planning Algorithms: A General Overview’, Journal of Intelligent \& Robotic Systems, pp. 1-33. doi: 10.1007/978-3-319-14705-5\_1. \\ \hline
-        \textbf{Title} & Path Planning and Trajectory Planning Algorithms: A General Overview \\ \hline
-        \textbf{Summary} & The article provides an overview of the main trajectory and route planning algorithms in robotics. It analyses methods such as Roadmap, Cell Decomposition, and RRT, as well as their applications in industrial and autonomous environments. \\ \hline
-        \textbf{Evaluation} & The study offers a comprehensive overview of the algorithms but focuses more on static industrial systems, limiting its applicability to dynamic environments. However, the review of RRT is useful for improving my project. \\ \hline
-        \textbf{Reflection} & This article will be key to contextualizing my work, as it provides a solid foundation on traditional methods and suggests possible areas for improvement, such as applying them in more dynamic environments. \\ \hline
-        \textbf{Main Themes} & Route planning, RRT, optimization algorithms, autonomous robotics. \\ \hline
-    \end{tabular}
-    \caption{Summary of Gasparetto et al. (2015)}
-    \label{tab:gasparetto2015}
-\end{table}
+Zhao et al. (2021) suggested an extension to bidirectional RRT*, enabling not only reduced paths but also faster convergence. Their findings, though, exist mostly in the realm of static environments and therefore restrict their direct use to real-time racing environments' dynamic requirements. In spite of this, the computational advantages obtained there remain quite relevant for the RRT* implementation implied in this work.
+\cite{reference5}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{3cm}|p{10cm}|}
-        \hline
-        \textbf{Reference} & Wang, H., Li, G., Hou, J., Chen, L., \& Hu, N. (2022) ‘A Path Planning Method for Underground Intelligent Vehicles Based on an Improved RRT* Algorithm,’ Electronics, vol. 11, no. 3, p. 294. doi: 10.3390/electronics11030294. \\ \hline
-        \textbf{Title} & A Path Planning Method for Underground Intelligent Vehicles Based on an Improved RRT* Algorithm \\ \hline
-        \textbf{Summary} & The study proposes an improved RRT* method for route planning in underground intelligent vehicles, adjusting the dynamic step size and turn angle constraints. \\ \hline
-        \textbf{Evaluation} & The approach is innovative for underground environments and offers improvements in efficiency and safety, but it is limited to controlled spaces and does not address navigation in fully dynamic environments. \\ \hline
-        \textbf{Reflection} & This study is relevant to my project, as the proposed RRT* improvements could be applied to optimize the algorithm in more complex scenarios, such as autonomous racing. \\ \hline
-        \textbf{Main Themes} & RRT*, underground autonomous vehicles, route planning, optimization. \\ \hline
-    \end{tabular}
-    \caption{Summary of Wang et al. (2022)}
-    \label{tab:wang2022}
-\end{table}
+Gasparetto et al. (2015) provide a pioneering compendium describing traditional motion planning paradigms, such as Roadmaps, Cell Decomposition, and RRT. Although their treatise is mainly focused on static and industrial settings, their theoretical framework regarding RRT offers detailed background information to apply such techniques to high-speed racing settings. \cite{reference6}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{3cm}|p{10cm}|}
-        \hline
-        \textbf{Reference} & Sánchez-Ibáñez, J.R., Pérez-del-Pulgar, C.J., \& García-Cerezo, A. (2021) ‘Path Planning for Autonomous Mobile Robots: A Review’, Sensors 2021, 21, 7898. doi: 10.3390/s21237898. \\ \hline
-        \textbf{Title} & Path Planning for Autonomous Mobile Robots: A Review. \\ \hline
-        \textbf{Summary} & The article reviews route planning algorithms for mobile robots, focusing on their classification and applicability in autonomous environments. \\ \hline
-        \textbf{Evaluation} & It provides a very useful overview of the main approaches, but it focuses on controlled scenarios and may be limited for dynamic environments such as competitions. \\ \hline
-        \textbf{Reflection} & This article provides a good foundation for comparing different approaches, which will help me justify the choice of RRT in my project. \\ \hline
-        \textbf{Main Themes} & Route planning, mobile robots, path search algorithms. \\ \hline
-    \end{tabular}
-    \caption{Summary of Sánchez-Ibáñez et al. (2021)}
-    \label{tab:sanchez2021}
-\end{table}
+Wang et al. (2022) has proposed an underground autonomous vehicle RRT* algorithm optimisation with step size and turn angle constraint. Though the boundaries of their interest are underground, floorless, the restraint focus planning aspects are relevant for platforms like OBRA that use Ackermann steering like a car.
+\cite{reference7}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{3cm}|p{10cm}|}
-        \hline
-        \textbf{Reference} & C. Messer, A. T. Mathew, N. Mladenovic and F. Renda, "CTR DaPP: A Python Application for Design and Path Planning of Variable-strain Concentric Tube Robots," 2022 IEEE 5th International Conference on Soft Robotics (RoboSoft), Edinburgh, United Kingdom, 2022, pp. 14-20, doi: 10.1109/RoboSoft54090.2022.9762088. \\ \hline
-        \textbf{Title} & CTR DaPP: A Python Application for Design and Path Planning of Variable-strain Concentric Tube Robots. \\ \hline
-        \textbf{Summary} & The study presents a modular platform in Python that uses the RRT* algorithm for route planning and design optimization in concentric tube robots. It focuses on trajectory planning in environments with torsion and curvature constraints. \\ \hline
-        \textbf{Evaluation} & The implementation in Python is relevant to my project, as it allows for the flexible use of planning and optimization algorithms. \\ \hline
-        \textbf{Reflection} & This article supports the use of Python in my project, demonstrating that it is an effective option for developing and testing algorithms like RRT*. \\ \hline
-        \textbf{Main Themes} & RRT*, route planning, concentric tube robots, design optimization, use of Python. \\ \hline
-    \end{tabular}
-    \caption{Summary of Messer et al. (2022)}
-    \label{tab:messer2022}
-\end{table}
+Sánchez-Ibáñez et al. (2021) centered on the categorisation of algorithms applied to path planning based on their applications, primarily bounded within controlled environments. Nonetheless, their taxonomy supports the selection rationale of why RRT* was chosen over A* or Dijkstra in dynamic racing environments.
+\cite{reference8}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|p{3cm}|p{10cm}|}
-        \hline
-        \textbf{Reference} & Kolski, S., Ferguson, D., Stachniss, C., \& Siegwart, R. (2006) 'Autonomous Driving in Dynamic Environments', Proceedings of the 2006 IEEE/RSJ International Conference on Intelligent Robots and Systems, pp. 1-10. doi: 10.3929/ethz-a-010079481. \\ \hline
-        \textbf{Title} & Autonomous Driving in Dynamic Environments. \\ \hline
-        \textbf{Summary} & The study presents a hybrid autonomous navigation system that operates in both structured and unstructured environments, handling dynamic obstacles like pedestrians and other vehicles. \\ \hline
-        \textbf{Evaluation} & Unlike many approaches focused on static environments, this system is highly relevant for dynamic settings, such as autonomous car competitions, where real-time adjustments to moving obstacles are critical. \\ \hline
-        \textbf{Reflection} & This study is essential for my project as it highlights the importance of dynamic environments and provides useful insights for improving my route planning system. \\ \hline
-        \textbf{Main Themes} & Autonomous navigation, dynamic environments, route planning, moving obstacles, autonomous vehicles. \\ \hline
-    \end{tabular}
-    \caption{Summary of Kolski et al. (2006)}
-    \label{tab:kolski2006}
-\end{table}
+Messer et al. (2022) outline the use of RRT* algorithms with Python to plan operations for concentric tube robots. Their work enhances the use of Python for this project and also its integration with ROS2-based systems, which is essential for this project's fulfillment.
+\cite{reference9}
+
+Kolski et al. (2006) explain hybrid methods of planning in dynamically changing environments. They write about navigation through moving obstacles and highlight the factor of real-time changeability, a significant factor in autonomous racing. Their work is implemented for developing the criteria for evaluation taken up in this research.
+\cite{reference10}
+
+Lei et al. (2025) introduce RRT* ASV, an RRT* optimised for Ackermann steering vehicles. This is of specific interest to OBRA, which requires related planning modifications due to its kinematic limitations. This work drew attention to taking vehicle dynamics into account in planning trajectories.
+\cite{reference11}
+
+Machavaram (2025) discusses aspects of adaptive Neuro-Fuzzy control systems for path planning. While they do not link the work to RRT* explicitly, the focus on decision-making in the presence of changing conditions leaves open the possibility of adaptive replanning in the future.
+\cite{reference12}
+
+Yoon, Y., and Jo, A. (2025) suggest an adaptive with location of obstacles path sampling approach using neural networks. Their solution is thinking about the problem in a completely different way, but a reminder of the value of adaptive and hybrid solutions. \cite{reference13}
+
+Yan et al. (2025) discuss the problem of path planning with city traffic constraints. According to their work, the benefit of active, real-time planning is revealed, which this project tries to achieve in competitive autonomous navigation.
+\cite{reference14}
+
+All of these works help validate an RRT-based planner for this task. Most of the work aims for a controlled or domain-restricted environment; nonetheless, some propose transferable optimisation, constraint handling, or real-time adaptation strategies. The literature also allows for several future directions, including combining RRT with data and learning-based heuristics and cost functions for dynamic replanning.
+
+
+\subsection{Originality}
+Though most of the studies that were reviewed concentrate on optimising RRT* for a static or bounded environment \cite{reference3, reference4, reference5}, 
+the distinguishing factor of this project was the use of a custom built RRT* planner for high-speed autonomous racing. 
+This project stands out because it integrates a new RRT* implementation into an actual simulation of the Silverstone racing 
+circuit.
+
+Also, the developed variant of RRT* was implemented with Python from scratch and integrated into ROS2, making 
+it compatible with the OBRA software. These claims regarding integration are verifiable because the performance 
+metrics like lap time, trajectory smoothness, and stability measured autonomously are no longer theoretical, 
+but rather grounded in a real-world scenario using an autonomous racing vehicle \cite{reference2}.
+
+Additionally, this project incorporates a comparative approach based on simulation exercises by testing 
+the planner’s performance over extended sessions, including 20 consecutive laps, to evaluate its reproducibility 
+and its range of variations. Such a detailed evaluation under highly controlled racing conditions is what sets the 
+project apart from generic applications in robotics and advance the understanding of sampling based algorithms.
 
 \chapter{Methodology}
-\section{Research and Software Development Process}
+\section{Application of Agile Methodology}
 
-\subsection{Application of Agile Methodology, aqui meto el diagrama de Agile}
-The project follows an Agile methodology, allowing for iterative progress and continuous refinement of the algorithms. This approach ensures flexibility and adaptability to changing requirements. Agile was chosen over traditional models such as Waterfall, as the latter requires a rigid, sequential structure that does not accommodate modifications once development begins.
+The Agile methodology is based on the principles of iterative development, 
+where requirements and solutions evolve through collaboration between self-organising \cite{reference21, reference22}.
 
-Given the dynamic nature of this project, the Agile framework supports the parallel development of:
+Agile was preferred over traditional models due to its iterative and adaptive development cycles, 
+which are more suitable for research-based projects. Unlike rigid and linear frameworks such as Waterfall \cite{reference23}, 
+Agile enables continuous feedback, evolving requirements, and flexible task reallocation. 
+This proved especially useful in a context where both technical implementation and experimental testing evolved throughout the project lifecycle.
+
+In the context of this project, Agile proved to be especially suitable due to several key characteristics:
+
 \begin{itemize}
-    \item Optimization and rewriting of the existing \textbf{Delaunay path planner}.
-    \item Development of a new \textbf{RRT* algorithm} from scratch.
-    \item Comparative testing and analysis of both approaches.
+    \item The project required the development and refinement of multiple algorithms 
+    (Delaunay and RRT*) in parallel, which would be difficult to coordinate under a sequential methodology.
+    \item Several unknowns emerged throughout the project, such as ROS2 integration issues, 
+    simulation-specific bugs \cite{reference15}, and evolving optimisation goals. Agile allowed reallocation of effort 
+    based on the results of each sprint.
+    \item Frequent testing and simulation were essential for validating progress. 
+    Agile naturally supports test-driven development and iterative validation \cite{reference22}, which 
+    aligns well with the experimental nature of this work.
+    \item The dual focus on technical development and research (e.g., literature review, algorithm design, integration testing) 
+    required a dynamic workflow where tasks could evolve and overlap.
 \end{itemize}
 
-The project is structured into multiple iterations, ensuring continuous validation and improvement of the implemented methods.
+\section{Iteration Breakdown}
 
-\section{Development Phases}
-The preparation phase involved selecting the topic and conducting meetings with OBRA to align the project's objectives. A proposal was submitted and refined based on feedback, followed by setting up the required system and environment, including Unity and ROS2. An initial progress report was submitted to document early findings, and research was conducted to establish a baseline for optimising the Delaunay path planner.
+Based on the Agile model, the development process was divided into five major phases, each building upon the outcomes of the previous one \cite{reference21, reference22}. 
+The phases were structured as follows:
 
-The first iteration focused on enhancing the Delaunay-based path planner by rewriting the algorithm to improve its efficiency and adaptability. An optimised version was implemented and tested in a simulation environment to validate improvements in path generation. The results were then demonstrated before proceeding with the development of the RRT algorithm.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Images/methodology.png}
+    \caption{Modular Development Flow — Iterative Structure of Project Phases}
+    \label{fig:methodology_diagram}
+\end{figure}
 
-In the second iteration, work began on the RRT algorithm by conducting a theoretical study to understand its principles and limitations. This was followed by research and design for a basic implementation, which was then developed and tested in a simulated environment to compare its performance with the Delaunay approach.
+\begin{itemize}
+    \item \textbf{Preparation Phase:} Definition of the project topic, coordination meetings with OBRA, and writing of the initial proposal. Tools and systems such as Ubuntu, ROS2, Unity and Foxglove were installed and configured for development and testing purposes \cite{reference15, reference16, reference17, reference20}.
+    
+    \item \textbf{Iteration 1 – Delaunay Optimisation \& Rewriting:} Analysis of the Delaunay triangulation method. The original algorithm was refactored and optimised to enhance stability and performance. The implementation was validated in the Unity simulation environment.
+    
+    \item \textbf{Iteration 2 – RRT* Development from Scratch:} A full implementation of RRT* was carried out from first principles. Theoretical foundations were studied, followed by coding and simulation-based evaluation to validate its performance under similar conditions.
+    
+    \item \textbf{Iteration 3 – Comparative Analysis:} A thorough comparison was conducted between the RRT* and the optimised Delaunay planner, including a side analysis of alternative planners developed throughout the project. Metrics such as path smoothness, time efficiency, and adaptability were evaluated in controlled simulation runs.
+    
+    \item \textbf{Final Validation and Integration:} The best-performing path planner at the end of this season will be integrated into the OBRA autonomous car. Specific attention will be given to hardware limitations, communication with ROS2 nodes, and real-time inference compatibility \cite{reference15, reference16}.
+\end{itemize}
 
-Once the basic RRT implementation was completed, the third iteration concentrated on optimising it using RRT*. This involved refining the algorithm to enhance route efficiency and conducting a comparative analysis between Delaunay and RRT* under racing conditions to assess their performance.
-
-Following the comparative tests, the project progressed to the final validation and integration phase. The selected algorithm was integrated into the OBRA car to ensure its applicability in real-world racing scenarios.
-
-The final stage of the project involved preparing a comprehensive report summarising the findings, results, and technical contributions. Additionally, a final presentation was developed to communicate the project's outcomes and submit the final deliverables.
-
-
-
+\section{People Involved}
+Throughout the project, collaboration with the Oxford Brookes Racing Autonomous (OBRA) team was essential. 
+Their input helped define the system requirements, particularly regarding the car's ROS2 integration and simulation constraints \cite{reference16}. 
+Regular meetings and feedback from OBRA members guided the practical implementation and ensured that the developed algorithms aligned with the team's real-world racing needs.
 
 \chapter{Technology}
 \section{Implementation Tools and Resources}
-The development of this project relies on several key technologies and tools to ensure efficient implementation and testing. The primary programming language used is Python, which serves as the backbone of the implementation. Python is used to develop the path-planning algorithms, integrate them into ROS2, and manage the necessary data processing tasks. Its extensive libraries and compatibility with machine learning and robotic frameworks make it ideal for rapid prototyping and testing.
 
-For robotic integration, we utilize ROS2 (Humble), which facilitates seamless communication between different components of the autonomous system. ROS2 manages sensor data processing, real-time control, and path planning, ensuring that all modules operate in a synchronized manner. The middleware's efficiency in handling multiple nodes is crucial for real-time decision-making within the autonomous vehicle.
+To ensure smooth implementation and testing of the project, we emphasised the use of primary technologies and tools. 
+Python serves as the primary programming language for implementing the algorithms and system logic in this project. 
+Python is used to develop the path-planning algorithms, integrate them into ROS2,
+and manage the necessary data processing tasks. Its many libraries, along with its useable features in machine learning 
+and robotics frameworks, enable it to be ideal for rapid prototyping and testing purposes.
 
-The project runs on Ubuntu 22.04, which provides a stable and well-supported environment for ROS2, Python-based applications, and simulation tools. Ubuntu ensures compatibility with the robotic frameworks used in this project and offers an extensive community for troubleshooting and optimization.
+To aid with robot integration, we use ROS2 (Humble) which enables easy transmission between parts of the 
+autonomous system \cite{reference15}. ROS2 takes care of real-time control, path planning and processing of sensor data, which 
+guarantees that all modules are in coordination with one another. The role of the middleware in taking care of 
+many nodes is vital in real-time decision-making in the autonomous vehicle.
 
-For version control, Git and GitLab serve as the central repository for managing code changes. The OBRA workspace on GitLab stores previous developments and is used to track new implementations through branches. Frequent commits help maintain a structured development workflow.
+Ubuntu 22.04 was selected due to its stability and compatibility with ROS2, Python-based frameworks, 
+and simulation tools such as Unity and Foxglove \cite{reference15, reference17}. For the robotic frameworks that are required for this project, 
+Ubuntu provides support and there is a large community available for help and further enhancements.
 
-Simulation and testing are conducted using a structured environment that combines Unity for scenario modeling and Foxglove for real-time visualization of vehicle states and planned paths. The simulation outputs, along with test results, are stored in Google Drive, ensuring efficient data management and accessibility for analysis.
-
-To maintain an organized workflow, Notion is used for task management and Agile planning, ensuring that development is well-structured and efficiently executed.
-
-By integrating these technologies, we aim to develop a robust and scalable path-planning solution that seamlessly integrates with the OBRA autonomous vehicle.
+For version control purposes, the code modification is stored altered on the central repository, 
+Git and Gitlab \cite{reference24}. Previous development on OBRA´s GitLab is stored in the OBRA workspace.
 
 \section{Workspace}
 \subsection{OBRA WS}
+The Oxford Brookes Racing Autonomous (OBRA) workspace arranges modules in a top-down manner of
+system architecture. Every major autonomous pipeline has a component developed by a subteam.
+This allows parallel development while making sure that everything integrates well with the system.
+Figure~\ref{fig:software_architecture} gives a top-down view of the autonomous stack,
+showing the data flow between the modules and how they interact with real-world and
+simulated environments.
 
-The Oxford Brookes Racing Autonomous (OBRA) workspace is organised around a modular system architecture, where each major component of the autonomous pipeline is developed by a dedicated subteam. This structure enables parallel development while ensuring each module integrates smoothly into the overall system. Figure~\ref{fig:software_architecture} provides an overview of the autonomous stack, highlighting the data flow between modules and their interaction with both real-world and simulated environments.
+The system is divided into key subsystems; Sensors Suite, Perception, Localisation \& Mapping,
+Trajectory Planning, and Controls. Each subteam is responsible for the development, testing, and integration
+of one of these subsystems and they work collaboratively through shared interfaces and simulation environments.
+This architecture should not only support scalability and maintainability but also show the nature of the team,
+coming from different expertise related to computer vision, robotics, AI, and control systems.
 
-The system is divided into key subsystems: Sensors Suite, Perception, Localisation \& Mapping, Trajectory Planning, and Controls. Each subteam is responsible for the development, testing, and integration of one of these subsystems, working collaboratively through shared interfaces and simulation environments. This architecture not only supports scalability and maintainability but also reflects the team's interdisciplinary nature, combining expertise in computer vision, robotics, AI, and control systems.
+Development and testing are done in real as well as simulated environments.
+The simulation setup models the track conditions such that it reflects the vehicle’s behavior
+under any condition of the track. This provides a safe and agile way to confirm that the
+improvements work before the physical car is given these improvements.
 
-Development and testing are carried out in both real and simulated environments. The simulation setup replicates the vehicle’s behaviour under various track conditions, providing a safe and flexible way to validate improvements before deploying them on the physical car.
 
 \begin{figure}[H]
     \centering
@@ -332,15 +338,14 @@ Development and testing are carried out in both real and simulated environments.
     \label{fig:software_architecture}
 \end{figure}
 
-
 \subsection{ADS-wsgraph}
-To visualize the structure of the OBRA ecosystem, we can execute the following command in the Ubuntu terminal:
-
+To visualise the structure of the OBRA ecosystem, we can execute the following command in the Ubuntu terminal:
 \begin{verbatim}
 rqt_graph
 \end{verbatim}
 
-This command generates a graphical representation of the ROS2 nodes and topics in execution. To obtain a visualization similar to the one shown in Figure \ref{fig:obra_graph}, it is necessary to have the simulator and the workspace running and properly configured.
+This command shows a graph of the ROS2 nodes and topics running.
+To generate a graph similar to Figure \ref{fig:obra_graph}, the simulator and the OBRA workspace must be correctly configured and actively running.
 
 \begin{figure}[h]
     \centering
@@ -349,92 +354,186 @@ This command generates a graphical representation of the ROS2 nodes and topics i
     \label{fig:obra_graph}
 \end{figure}
 
-The OBRA workspace consists of multiple nodes that interact through ROS2 topics, enabling communication between different modules of the autonomous system. In the graph generated by \texttt{rqt\_graph}, we can observe how the different components are organized and communicate.
+The OBRA workspace comprises several nodes which interact via ROS2 topics so as to enable communication 
+between different modules of the autonomous system \cite{reference15}. In the graph that \texttt{rqt\_graph} produces, 
+we can see how the different components are laid out and how they communicate.
 
-The \texttt{/status} node provides system information and connects with other key modules. Within the perception subsystem, the \texttt{/perception/yolov5} node processes images and generates bounding boxes, which are sent to \texttt{/perception/boxes} and subsequently converted into positions through \texttt{/perception/position}. This information is used by other modules such as path planning and localization.
+The \texttt{/status} node gives the system info and links with other prime modules. 
+Inside the feel setup, the \texttt{/perception/yolov5} node takes pictures and forms bounding boxes, 
+which go to \texttt{/perception/boxes} and then changed to positions through \texttt{/perception/position}. 
+This data is used by other modules like path planning and localisation.
 
-The cone detection module processes position data through the \texttt{/cones/positions} topic, integrating this data into route planning via \texttt{/local\_planner} and lap counting via \texttt{/lapcount}. Additionally, the GPS module handles localization data through \texttt{/gps/lapcount}, \texttt{/gps/position}, and \texttt{/gps/distance}, providing essential information for autonomous navigation.
+Data regarding the position of cones is routed through the topic \texttt{/cones/positions}; 
+this is data that the module uses to make decisions about its routes (\texttt{/local\_planner}) and 
+how many laps have been completed (\texttt{/lapcount}). The proper operation of the system also requires 
+data from the localisation module pertaining to \texttt{/gps/lapcount}, \texttt{/gps/position}, 
+and \texttt{/gps/distance} at its disposal to make fully informed decisions about what is required to enable a vehicle to drive itself.
 
-Finally, the control module processes all this information and transmits it to \texttt{/motion}, enabling movement execution in the autonomous vehicle. The communication between these modules ensures the proper operation of the system in a simulation environment or in the real vehicle.
+Then, the control unit collects all that data and sends it to /motion so that the car can drive itself. 
+The talk between these parts makes sure the right way the system works in a pretend setting or in the actual vehicle.
 
 The following subsections describe the various system modules in detail:
 
 \subsection{Perception}
 
-Perception is the entry point of the autonomous system. Computer vision is used to process images from our stereo camera, the Zed 2i, and the Livox HAP LiDAR. The detection of cones is handled through the YOLO neural network which takes images from the left channel of the camera to infer the position of cones on a 2D map. Depth perception from the camera is handled by taking into account the bounding boxes from both camera channels and comparing the two received frames to estimate a distance to an object getting a midpoint for them to estimate distance. The most suitable base suitable model from Ultralytics was YOLOv11 Nano [1], due to having the fastest inference speed of the offered base models. Detection of small objects such as cones at a distance is challenging due to the resolution limitations of the camera. This led to modifications on the base YOLOv11 neural network to increase its accuracy to detect small objects, making use of the YOLO-Z [2] approach.
+Perception is the entry point of the autonomous system. Computer vision is used to process images 
+from our stereo camera, the Zed 2i, and the Livox HAP LiDAR \cite{reference27}. The detection of cones is handled through 
+the YOLO neural network which takes images from the left channel of the camera to infer the position of 
+cones on a 2D map. Depth perception from the camera is handled by taking into account the bounding boxes 
+from both camera channels and comparing the two received frames to estimate a distance to an object 
+getting a midpoint for them to estimate distance. The most suitable base suitable model from Ultralytics 
+was YOLOv11 Nano, due to having the fastest inference speed of the offered base models. Detection of 
+small objects such as cones at a distance is challenging due to the resolution limitations of the camera. 
+This led to modifications on the base YOLOv11 neural network to increase its accuracy to detect small objects, making use of the YOLO-Z approach \cite{reference26}.
 
-To train the model to detect the four cone types, a dataset with manually labelled and gathered data was constructed. A dataset such as this, had to be varied to cover all possible light conditions that could possibly happen at competition. The data was gathered from past runs at Silverstone and testing, and stitched together to create a dataset with variable lighting conditions, locations and weather to be ready for all of the detection challenges presented on a fast moving vehicle. The model trained on this dataset achieves an mAP (mean average precision) score of 87\%, with an inference speed of 2.8 ms. The model was further customised by exporting it to the TensorRT [3] format. The advantages of this approach is the optimisation of the YOLO model on the hardware it is running on, which in this case is the Nvidia Jetson Nano. The optimisation includes techniques such as layer-fusion, precision calibration, dynamic tensor memory management and kernel auto-tuning. The combination of these techniques increase the speed of inference by 46.5\%, making it 1.3ms, while decreasing mAP by 1\%.  
-
-The perception system also makes use of LiDAR in tandem with computer vision techniques. LiDAR works along the depth perception model from the Zed Camera to give an accurate distance estimation of the cones in the path of the vehicle, through point cloud data. The Livox HAP LiDAR also has a detection range of 150 meters. This enables the system to map far away cones, which the object detector and the camera would not be able to detect confidently due to resolution limitations which makes the color of the cones indistinguishable at extreme distances. This level of mapping is needed for SLAM and Trajectory Planning as the position of the cones are placed on a 3D map used by both of these systems. Furthermore, this approach allows the two perception systems to complement each other’s weaknesses, as LiDAR performs poorly in rainy conditions, while the camera performs poorly in extremely sunny or dark conditions.
+The perception system also makes use of LiDAR in tandem with computer vision techniques. 
+LiDAR works along the depth perception model from the Zed Camera to give an accurate distance 
+estimation of the cones in the path of the vehicle, through point cloud data. The Livox HAP LiDAR 
+also has a detection range of 150 meters. This enables the system to map far away cones, which the 
+object detector and the camera would not be able to detect confidently due to resolution limitations 
+which makes the color of the cones indistinguishable at extreme distances. This level of mapping is needed 
+for SLAM and Trajectory Planning as the position of the cones are placed on a 3D map used by both of these systems \cite{reference27}.
 
 \subsection{Localisation \& Mapping}
+Simultaneous Localisation and Mapping (SLAM) is the module in which an agent constructs an understanding 
+of a previously unexplored environment while simultaneously estimating its own position within the environment. 
+Due to the inherent uncertainties in the sensors and actuators, SLAM is inherently probabilistic and combines the 
+two key tasks: localisation which involves estimating the agent's own position based on the existing map and mapping 
+which entails creating a map given an accurate position \cite{reference6}. The current SLAM module makes use of the IMU data along with the 
+GPS and wheel speed sensor, to enhance the accuracy and reliability of both localisation and mapping \cite{reference27}. 
+The inertial measurement unit (IMU) provides data for the agent’s orientation allowing for real time 
+adjustments to its estimated position. The GPS provides data as a global reference point which is useful 
+for the outdoor environments. The wheel speed sensors aid in odometry calculations by tracking all the tracking 
+distances traveled. By integrating these sensors, the SLAM module effectively reduces the uncertainties and improves 
+the reliability of the generated map allowing the agent to navigate the environment with greater precision.
 
-Simultaneous Localisation and Mapping (SLAM) is the module in which an agent constructs an understanding of a previously unexplored environment while simultaneously estimating its own position within the environment. Due to the inherent uncertainties in the sensors and actuators, SLAM is inherently probabilistic and combines the two key tasks : localisation which involves estimating the agent's own position based on the existing map and mapping which entails creating a map given an accurate position. The current SLAM module makes use of the IMU data along with the GPS and wheel speed sensor, to enhance the accuracy and reliability of both localisation and mapping. The inertial measurement unit (IMU) provides data for the agent’s orientation allowing for real time adjustments to its estimated position. The GPS provides data as a global reference point which is useful for the outdoor environments. The wheel speed sensors aid in odometry calculations by tracking all the tracking distances traveled. By integrating these sensors, the SLAM module effectively reduces the uncertainties and improves the reliability of the generated map allowing the agent to navigate the environment with greater precision.
-
-To complement SLAM, additional systems are implemented for tasks like map cleanup, clustering, or loop-closure adjustments based on map conditions. In events where a prior map is provided, the full SLAM system is still launched with a preloaded map to reflect changes in the environment in the system. For the acceleration event, SLAM faces limitations due to the uniform and repetitive pattern of a straight line of cones, which poses challenges for landmark-based systems. In such cases, focus shifts to an Inertial Navigation System (INS), which fuses global positioning with odometry data to measure task progress from the start point while using landmarks for local navigation. For unknown tracks, such as autocross and track drive, the SLAM system plays a critical role in tracking landmark positions to enable robust path planning and control. It also aids in lap counting and monitoring task progress. Specifically, during the track drive event, the SLAM system signals a successful loop closure at the end of a lap. This significantly reduces overall system uncertainty, allowing path planning and control systems to operate at higher performance levels with an extended estimate of the track beyond the exploratory lap. Currently, our system emphasises improving our localisation algorithm with a focus on EKF localisation.
-
-By optimising EKF localisation, we aim to achieve more precise position estimates that complement SLAM's mapping capabilities. This improvement is particularly relevant for events like skidpad and acceleration, where accurate localisation is critical for performance. Additionally, these advancements in EKF localisation contribute to better integration with other subsystems such as path planning and control, ensuring seamless operation across diverse scenarios.
+To complement SLAM, additional systems are implemented for tasks like map cleanup, clustering, 
+or loop-closure adjustments based on map conditions. In events where a prior map is provided, the 
+full SLAM system is still launched with a preloaded map to reflect changes in the environment in the system. 
+For the acceleration event, SLAM faces limitations due to the uniform and repetitive pattern of a straight line 
+of cones, which poses challenges for landmark-based systems. In such cases, focus shifts to an Inertial Navigation 
+System (INS), which fuses global positioning with odometry data to measure task progress from the start point while 
+using landmarks for local navigation \cite{reference25}. For unknown tracks, such as autocross and track drive, the SLAM system plays 
+a critical role in tracking landmark positions to enable robust path planning and control. It also aids in lap 
+counting and monitoring task progress. Specifically, during the track drive event, the SLAM system signals a successful 
+loop closure at the end of a lap. This significantly reduces overall system uncertainty, allowing path planning and control 
+systems to operate at higher performance levels with an extended estimate of the track beyond the exploratory lap. Currently, 
+our system emphasises improving our localisation algorithm with a focus on EKF localisation.
 
 \subsection{Path Planning}
 
-The trajectory planning module assumes the crucial responsibility of generating a viable and efficient path for the vehicle to navigate the track, taking into account the information provided by the perception and localization subsystems. Recognizing the inherent uncertainties associated with SLAM algorithms, particularly during the initial exploration phase, the trajectory planning module employs a robust approach to ensure optimal performance and safety throughout the racing process.
+The trajectory planning module takes on the essential task of planning a path that may be feasible and effective for 
+the vehicle to travel the course based on the details supplied by the sight and location sub-modules. 
+Acknowledging the fundamental uncertainties of the SLAM algorithms, notably in the initial mapping phase, the trajectory 
+planning module will adopt a methodology that in the context of the race optimises performance and safety \cite{reference6}.
 
-RRT* (Rapidly-exploring Random Trees) has been fully developed and is now the primary trajectory planner. It is an optimized version of RRT that enhances trajectory efficiency by ensuring paths are not only feasible but also near-optimal. Unlike traditional sampling-based methods, RRT* incrementally refines the path as it explores the environment, reducing unnecessary deviations and ensuring smoother, shorter trajectories. This makes it particularly well-suited for autonomous racing, where quick, adaptive decision-making is crucial. Compared to Delaunay, which relies on structured and well-defined cone distributions, RRT* is significantly more flexible, allowing it to adapt to highly dynamic and unpredictable track layouts. Additionally, RRT* is capable of handling sparse or irregular cone distributions more effectively, ensuring that the vehicle maintains a viable trajectory even in challenging conditions.
+RRT* path refinement is gradually developed in the exploration of the environment, therefore, minimalising 
+useless deviations and providing smoother, shorter trajectories. It is, therefore, more applicable in autonomous racing 
+where the decisions have to be based on rapidly changing information \cite{reference3, reference4}. The flexibility of RRT* in unanticipated, time-varying 
+track layouts greatly overshadows the capabilities of Delaunay, based on structured, well-defined conical distributions, 
+hence making it an ideal choice for the application considered \cite{reference1}.
 
-To validate the RRT* planner, we employ heuristic evaluation methods that analyze path smoothness, computational efficiency, and adaptability to dynamic environments. One of the key reasons for selecting RRT* over alternative methods is its ability to explore large state spaces while continuously refining the path, making it a robust solution for real-time trajectory generation.
+Furthermore, RRT* can exploit such sparsely and irregularly 
+distributed cones more efficiently to keep the vehicle on a feasible path in all circumstances.
 
-While RRT* is the preferred approach, the system retains Delaunay Triangulation as a backup planner. This method constructs non-overlapping triangles between detected cones to estimate track boundaries and generate a valid path. Although computationally efficient, Delaunay is more dependent on structured layouts, making it less reliable in complex scenarios. However, it remains an effective contingency plan for cases where RRT* might fail due to external constraints, ensuring that the vehicle always has a viable path.
+Delaunay builds non-overlapping 
+triangles between detected cones to estimate track boundaries and then generates a valid path that the vehicle can take. 
+Computationally, this efficient means a lot for structured layouts; ergo, it is less reliable in complex scenarios \cite{reference6}. 
+However, this can be considered an effective contingency plan for it to be used in external constraints, RRT*, to keep the vehicle always having a place to go.
 
-Current efforts focus on further optimizing RRT* to reduce computational overhead and to ensure smooth path integration across various driving conditions. Future developments will explore adaptive heuristics to enhance trajectory refinement, allowing for even greater efficiency and responsiveness in high-speed autonomous racing scenarios.
 
 \subsection{Control}
 
-The Control module is responsible for the implementation of advanced control strategies that optimize the performance of vehicles on track. One of the most powerful methodologies is the Model Predictive Control (MPC), which was selected for the OBRA autonomous race car because of its predictive capabilities, optimization-based approach, and ability to handle constraints, unlike traditional controllers like PID. MPC optimizes the car's trajectory over a prediction horizon, allowing it to anticipate future states and make optimal decisions at each time step.
+The Control module is responsible for the implementation of advanced control strategies that optimise the performance of vehicles on track. 
+One of the most powerful methodologies is the Model Predictive Control (MPC), which was selected for the OBRA 
+autonomous race car because of its predictive capabilities, optimisation-based approach, and ability to handle 
+constraints, unlike traditional controllers like PID. MPC optimises the car's trajectory over a prediction horizon, 
+allowing it to anticipate future states and make optimal decisions at each time step \cite{reference25}.
 
-MPC works by solving an optimization problem at each step to find the best control inputs that will minimize the cost function. This cost function typically includes deviation from the desired trajectory, minimization of control efforts and respecting dynamic constraints. One of the key improvements are the Longitudinal Control, adjusting acceleration and braking based on track curvature and vehicle dynamics, ensuring smoother speed transitions, and the Lateral Control that optimized the steering by evaluating multiple future trajectories, improving stability compared to the previous Pure Pursuit Controller (PPC). It works with the Inputs: that are circuit coordinates and vehicle dynamics (mass, inertia, tire stiffness), with MPC Optimization, that Predicts vehicle motion, minimizes trajectory deviation, and optimizes control actions, and Vehicle Simulation that Updates lateral forces and yaw rate via the Bicycle Model for real-time adaptation. Considering the reduction in trajectory error, the decrease in steering control variability, and a faster convergence to the desired path, MPC improves overall performance by approximately 55--65\% compared to the PID-based system.
+MPC works by solving an optimisation problem at each step to find the best control inputs that will minimise 
+the cost function. This cost function typically includes deviation from the desired trajectory, minimisation 
+of control efforts and respecting dynamic constraints. It works with the inputs: that are circuit coordinates and vehicle dynamics 
+(mass, inertia, tire stiffness), with MPC optimisation, that predicts vehicle motion, minimises trajectory deviation, 
+and optimises control actions, and vehicle simulation that updates lateral forces and yaw rate via the Bicycle Model 
+for real-time adaptation.
 
-We say that the MPC is 55--65\% better because of four factors: the first is Trajectory Error Reduction; MPC predicts upcoming turns and maneuvers using a lookahead horizon, whereas PID only reacts to the current error, the second one is Reduced Steering Oscillations; PID tends to cause overshooting and oscillations when correcting large errors, the third one is Smoother Speed Transitions; thanks to the longitudinal control, the MPC adjusts acceleration and braking based on track curvature and vehicle dynamics, reducing abrupt speed changes and the last one is Improved Stability in Dynamic Conditions; In high speed or low margin conditions, MPC maintains stability using dynamic vehicle model.
 
 \subsection{Hardware and Sensors}
 
-The system works on the premise that all required sensor equipment is housed within our Sensor Plate (SP). The SP runs on a limited 10A power supply which forces strategic choice of sensor hardware. The SP can be attached, removed and modified in a quick time. Ease of service has been considered with the body having various access points to ensure functionality.
+The system works on the premise that all required sensor equipment is housed within our Sensor Plate (SP). 
+The SP runs on a limited 10A power supply which forces strategic choice of sensor hardware. 
+The SP can be attached, removed and modified in a quick time. Ease of service has been considered with the 
+body having various access points to ensure functionality.
 
-The placement of each sensor equipment is determined to maximise the performance out of them while adhering to the regulations. The Livox HAP TX LiDAR is placed at the base of the SP and as far forward as allowed by the ADS-DV side view envelope to be able to detect the cones and have an unobstructed field of view. The Zed2i Camera is therefore put on top of the LiDAR to still be centered and field of view obstruction from the LiDAR is minimised by placing it as close to the side view envelope as possible. In addition, the dual GPS antenna setup is placed as far apart as the front view envelope allows for more error correction in the GPS drift.
+The placement of each sensor equipment is determined to maximise the performance out of them while adhering 
+to the regulations. The Livox HAP TX LiDAR is placed at the base of the SP and as far forward as allowed by the 
+ADS-DV side view envelope to be able to detect the cones and have an unobstructed field of view \cite{reference27}. The Zed2i Camera 
+is therefore put on top of the LiDAR to still be centered and field of view obstruction from the LiDAR is 
+minimised by placing it as close to the side view envelope as possible. In addition, the dual GPS antenna setup 
+is placed as far apart as the front view envelope allows for more error correction in the GPS drift.
 
-The system is designed to work as a complete autonomous module via the addition of compute on the SP, this allows for easier installation and use on a variety of vehicles. This is made possible by the use of a CAN bypass which allows direct connection to the vehicle control unit.
+The system is designed to work as a complete autonomous module via the addition of compute on the SP, 
+this allows for easier installation and use on a variety of vehicles. This is made possible by the use of 
+a CAN bypass which allows direct connection to the vehicle control unit.
 
-To aid software development the team has developed a small scale platform which replicates the IMechE’s ADS-DV as accurately as possible. We call this the ADS-BV (Brookes Vehicle). This platform is ideal for rapid testing and troubleshooting issues in a small confined space where we are limited to 20 km/h. This has led to the development of OBRA-P01 which is the 2014 OBR chassis fitted for autonomous driving. This system works to mimic the ADS-DV and ADS-BV as closely as possible, both testing platforms use an EPAS Microsteer MGU steering motor to allow for autonomous steering. In terms of braking the systems differ. The ADS-BV uses a linear actuator to actuate the mechanical brake pedal and an electromagnetic EBS to ensure maximum safety. The braking system for OBRA-P01 uses the traditional hydraulic system merged with electronic actuators that create a BBW system for autonomous braking. Emergency braking is achieved by an “always on” system which locks the wheels when the system has no signal. Both testing platforms use identical CAN system construction and VCU architecture to the ADS-DV to ensure a seamless transition between the 3 platforms.
-
-
-
+To aid software development the team has developed a small scale platform which replicates the IMechE’s 
+ADS-DV as accurately as possible. We call this the ADS-BV (Brookes Vehicle). This platform is ideal for rapid 
+testing and troubleshooting issues in a small confined space where we are limited to 20 km/h. This has led to 
+the development of OBRA-P01 which is the 2014 OBR chassis fitted for autonomous driving. This system works to mimic 
+the ADS-DV and ADS-BV as closely as possible, both testing platforms use an EPAS Microsteer MGU steering motor to allow 
+for autonomous steering \cite{reference28}. In terms of braking the systems differ. The ADS-BV uses a linear actuator to actuate the 
+mechanical brake pedal and an electromagnetic EBS to ensure maximum safety. The braking system for OBRA-P01 uses the 
+traditional hydraulic system merged with electronic actuators that create a BBW system for autonomous braking. Emergency 
+braking is achieved by an “always on” system which locks the wheels when the system has no signal. Both testing platforms 
+use identical CAN system construction and VCU architecture to the ADS-DV to ensure a seamless transition between the 3 platforms.
 
 
 \section{Simulation and Testing Tools}
 
-The simulation and testing phase plays a crucial role in validating the path-planning algorithms before deployment in the real OBRA autonomous vehicle. The core of the simulation environment is built using Unity, which provides a controlled and highly customizable setting where different track conditions, obstacles, and environmental variations can be modeled. Unity allows us to evaluate the performance of the algorithms under high-speed driving scenarios, tight turns, and unexpected obstacles, ensuring that the vehicle can navigate efficiently and safely.
+The simulation and testing phase plays a crucial role in validating the path-planning 
+algorithms before deployment in the real OBRA autonomous vehicle. The core of the simulation 
+environment is built using Unity, which provides a controlled and highly customisable setting 
+where different track conditions, obstacles, and environmental variations can be modeled \cite{reference17}. Unity 
+allows us to evaluate the performance of the algorithms under high-speed driving scenarios, tight turns, 
+and unexpected obstacles, ensuring that the vehicle can navigate efficiently and safely.
 
-To complement the simulation process, we use Foxglove for real-time visualization and analysis of key system data. Since our project is built on ROS2 (Humble), Foxglove acts as an interface to monitor ROS2 topics, displaying critical information such as vehicle state, planned trajectories, sensor readings, and dynamic obstacle detection. This visualization is essential for debugging, performance assessment, and fine-tuning the parameters of our path-planning algorithms.
+To complement the simulation process, we use Foxglove for real-time visualisation and analysis of key 
+system data. Since our project is built on ROS2 (Humble), Foxglove acts as an interface to monitor ROS2 
+topics, displaying critical information such as vehicle state, planned trajectories, sensor readings, and 
+dynamic obstacle detection \cite{reference20}. This visualisation is essential for debugging, performance assessment, 
+and fine-tuning the parameters of our path-planning algorithms.
 
-The validation process is structured around a set of performance metrics, ensuring that each algorithm is assessed based on objective criteria. These metrics include:
+This simulation environment offers a critical development sandbox for validating the feasibility, responsiveness, 
+and robustness of the planning logic before transitioning to physical deployment. The validation process is structured 
+around a set of performance metrics, ensuring that each algorithm is assessed based on objective criteria. These metrics include:
+
 \begin{itemize}
     \item Path efficiency: Measuring the distance and curvature of the generated trajectory.
     \item Computational speed: Evaluating how quickly the algorithm produces a valid path.
     \item Adaptability to dynamic environments: Testing how well the planner reacts to changes such as moving obstacles or shifting track conditions.
 \end{itemize}
 
-Once the simulations are completed, the results, including logs, performance data, and video recordings, are stored in Google Drive for further analysis and comparison. This repository allows the team to track improvements over time and make data-driven decisions when optimizing the algorithms.
+Once the simulations are completed, the results, including logs, performance data, and video 
+recordings, will be stored in Google Drive for further analysis and comparison. This repository allows 
+the team to track improvements over time and make data-driven decisions when optimising the algorithms.
 
-By integrating Unity for simulation, Foxglove for real-time monitoring, and Google Drive for data storage, we establish a structured and efficient testing framework. This ensures that our path-planning algorithms are rigorously validated before integration into the OBRA vehicle, minimizing risks and maximizing system reliability.
+By integrating Unity for simulation, Foxglove for real-time monitoring, and Google Drive for data storage, 
+we establish a structured and efficient testing framework. This ensures that our path-planning algorithms are 
+rigorously validated before integration into the OBRA vehicle, minimising risks and maximising system reliability.
 
+\chapter{System Code Implementation}
+This chapter gives the implementation details of the path planning system developed for the OBRA autonomous vehicle. 
+It explains the structure of the codebase and the key scripts involved in addition to the design choices behind switching 
+from a Delaunay-based planner to a more dynamic and adaptable implementation of RRT* \cite{reference6}. Each planner is described in terms of 
+functionality, optimisations, and performance trade-offs. Version control strategy and development workflow is also included 
+to reflect software engineering best practices \cite{reference18}.
 
-
-
-
-\chapter{Code Development}
 
 \section{Path Planning Folder Structure}
 
-To understand the overall structure of the path planning folder, we can refer to the diagram in Figure \ref{fig:path_planning_structure}. This structure organises different components responsible for planning the vehicle's path using either the Delaunay triangulation method or the RRT* algorithm.
+To get the general outlook of the path planning directory, refer to the diagram in Figure
+\ref{fig:path_planning_structure}. This organises different parts in charge of planning
+the vehicle's path using either the Delaunay triangulation way or the RRT* algorithm.
 
 \begin{figure}[h]
     \centering
@@ -443,7 +542,9 @@ To understand the overall structure of the path planning folder, we can refer to
     \label{fig:path_planning_structure}
 \end{figure}
 
-The main entry point of the path planning system is the \texttt{local\_planner.py} script. This module connects all components and manages the overall planning process. Within \texttt{local\_planner}, the function \texttt{change\_state(self)} determines whether to use Delaunay or RRT* based on the detected environment. The selection is made using the following lines of code:
+The main entry point of the path planning system is the \texttt{local\_planner.py} script. This module connects all components and manages the overall planning process. 
+Within \texttt{local\_planner}, the function \texttt{change\_state(self)} determines whether to use Delaunay or RRT* based on the detected environment. 
+The selection is made using the following lines of code:
 
 \begin{verbatim}
 self.state = RRTStarState(self)  # Uses RRT* for path planning
@@ -451,7 +552,9 @@ self.state = Delaunay(self)      # Uses Delaunay for path inference
 \end{verbatim}
 
 \subsection{Local Planner (local\_planner.py)}
-The \texttt{local\_planner.py} script serves as the core component of the path planning system. It is responsible for subscribing to relevant ROS2 topics, processing incoming data, and determining the appropriate path planning algorithm. The script maintains real-time vehicle position updates and cone detection to adjust its planning method dynamically.
+The \texttt{local\_planner.py} script is also responsible for subscribing to relevant ROS2 topics, processing incoming data, 
+and determining the appropriate path planning algorithm. The script maintains real-time vehicle position 
+updates and cone detection to adjust its planning method dynamically.
 
 A key function in \texttt{local\_planner.py} is \texttt{change\_state(self)}, which decides whether to use the RRT* or Delaunay algorithm based on the available cone data:
 
@@ -460,16 +563,23 @@ def change_state(self):
     """
     Determines the path planning method based on detected cones.
     """
-    if count_blue > 0 and count_yellow > 0 and count_blue + count_yellow > 2:
-        self.state = RRTStarState(self)  # Selects RRT* for complex scenarios
+    if count_blue > 0 and count_yellow > 0 
+    and count_blue + count_yellow > 3:
+        self.state = RRTStarState(self)  
+        # Selects RRT* when complex or dynamic scenarios are detected
     else:
         self.state = Delaunay(self)  # Defaults to Delaunay triangulation
 \end{verbatim}
 
-The function first verifies if the system has detected both blue and yellow cones. If a sufficient number of cones are present, it selects \texttt{RRTStarState}, as the RRT* algorithm is better suited for handling complex, dynamic paths. If fewer cones are detected, it defaults to Delaunay triangulation, which relies on precomputed track midpoints for a stable and structured path.
+The function first verifies if both blue and yellow cones have been detected by the system.
+If enough cones have been found, it picks \texttt{RRTStarState} since the RRT* algorithm is better for more complex,
+dynamic paths. If fewer cones are found, it falls back to Delaunay triangulation; this track uses
+precomputed midpoints for a path that is stable and well behaved.
 
 \subsection{State Management (new\_states.py)}
-The \texttt{new\_states.py} module defines the behaviour of different path planning strategies. It manages vehicle states and allows seamless switching between planning methods depending on the track conditions. The state management system is based on an abstract class \texttt{LocalPlannerState}, which enforces the implementation of a \texttt{plan\_path} method in all subclasses.
+The \texttt{new\_states.py} module defines the behaviour of different path planning strategies. 
+It manages vehicle states and allows seamless switching between planning methods depending on the track conditions. 
+The state management system is based on an abstract class \texttt{LocalPlannerState}, which enforces the implementation of a \texttt{plan\_path} method in all subclasses.
 
 One of the primary states is \texttt{RRTStarState}, which utilises the RRT* algorithm for adaptive path generation:
 
@@ -479,22 +589,27 @@ class RRTStarState(LocalPlannerState):
         """Implements the RRT* algorithm for path planning."""
         try:
             # Ensure car position is defined
-            if not hasattr(self.context, "car_position") or self.context.car_position is None:
+            if not hasattr(self.context, "car_position") 
+            or self.context.car_position is None:
                 print("Warning: `car_position` is not defined.")
                 return self.context.last_path
 
             # Extract cone positions from the local track
-            cones_blue = cones_to_tuple_list(self.context.local_track.blue)
-            cones_yellow = cones_to_tuple_list(self.context.local_track.yellow)
+            cones_blue = cones_to_tuple_list
+            (self.context.local_track.blue)
+            cones_yellow = cones_to_tuple_list
+            (self.context.local_track.yellow)
             
             # Instantiate the RRT* planner
             rrt_planner = RRTStarPlanner(cones_blue, cones_yellow)
             
             # Generate the path using RRT*
-            path = rrt_planner.plan_path(start=self.context.car_position, goal=self.context.target_position)
+            path = rrt_planner.plan_path(start=self.context.car_position, 
+            goal=self.context.target_position)
             
             if path is None:
-                print("Warning: RRT* did not find a path, using last known path.")
+                print("Warning: RRT* did not find a path, 
+                using last known path.")
                 return self.context.last_path
 
             return path
@@ -503,7 +618,9 @@ class RRTStarState(LocalPlannerState):
             return self.context.last_path
 \end{verbatim}
 
-This function first ensures that the car's position is known. It then extracts cone locations and passes them to the \texttt{RRTStarPlanner}, which attempts to compute an optimal path. If the planner fails, it defaults to the last successful path to maintain stability.
+This function first ascertains the position of the car.
+It then extracts cone locations and passes them to the \texttt{RRTStarPlanner},
+trying to compute an optimal path; if it doesn’t: the last successful path, to keep up the stability.
 
 \subsection{Utility Functions (utils.py)}
 The \texttt{utils.py} module provides helper functions for sorting cone data, smoothing paths, and handling data conversions.
@@ -514,27 +631,48 @@ def sort_cone_chain(cones):
     return sorted(cones, key=lambda c: c.x)
 \end{verbatim}
 
-By integrating these components, the path planning system dynamically selects the best algorithm for any given scenario, ensuring optimal performance in autonomous racing conditions.
-
+By integrating these components, the path planning system dynamically selects the best 
+algorithm for any given scenario.
 
 \section{Initial Path Planner: Old Delaunay Implementation}
-The initial path planner used by the OBRA autonomous vehicle during FSUK 2024 was based on the Delaunay triangulation method. This path planner was developed by the team throughout 2023 and 2024 and served as the foundation for autonomous navigation in the competition. The system relied on the detection of blue and yellow cones to generate a track boundary and compute a smooth path through the midpoints of the triangulated structure. By leveraging Delaunay triangulation, the planner provided a stable and predictable route, ensuring the vehicle could navigate efficiently. The initial Delaunay-based path planner lacks adaptability in dynamic environments, as it relies on static triangulation of detected cones. It struggles with inconsistent cone placement, cannot handle sudden obstacles efficiently, and lacks path smoothing, leading to suboptimal trajectories. Additionally, it does not optimise paths for minimal turns or distance.This implementation, while effective, had limitations in dynamic obstacle avoidance and adaptability, leading to further refinements in subsequent iterations.
 
-\section{Delaunay Path Planner Optimization and Rewriting}
+The OBRA self-driving car used a path finder at the start of FSUK 2024 that was based on Delaunay triangulation. 
+This path planner had been made by the team over 2023 and 2024 and served as the foundation for autonomous navigation in the competition.
+It used the blue and yellow cones to make a track edge and calculate a fine way through the middle points of the triangled shape. 
+By using Delaunay triangulation, the planner gave a steady and known route, making sure the car could drive well. 
+The first Delaunay-based way planner does not have flexibility in changing settings, since it depends on fixed triangulation of cones that were found. 
+It has problems with not placing cones well, cannot manage quickly moving barriers well, and does not have way softening, resulting in suboptimal trajectories. 
+Also, it does not optimise paths for minimal turns or distance. This implementation, while effective, had limitations in dynamic obstacle avoidance and adaptability, 
+leading to further refinements in the next loop.
 
-The optimization of the Delaunay path planner resulted in a significant reduction in complexity, improving both efficiency and maintainability. The previous implementation contained over 750 lines of code, relying on a complex graph-based approach to manage cone connections and extract midpoints. The new implementation, reduced to under 200 lines, introduces a streamlined structure based on the \texttt{TrackNavMesh} class, which efficiently handles the Delaunay triangulation and simplifies the extraction of midpoints.
+\section{Delaunay Path Planner Optimisation and Rewriting}
+
+The Delaunay path planner was optimised so that there was a large reduction in complexity, making it more efficient and easier to sustain.
+Before, there were more than 750 lines of code that formed the old implementation, and it heavily relied on using a complex graph-based approach 
+to manage cone connections and extract midpoints.
+
+An integral part of the new system is the \texttt{TrackNavMesh} class, which covers up the complexity of cone links by working with the Delaunay triangulation API 
+directly from SciPy. Instead of manually managing graph structures to represent the track, \texttt{TrackNavMesh} internally handles the construction and traversal 
+of Delaunay triangles. It also brings together rules for picking inner midpoints between cones of different colours, streamlining the overall path generation process. 
+By wrapping up this logic, \texttt{TrackNavMesh} improves code modularity, while ensuring consistent and efficient triangulation results. 
+Now, less than 250 new lines introduces a streamlined structure based on the \texttt{TrackNavMesh} class, which efficiently handles the Delaunay triangulation 
+and simplifies the extraction of midpoints.
+
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{Images/delaunay.png}
-    \caption{Optimized Delaunay Path Planning System}
-    \label{fig:delaunay_optimization}
+    \caption{Optimised Delaunay Path Planning System}
+    \label{fig:delaunay_optimisation}
 \end{figure}
 
-Figure \ref{fig:delaunay_optimization} illustrates the restructured Delaunay path planner, highlighting key components and their interactions. The new system is structured around four main elements: \texttt{PathPlanner}, \texttt{TrackNavMesh}, \texttt{Delaunay}, and \texttt{UtilityFunctions}.
+Figure \ref{fig:delaunay_optimisation} illustrates the restructured Delaunay path planner, highlighting key components and their interactions. 
+The new system is structured around four main elements: \texttt{PathPlanner}, \texttt{TrackNavMesh}, \texttt{Delaunay}, and \texttt{UtilityFunctions}.
 
 \subsection{Structural Simplification}
-Previously, the planner relied on a manually managed graph structure to connect cones and determine midpoints. The new approach abstracts these operations into \texttt{TrackNavMesh}, which directly utilizes the \texttt{Delaunay} class from SciPy to establish relationships between cones.
+
+In the past, the planner used a graph that was manually managed to connect cones and find midpoints.
+The new way of doing things makes these processes into TrackNavMesh, which directly uses the Delaunay class from SciPy to relate cones.
 
 \begin{verbatim}
 def get_inner_midpoints(self):
@@ -542,24 +680,34 @@ def get_inner_midpoints(self):
     for triangle in self.delaunay.simplices:
         for cone_idx in triangle:
             for other_cone_idx in triangle:
-                if self.get_cone_color(cone_idx) != self.get_cone_color(other_cone_idx):
+                if self.get_cone_color(cone_idx) != 
+                self.get_cone_color(other_cone_idx):
                     self.add_connection(cone_idx, other_cone_idx)
 \end{verbatim}
 
-By leveraging Delaunay triangulation directly, the system no longer requires redundant connection management, reducing computational overhead.
+By leveraging Delaunay triangulation directly, the systemeliminates the need for explicit connection handling, thereby reducing computational overhead.
 
 \subsection{Efficient Midpoint Calculation}
-In the previous version, midpoint calculations involved multiple nested loops and redundant filtering. The optimized implementation directly extracts necessary midpoints from the triangulation and computes distances efficiently:
+
+Earlier, in midpoint calculations, there was a lot of nesting 
+inside the loops, and filtering that caused more work.
+The better way now just takes the midpoints from the triangulation directly and computes distances efficiently:
 
 \begin{verbatim}
 def get_distance_between(position_1, position_2):
-    return math.hypot(position_1[0] - position_2[0], position_1[1] - position_2[1])
+    return math.hypot(position_1[0] - position_2[0], 
+    position_1[1] - position_2[1])
 \end{verbatim}
 
 This approach consolidates distance calculations into a single function, removing unnecessary recalculations.
 
 \subsection{Enhanced Cone Clustering for Smoother Paths}
-The old system inconsistently merged closely positioned cones, sometimes leading to erratic paths. The new implementation introduces \texttt{cluster\_cones\_together}, which ensures cones within a threshold distance are merged systematically.
+
+The former system would merge closely positioned cones with
+varying success, sometimes resulting in erratic paths. A new
+implementation of the\texttt{cluster\_cones\_together}function will
+guarantee that cones within a certain distance of each other are
+always merged in a systematic manner.
 
 \begin{verbatim}
 def cluster_cones_together(cones_to_cluster):
@@ -569,8 +717,10 @@ def cluster_cones_together(cones_to_cluster):
         for cone in cones_to_cluster:
             for next_cone in cones_to_cluster:
                 if cone == next_cone: continue
-                if get_distance_between(cone, next_cone) < MAX_CLUSTER_DISTANCE:
-                    cones_to_cluster.append(get_midpoint(cone, next_cone))
+                if get_distance_between(cone, next_cone) 
+                < MAX_CLUSTER_DISTANCE:
+                    cones_to_cluster.append
+                    (get_midpoint(cone, next_cone))
                     cones_to_cluster.remove(cone)
                     cones_to_cluster.remove(next_cone)
                     any_cone_within_max_cluster_distance = True
@@ -579,7 +729,8 @@ def cluster_cones_together(cones_to_cluster):
 This method ensures smooth trajectories by preventing unnecessary sharp turns in the generated paths.
 
 \subsection{Comparison of Old vs. New Implementation}
-The table below highlights key improvements in the optimized Delaunay path planner:
+
+The table below highlights key improvements in the optimised Delaunay path planner:
 
 \begin{table}[h]
     \centering
@@ -592,7 +743,7 @@ The table below highlights key improvements in the optimized Delaunay path plann
         \hline
         \textbf{Midpoint Calculation} & Multiple iterations, redundant checks & Extracted directly from Delaunay triangulation \\
         \hline
-        \textbf{Distance Calculations} & Scattered and repeated & Centralized and reusable \\
+        \textbf{Distance Calculations} & Scattered and repeated & Centralised and reusable \\
         \hline
         \textbf{Cone Clustering} & Handled inconsistently & \texttt{cluster\_cones\_together} ensures proper merging \\
         \hline
@@ -603,33 +754,48 @@ The table below highlights key improvements in the optimized Delaunay path plann
     \label{tab:delaunay_comparison}
 \end{table}
 
-By simplifying the architecture, eliminating redundant computations, and leveraging Delaunay triangulation more effectively, the new implementation is significantly more efficient, adaptable, and maintainable for future improvements.
+The new implementation is more efficient, adaptable, and maintainable for
+future improvements as redundancy is removed from the computation and the
+Delaunay triangulation is used more efficiently. It simplifies the architecture.
 
 \section{Development of RRT*}
 \subsection{Motivation for Switching from Delaunay to RRT*}
 
-The transition from the Delaunay-based path planner to RRT* was driven by the limitations observed in the previous system and the need for a more adaptive planning method. The Delaunay algorithm, while effective in generating stable midpoints, struggled with dynamic cone layouts and track variations. Since it relies on a predefined triangulation structure, it was unable to effectively handle missing cones, sharp turns, or sudden changes in track conditions.
+The shift from the Delaunay-based path planner to RRT* was prompted by limitations in the former
+approach and the desire for a more flexible means of planning. The Delaunay method
+proved quite well for stable midpoints, but had some difficulty with dynamic cone layouts plus
+the tracks themselves \cite{reference6}. Since a predefined triangulation structure is used by the former,
+missing cones along with sharp turns or sudden variations in the track's condition are
+problems for it in proper planning of the path.
 
-RRT*, on the other hand, offers a more flexible approach to path planning. It incrementally expands a search tree, allowing the system to adapt to different track layouts in real time. This adaptability ensures that the vehicle can navigate through complex turns while maintaining an optimal trajectory. The planner also provides collision avoidance by sampling points that maximize clearance from cones, improving vehicle stability.
+RRT*, however, varies the path
+planning approach more flexibly. It progressively grows a search tree such that the
+system can dynamically adjust to varying track layouts on the fly \cite{reference4}. In so doing, the
+vehicle would be enabled to navigate its way around complex turns while keeping
+an optimal trajectory. The planner also gives collision avoidance by the sampling
+of points making maximum clearance from cones thereby better stabilising the vehicle.
 
-Given these advantages, the implementation of RRT* in the real vehicle aims to enhance performance in racing conditions, ensuring the car remains within track limits while dynamically adjusting to varying environments. The computational cost of RRT* was carefully optimized to ensure real-time execution without overloading the vehicle’s onboard processing power.
+With these advantages, the implementation of RRT* in the real vehicle will be geared up to
+race conditions, making sure that the car is within track limits while dynamically adapting to
+the changing environments. The computational cost of RRT* has been carefully optimised to enable 
+realtime execution without overloading the onboard processing power of the vehicle.
 
 \begin{table}[h]
     \centering
     \small
-    \begin{tabular}{|p{4cm}|p{6cm}|p{6cm}|}
+    \begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
         \hline
         \textbf{Feature} & \textbf{Delaunay Path Planner} & \textbf{RRT* Path Planner} \\
         \hline
-        \textbf{Structure} & Uses fixed triangulation based on detected cones & Incrementally expands a tree to explore possible paths \\
+        \textbf{Planner Structure} & Uses fixed triangulation based on detected cones & Incrementally expands a tree to explore possible paths \\
         \hline
         \textbf{Adaptability} & Limited to predefined cone connections & Dynamically adjusts to missing cones and track variations \\
         \hline
-        \textbf{Handling of Sharp Turns} & Struggles with tight corners due to fixed structure & Can generate alternative paths to optimize turning radius \\
+        \textbf{Handling of Sharp Turns} & Struggles with tight corners due to fixed structure & Can generate alternative paths to optimise turning radius \\
         \hline
         \textbf{Collision Avoidance} & Midpoints are generated without explicit collision checking & Samples points that ensure safe clearance from cones \\
         \hline
-        \textbf{Computational Load} & Lower but lacks adaptability & Higher but optimized to maintain real-time performance \\
+        \textbf{Computational Load} & Lower but lacks adaptability & Higher but optimised to maintain real-time performance \\
         \hline
         \textbf{Implementation in Real Car} & Previously used in FSUK 2024 but had limitations & Being tested for improved race performance and track adaptation \\
         \hline
@@ -647,62 +813,116 @@ Figure \ref{fig:rrtstar_structure} illustrates the core components of the RRT* p
     \label{fig:rrtstar_structure}
 \end{figure}
 
-RRT* was chosen due to its ability to generate adaptive paths in dynamic environments while ensuring path optimization over iterations. The planner consists of key modules that handle node expansion, collision avoidance, and final path smoothing.
+RRT* was selected because of its capability to generate adaptive paths in dynamic
+environments while ensuring path optimisation over iterations. The planner
+comprises major modules which are node expansion, collision avoidance, and
+final path smoothing.
 
 \subsection{RRT vs. RRT*: Key Differences}
 
-Although both RRT (Rapidly-exploring Random Tree) and RRT* (RRT Star) belong to the same family of sampling-based path planning algorithms, they serve different purposes when applied to real-world autonomous systems. RRT is designed to quickly find any feasible path from a start to a goal state. It is computationally efficient and particularly useful in high-dimensional configuration spaces. However, it does not guarantee path optimality, often producing jagged or unnecessarily long routes. In contrast, RRT* extends RRT by continuously rewiring the tree during expansion, gradually optimizing the path length and smoothness.
+Though both RRT (Rapidly-exploring Random Tree) and RRT* (RRT Star)
+belong to the same family of sampling-based path planning algorithms,
+they serve different purposes when applied to real-world autonomous systems \cite{reference1, reference3}.
+RRT is designed to quickly find any feasible path from a start to a goal state.
+It is computationally efficient and particularly useful in high-dimensional configuration spaces.
+It does not assure path optimality, sometimes leading to jagged or overly long routes.
+On the other hand, RRT* incrementally optimises the path length and smoothness by continuously rewiring the tree during expansion \cite{reference4}.
 
-In the context of our autonomous racing vehicle, optimality and continuity are not just desired—they are essential. The OBRA car operates in a constrained and dynamic workspace defined by cones that may vary in density, spacing, and even presence due to sensor limitations. In such conditions, simply finding a valid path, as RRT does, is insufficient. We require paths that are not only collision-free but also minimize sharp steering inputs, maximize smoothness, and stay close to the racing line to reduce lap time.
+In our autonomous car, optimality and continuity are not just desired; they are essential.
+The OBRA car works in a limited and dynamic workspace set by cones that can vary in how close
+they are to each other and even if they are there because of sensor limits. In such situations, just finding a safe path as RRT does, is not enough.
+Paths must not only avoid obstacles but also minimise sudden steering changes but also minimise sudden
+changes in a maneuver double delta at all times.
+To improve lap times, the planner aims to produce smoother steering profiles and trajectories that 
+adhere closely to the optimal racing line.
 
-RRT* addresses these requirements directly. By incrementally improving the path as new nodes are added, it creates trajectories that are smoother and more centered. This reduces mechanical stress on the car's steering system and increases overall stability, especially in high-speed sections or tight turns. Furthermore, the ability of RRT* to adapt to local changes in the environment makes it more robust for real-time racing, where missing cones or sudden layout shifts may occur. 
+RRT* meets these requirements. By incrementally improving the path as new nodes come in, it makes
+trajectories that are smoother and more centered. This cuts mechanical strain on the car's steering
+system and raises overall stability, most especially in high-speed parts or tight turns. Also, the
+capability of RRT* to change with local shifts in the environment makes it more strong for
+real-time racing, where missing cones or sudden layout shifts may occur.
 
-Although RRT* incurs a slightly higher computational cost due to its optimization phase, we mitigated this by carefully tuning key parameters such as step size and maximum iterations. The result is a planner that operates within the real-time constraints of our onboard system while producing higher-quality paths than its predecessor. For this reason, RRT* was selected as the foundation for our planner, offering a balance between flexibility, efficiency, and trajectory quality that aligns with the specific demands of the OBRA car and the racing domain.
-
+Although RRT* incurs a slightly higher computational cost due to its optimisation phase, 
+we have some ways to tamp that down by carefully tuning parameters like step size
+and maximum iterations. The end result is a planner that can work within the real-time
+constraints of our onboard system and still come up with better paths than before. For
+this reason, RRT* was chosen as the foundation
+for our planner, offering a balance between flexibility, efficiency, and trajectory quality that
+aligns with the specific demands of the OBRA car and the racing domain.
 
 \subsection{Initial RRT* Planner: Centerline Trajectory}
 
-In order to perform a meaningful comparison between the RRT* planner and the existing Delaunay-based planner, the first version of RRT* was designed to follow a trajectory biased toward the center of the track. This decision was motivated by the behavior of the Delaunay planner, which inherently produces paths that pass through the midpoints of adjacent cones. Therefore, centering the initial RRT* implementation enables a direct evaluation in terms of smoothness, adaptability, and precision under similar constraints.
+To compare the RRT* planner with the Delaunay-based planner,
+the first version of RRT* was made to track along a path biased toward the center of the track;
+This decision was motivated by the behavior of the Delaunay planner, which inherently produces paths 
+that pass through the midpoints of adjacent cones. Therefore, to center the implementation of RRT* 
+enables a direct evaluation in terms of smoothness, adaptability, and precision under similar constraints.
 
-To achieve this central bias, the sampling function \texttt{sample\_point()} was engineered to generate random points with a preference for the geometric center between blue and yellow cones. This is implemented by calculating the average position of cones on both sides of the track and biasing new random points toward that mean:
+To create this central bias, the picking function \texttt{sample\_point()} was built to make
+random points with a liking for the shape center between blue and yellow cones.
+This is done by finding the average position of cones on both sides of the
+path and leading new random points toward that mean:
 
 \begin{verbatim}
-track_center_x = (np.mean(self.blue_cones[:, 0]) + np.mean(self.yellow_cones[:, 0])) / 2
-track_center_y = (np.mean(self.blue_cones[:, 1]) + np.mean(self.yellow_cones[:, 1])) / 2
+track_center_x = (np.mean(self.blue_cones[:, 0]) + 
+np.mean(self.yellow_cones[:, 0])) / 2
+track_center_y = (np.mean(self.blue_cones[:, 1]) + 
+np.mean(self.yellow_cones[:, 1])) / 2
 track_center = np.array([track_center_x, track_center_y])
 ...
-random_point = random_point * (1 - bias_factor) + track_center * bias_factor
+random_point = 
+random_point * (1 - bias_factor) + track_center * bias_factor
+
 \end{verbatim}
 
-A \texttt{bias\_factor} of 0.2 ensures that, while points retain some randomness to enable exploration, they are gently pulled toward the central path. Additionally, a slight outward shift is applied to increase spacing from the cones and reduce the risk of near-collisions:
+A \texttt{bias\_factor} of 0.2  ensures that while points retain some randomness to enable
+exploration, they are gently pulled towards the central path. Also, a slight outward
+shift is applied to increase spacing from the cones and reduce the risk of near collisions:
 
 \begin{verbatim}
 shift_distance = 1.2
-random_point += shift_distance * (random_point - track_center) / np.linalg.norm(random_point - track_center)
+random_point += shift_distance * (random_point - track_center) / 
+np.linalg.norm(random_point - track_center)
 \end{verbatim}
 
-As a result, the generated tree grows in a way that naturally follows the middle of the corridor defined by the cones, producing paths that are smoother and more aligned with the behavior of the Delaunay planner. This configuration is essential for isolating the specific benefits of RRT*, such as adaptability to missing cones or sharper turns, without introducing bias due to fundamentally different target trajectories.
+Therefore, the resulting tree grows along the center of the corridor defined by the cones
+such that it gives rise to paths which are smoother and better aligned with the properties of the Delaunay planner.
+This set up is critical to extracting the specific advantages of RRT*, that it
+can adapt to missing cones or sharper turns without any form of bias introduced by fundamentally different target trajectories.
 
-Future versions of the planner, discussed in the next section, will explore more aggressive strategies focused on minimizing lap time rather than maintaining central alignment.
+Future versions of the planner, discussed in the next section, will explore more 
+aggressive strategies focused on minimising lap time rather than maintaining central alignment.
 
 
-\subsubsection{Node Expansion and Distance Selection}
-The RRT* planner expands nodes in the direction of randomly sampled points to explore the space efficiently. The step size is set to \textbf{5 units} to balance coverage and computational efficiency:
+\subsubsection*{Node Expansion and Distance Selection}
+
+The RRT* planner expands nodes in the direction of randomly sampled 
+points in front of the car to explore the space efficiently. The step size is set to \textbf{5 units} 
+to balance coverage and computational efficiency:
 
 \begin{verbatim}
 def steer(self, nearest_node, random_point):
     """
-    Generates a new node in the direction of `random_point`, limited by `step_size`.
+    Generates a new node in the direction of `random_point`, 
+    limited by `step_size`.
     """
-    direction = (random_point - nearest_node) / np.linalg.norm(random_point - nearest_node)
+    direction = (random_point - nearest_node) / 
+    np.linalg.norm(random_point - nearest_node)
     new_node = nearest_node + direction * self.step_size
     return new_node
 \end{verbatim}
 
-Increasing the number of nodes significantly improves path resolution but also introduces computational overhead. If too many nodes are generated per iteration, the planner overloads the CPU, leading to a \textbf{delayed response} from the car. This delay causes the vehicle to react too late, making it difficult to follow the planned trajectory, ultimately leading to deviations from the track. Through empirical testing, a balance was found where \textbf{25 iterations} provide a good trade-off between accuracy and real-time performance.
+Increasing the number of nodes improves path resolution as well but with
+computational overhead. If too many nodes are generated per loop, 
+the planner overloads the CPU, leading to a \textbf{delayed response} from the car. 
+This makes the car react too late to try to follow the planned path, eventually causing it
+to deviate off the track. An equilibrium was found
+It turned out that \textbf{25 iterations} provide a good trade-off between accuracy and real-time performance.
 
-\subsubsection{Collision Detection and Safety Constraints}
-To ensure the vehicle avoids obstacles, a collision-checking mechanism was implemented. Each new node is validated against the detected cones to ensure a \textbf{safe clearance distance} of at least \textbf{2.5 units}:
+\subsubsection*{Collision Detection and Safety Constraints}
+
+To ensure the vehicle avoids obstacles, a collision-checking mechanism was implemented. 
+Each new node is validated against the detected cones to ensure a \textbf{safe clearance distance} of at least \textbf{2.5 units}:
 
 \begin{verbatim}
 def is_collision_free(self, new_node):
@@ -716,8 +936,10 @@ def is_collision_free(self, new_node):
 
 By maintaining a safe distance from cones, the planner prevents situations where the vehicle may clip obstacles due to minor inaccuracies in perception.
 
-\subsubsection{Path Retracing and Smoothing}
-Once a set of valid nodes has been generated, the planner reconstructs the path from the last node back to the start using a retracing mechanism:
+\subsubsection*{Path Retracing and Smoothing}
+
+Once a set of valid nodes has been generated, the planner reconstructs the path 
+from the last node back to the start using a retracing mechanism:
 
 \begin{verbatim}
 def retrace_path(self):
@@ -732,29 +954,42 @@ def retrace_path(self):
     return np.array(path)
 \end{verbatim}
 
-To further refine the trajectory, a \textbf{spline-based smoothing algorithm} is applied. This ensures the path is continuous and minimizes abrupt steering changes:
+To further refine the trajectory, a \textbf{spline-based smoothing algorithm} is applied. 
+This ensures the path is continuous and minimises abrupt steering changes:
 
 \begin{verbatim}
 def smooth_path(self, path, smoothing_factor=0.5, num_points=50):
     """
     Uses spline interpolation to generate a smoother trajectory.
     """
-    tck, u = splprep([path[:, 0], path[:, 1]], s=smoothing_factor, k=min(3, len(path)-1))  
+    tck, u = splprep([path[:, 0], path[:, 1]], s=smoothing_factor, 
+    k=min(3, len(path)-1))  
     x_smooth, y_smooth = splev(np.linspace(0, 1, num_points), tck)
     return np.vstack((x_smooth, y_smooth)).T
 \end{verbatim}
 
-Smoothing eliminates unnecessary oscillations in the path, reducing the load on the vehicle's steering system and improving driving stability.
+Smoothing eliminates unnecessary oscillations in the path, 
+reducing the load on the vehicle's steering system and improving driving stability.
 
 
 \subsection{Final RRT* Planner: Fastest Trajectory}
 
-This version of the RRT* planner is considered the final and most optimal implementation for the OBRA car, as it is explicitly designed to follow the fastest possible trajectory through the track rather than simply maintaining a central line. While the initial RRT* was biased toward the center to enable direct comparison with the Delaunay planner, this version prioritizes performance, speed, and aggressive maneuvering—factors critical in a competitive racing environment.
+Before all tests were carried out, this version of the RRT* planner, in theory, 
+was thought to be the most optimal for the OBRA car. It was meant to give precedence 
+to the shortest and most aggressive path along the track, rather than simply following 
+the center line. While the first version of the RRT* favored a middle-line approach to 
+give a clear contrast with the Delaunay planner, this iteration places more emphasis on agility, 
+speed, and assertive maneuvering—key attributes in a competitive racing environment \cite{reference4}.
 
-The core difference lies in the sampling strategy. Instead of sampling points biased toward the geometric center of the track, this planner favors points further ahead along the driving axis (positive X-direction), encouraging the vehicle to progress rapidly while minimizing lateral deviation. This is reflected in the following line within the \texttt{sample\_point()} method:
+A major variation is in the sampling approach. Rather than choosing points that are
+skewed towards the center of the track, as in the former case, this planner now selects
+points which are more spread out along the driving axis (positive X-direction), thus
+urging the vehicle to move forward rapidly while keeping lateral deviation to a minimum.
+This is reflected in the following line within the \texttt{sample\_point()} method:
+
 
 \begin{verbatim}
-rand_x = np.random.uniform(5, 10)  # Prioritize forward sampling
+rand_x = np.random.uniform(5, 10)  # Prioritise forward sampling
 rand_y = np.random.uniform(-3, 3)  # Allow lateral flexibility
 random_point = np.array([car_x + rand_x, car_y + rand_y])
 \end{verbatim}
@@ -769,117 +1004,172 @@ if np.any(distances < 2.5):
 
 This ensures that the trajectory not only favors speed but also remains within safe operational margins.
 
-Additionally, this version uses an alignment-weighted nearest node search that prioritizes expansion in the forward direction (X-axis), reinforcing the planner’s bias toward the racing line and avoiding backward or inefficient detours:
+Also, this version uses an alignment-weighted nearest node search that
+emphasises growth in the positive direction (X-axis), strengthening the planner’s
+preference for the racing line and making sure there are no backward or wasteful
+excursions.
 
 \begin{verbatim}
 goal_direction = np.array([1, 0])  # Favors forward motion
 \end{verbatim}
 
-Compared to the initial centerline-focused RRT*, this implementation results in more aggressive paths that cut closer to the apex of turns and reduce total lap distance, while still respecting safety constraints. It is therefore better aligned with the real-world demands of autonomous racing, where maximizing performance per lap is more important than symmetrical navigation.
+Compared to the initial centerline-focused RRT*, this implementation results in more
+aggressive paths that cut closer to the apex of turns and reduce total lap distance,
+while still respecting safety constraints. It is therefore better aligned with the real-world
+demands of autonomous racing, where maximising performance per lap is more important than symmetrical navigation.
 
-This final RRT* planner lays the foundation for deployment in the real vehicle, offering a robust balance between real-time feasibility, adaptability, and competitive performance.
+his final RRT* planner establishes a strong foundation for real-world deployment in the real vehicle, 
+offering a robust balance between real-time feasibility, adaptability, and competitive performance.
 
 \subsection{Final Considerations}
 
-Throughout this project, four distinct path planners were developed and evaluated to explore the trade-offs between stability, adaptability, and performance in autonomous racing: the initial unoptimized Delaunay planner, the improved Delaunay version, a centerline-biased RRT* planner, and the final optimized RRT* for fastest trajectory.
+Throughout this project, three distinct path planners were developed and four were evaluated to explore the trade-offs between 
+stability, adaptability, and performance in autonomous racing: the initial unoptimised Delaunay planner, 
+the improved Delaunay version, a centerline-biased RRT* planner, and the final optimised RRT* for fastest trajectory.
 
-The initial Delaunay planner was the first implemented solution. Although functional, it lacked the flexibility to handle dynamic track variations. It followed a fixed triangulation logic between cones, often generating stable but suboptimal paths. Its limitations became evident when cones were missing, misplaced, or when sharp turns required more dynamic trajectory adaptation.
+The first \textbf{Delaunay} solution was the one the car was already using. It was functional but lacked flexibility
+to manage dynamic track variations; it used a fixed triangulation logic between cones, often
+generating stable but suboptimal paths \cite{reference6}. Consequent weaknesses were exposed with unstable
+configurations, that is, with missing or misplaced cones, and with sharper turns, where greater
+dynamic trajectory adaptation was required.
 
-The optimized Delaunay version addressed some of these issues by refining the triangulation logic, improving midpoint selection, and adjusting parameters to make the output path more consistent. However, it still suffered from structural rigidity, as its connectivity remained dependent on the presence and layout of detected cones. Despite offering better stability than the original version, its adaptability and response time to sudden track changes remained limited.
+The \textbf{Optimised Delaunay} version made some steps toward this, by refining the triangulation logic,
+improving the selection of midpoints and parameters to make the output path more consistent.
+It still suffered structural rigidity since its connectivity depended on the presence and layout of
+detected cones. It offered much better stability than the original version, but its adaptability and
+response time to sudden track changes remained limited.
 
-To overcome these constraints, the RRT* family of planners was introduced. The first implementation was intentionally biased toward the centerline to mirror the typical behavior of the Delaunay planner. This allowed a fair comparison in terms of precision, smoothness, and structural differences. It demonstrated improved handling of irregularities in cone placement, as well as more consistent collision avoidance.
+To overcome these constraints, the family of RRT* planners was introduced. The first implementation of \textbf{Centralised RRT*} was 
+intentionally biased toward the centreline to mirror the typical behavior of the Delaunay planner.
+This allowed a fair comparison in terms of precision, smoothness, and structural differences \cite{reference3}.
 
-The final and most performant version is the optimized RRT* planner targeting the fastest possible trajectory. Unlike its predecessors, it no longer follows a geometric centerline but actively searches for paths that minimize total driving distance and improve lap time. Through strategic forward sampling, directionally weighted node expansion, and active cone avoidance, it generates more aggressive and efficient routes. While this introduces higher computational complexity, the parameters were carefully tuned to maintain real-time performance on the OBRA car's onboard system.
+The final and theoretically most performant version is the \textbf{Optimised RRT*} planner targeting the fastest possible trajectory.
+No longer does it follow a geometric centerline like its predecessors, but it actively searches for paths that minimise 
+total driving distance and improve lap time. It generates more aggressive and efficient routes through strategic forward sampling, 
+directionally weighted node expansion, and active cone avoidance \cite{reference4}.
+It is expected that the final RRT* planner will significantly outperform 
+the others in dynamic conditions, especially on sharp turns and incomplete cone layouts. 
+Its adaptive nature and path optimisation capabilities make it the most promising solution for real-world autonomous racing.
 
-In summary, the planners form a clear progression:
-\begin{itemize}
-    \item \textbf{Initial Delaunay}: Basic, stable, but limited and rigid.
-    \item \textbf{Optimized Delaunay}: More stable and refined, yet still constrained by static structure.
-    \item \textbf{Centerline RRT*}: Flexible and robust, ideal for comparison and mid-level adaptation.
-    \item \textbf{Final RRT* (Fastest)}: Optimal in performance, adaptable to real-time racing scenarios, and designed for deployment.
-\end{itemize}
+\section{Version Management}
 
-It is expected that the final RRT* planner will significantly outperform the others in dynamic conditions, especially on sharp turns and incomplete cone layouts. Its adaptive nature and path optimization capabilities make it the most promising solution for real-world autonomous racing.
+Version control has a great part in the building of this project. It helps run collaboration,
+control code, keep it in order and track changes as well. So, we use Git and
+have GitLab where the OBRA team's shared workspace is kept. Here, GitLab acts as the main repository
+that keeps all project files, code versions, and data from previous years \cite{reference18}.
+
+At the beginning of the project, the entire existing workspace was cloned from GitLab, 
+providing access to all prior developments, including path-planning algorithms and other essential 
+components used by the team in past seasons. This initial setup allowed us to build on a strong foundation 
+while ensuring compatibility with the existing autonomous system.
+
+Throughout the development process, every modification and enhancement to the path planners 
+has been systematically handled using branches within our GitLab repository. Each time a new version 
+of a path planning algorithm was implemented—whether adjustments to the Delaunay planner or the creation of the RRT* algorithm—an exclusive branch was opened. 
+This branching strategy enabled parallel development and evaluation of diverse versions while maintaining the stability of the main codebase \cite{reference18}.
+
+Commits are made in an organised and regularly updated repository, from which every iteration and 
+refinement is documented. This has been key in ensuring traceability and rollback capabilities when needed, 
+as well as enabling effective collaboration. With GitLab’s integrated features, we set up a structured 
+development flow, making code reviews, bug tracking, and continuous integration more manageable.
+
+In addition to code management, we use Notion to coordinate team tasks and maintain an Agile workflow. 
+Notion enables us to assign responsibilities, track progress, and ensure development efforts remain aligned 
+with project goals. Furthermore, all generated data, including test results, simulation outputs, and performance 
+evaluations, are stored in Google Drive. This provides a centralised location for data accessibility, allowing for 
+efficient documentation and analysis of algorithm performance over time.
+
 
 \newpage
 
+\chapter{Testing and Evaluation}
 
-\chapter {Version Management}
+This chapter gives the evaluation methodology and results of four path planning algorithms: Original Delaunay, 
+Optimised Delaunay, Central RRT*, and Optimised RRT*. All planners undergo testing in controlled simulations having identical 
+dynamics, with performance evaluated in terms of lap time and average speed as well as trajectory smoothness using metrics relevant to autonomous racing.
 
-\section{Source Code and Data Management}
-
-Version control plays a crucial role in the development of this project, ensuring efficient collaboration, structured code management, and reliable tracking of modifications. For this purpose, we utilize Git alongside GitLab, where the OBRA team's centralized workspace is hosted. GitLab serves as the primary repository, storing all project files, code implementations, and historical data from previous years.
-
-At the beginning of the project, the entire existing workspace was cloned from GitLab, providing access to all prior developments, including path-planning algorithms and other essential components used by the team in past seasons. This initial setup allowed us to build upon a solid foundation while ensuring compatibility with the existing autonomous system. Throughout the development process, every modification and improvement to the path planners has been systematically managed using branches within our GitLab repository. Each time a new version of a path-planning algorithm was implemented—whether modifications to the Delaunay planner or the development of the RRT/RRT* algorithm—a dedicated branch was created. This approach enabled parallel development and testing of different versions while preserving the stability of the main codebase.
-
-To maintain an organized and up-to-date repository, commits have been made regularly, ensuring that every iteration and refinement is properly documented. This frequent commit practice has allowed us to track changes efficiently, revert to previous versions when necessary, and collaborate seamlessly within the team. By leveraging GitLab's version control features, we have established a structured workflow that facilitates code reviews, debugging, and continuous integration, ultimately enhancing the reliability of our path-planning system.
-
-In addition to code management, we use Notion to coordinate team tasks and maintain an Agile workflow. Notion enables us to assign responsibilities, track progress, and ensure development efforts remain aligned with project goals. Furthermore, all generated data, including test results, simulation outputs, and performance evaluations, are stored in Google Drive. This provides a centralized location for data accessibility, allowing for efficient documentation and analysis of algorithm performance over time.
-
-\subsection{GitLab Repository Structure (Aquí puedes incluir una imagen del esquema del repositorio)}
-
-\subsection{Source Code Repository Link}
-URL or reference to the project repository.
-
-\newpage
-
-\chapter{Results}
 \section{Results and Testing}
-\subsection{Simulation Setup}
 
-The evaluation of the four planners—Original Delaunay, Optimized Delaunay, Central RRT, and Optimized RRT—was conducted in a unified simulation environment to ensure consistency and fairness across tests. The entire setup was built using the Unity game engine, where a custom closed-loop racetrack was designed to simulate realistic driving conditions. This virtual track served as the benchmark environment for assessing the path planning capabilities of each algorithm.
+The evaluation of the four planners—Original Delaunay, Optimised Delaunay, Central RRT*, and Optimised RRT*—
+was held in a unified simulation environment to assure consistency and fairness across tests.
+The setup was done using the Unity game engine, where a closed-loop racetrack, designed to simulate
+realistic driving conditions, was made custom for this vocation \cite{reference17}.
+The virtual track served as the benchmark environment for assessing the path planning capabilities of each algorithm,
+as illustrated in Figure~\ref{fig:simulator}.
 
-To monitor and validate the system behavior, \texttt{Foxglove Studio} was employed as the main visualization tool. It allowed real-time inspection of topics published during the simulation, such as \texttt{/planned\_path}, \texttt{/vehicle\_pose}, and \texttt{/lap\_timer}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Images/simulator.png}
+    \caption{Simulation environment developed in Unity for planner evaluation}
+    \label{fig:simulator}
+\end{figure}
 
-For data collection, each simulation session was configured to run exactly three complete laps per planner. During execution, positional data (X, Y, Z coordinates) along with timestamps and other relevant metadata were logged at a fixed rate. These logs were captured within Unity and exported in CSV format immediately after the simulation. The resulting CSV files contained high-resolution spatial and temporal information, which enabled accurate offline analysis for computing performance metrics such as execution time, path length, and speed profiles.
+To monitor and validate the system behavior, \texttt{Foxglove Studio} was employed as the 
+main visualisation tool. It allowed real-time inspection of topics published during the simulation, 
+such as \texttt{/planned\_path}, \texttt{/vehicle\_pose}, and \texttt{/smooth\_trajectory}, as illustrated in Figure~\ref{fig:foxglove}.
 
-In order to further ensure that all planners were evaluated under identical physical conditions, a constant engine force value of \texttt{45} was applied to the vehicle in Unity for every test case. This parameter controls the forward propulsion of the simulated car, and keeping it fixed guarantees that all planners had the same opportunity to accelerate and complete each lap. As a consequence, lap times are expected to fall within a similar range across planners, and any observed variations in execution time can be attributed solely to the performance and efficiency of the path planning algorithm itself.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Images/foxglove.png}
+    \caption{Foxglove environment developed for trajectory evaluation}
+    \label{fig:foxglove}
+\end{figure}
 
-This standardized setup ensured that all planners operated under identical conditions—same track layout, vehicle dynamics, environmental parameters, and simulation duration—providing a robust foundation for comparative analysis.
+To guarantee that all planners were being tested under identical physical conditions,
+we applied a constant engine force value to the vehicle in Unity for every test case.
+The parameter controls the forward propulsion of the car, and keeping it fixed would
+guarantee that all planners have the same opportunity to accelerate and complete each lap.
+As a result,
+lap times should be within the same range across planners and any observed variations in 
+execution time can be attributed solely to the performance and efficiency of the path planning algorithm itself.
 
+This standardised setup ensured that all planners operated under identical conditions; 
+same track layout, vehicle dynamics, environmental parameters, and simulation duration.
 
-\subsection{Test Scenarios}
+\subsection{Results and Testing, Test 1}
+The initial test scenario consisted of a single simulation session per planner, 
+in which each executed three complete laps around a closed-loop racetrack. 
 
-To ensure a fair and consistent evaluation, all planners were tested under identical conditions in terms of simulation environment, initial state, and configuration parameters. The primary goal of these tests was to isolate the impact of the path planning algorithm itself on performance metrics such as execution time, path efficiency, and trajectory smoothness.
+While it ran,
+the positions (X, Y, Z) coordinates and timelaps were captured in Unity and then, in CSV format, exported right after the simulation.
+As a result, the CSV files had high resolution in them
+space and time data, which enabled accurate analysis for computing performance metrics 
+such as execution time, path length, and speed profiles.
+The planners evaluated in this stage were:
 
-The initial test scenario consisted of a single simulation session per planner, in which each executed three complete laps around a closed-loop racetrack. The planners evaluated in this stage were:
 \begin{itemize}
   \item Original Delaunay
-  \item Optimized Delaunay
-  \item Central RRT
-  \item Optimized RRT
+  \item Optimised Delaunay
+  \item Central RRT*
+  \item Optimised RRT*
 \end{itemize}
 
-This track was a simplified representation of a real-world autonomous driving course, inspired by the Silverstone circuit. The simulation was conducted in a fully controlled environment, free from dynamic elements such as moving obstacles, to allow direct comparison of the planners' path generation capabilities.
+The track used for this test was a simplified representation of a real-life course, based on the "Silverstone FS-UK 2024" circuit. 
+he experiment was conducted in a fully controlled environment, free from dynamic parts like moving obstacles, 
+in order to enable a direct comparison of the planners’ trajectory generation capabilities. 
+A constant propulsion force of 45 Unity units, corresponding approximately to 31.6 km/h, was applied
+for the motor force.
 
-Following the results of the initial tests, a second, more extensive simulation was conducted to analyze long-term performance and consistency. This test involved 10 consecutive laps and was carried out exclusively for the two top-performing planners from the first round: Optimized Delaunay and Optimized RRT. The objective was to measure stability across multiple laps, identify variations in lap time, and assess the repeatability of the path planning logic over an extended session.
-
-Both simulations were executed within the same Unity–ROS2 environment, ensuring consistency in vehicle dynamics, update rates, and environmental conditions across all test scenarios.
-
-
-\section{Performance Metrics}
-\subsection{Computation Time Evaluation}
-
-To evaluate the execution time performance of each path planner, we measured the time taken to complete each of the three laps during the simulation. The table below summarizes the recorded lap times for the four tested planners.
+To evaluate the execution time taken by each path planner, we measured the time the planner took to complete 
+each of the three laps during the simulation. The table below gives the lap times recorded for the four tested planners.
 
 \begin{table}[H]
-\centering
-\begin{tabular}{lccc}
-\toprule
-\textbf{Planner} & \textbf{Lap 1 (s)} & \textbf{Lap 2 (s)} & \textbf{Lap 3 (s)} \\
-\midrule
-Central RRT & 39.115 & 38.197 & 37.748 \\
-Original Delaunay & 39.202 & 37.777 & 37.682 \\
-Optimized Delaunay & 39.162 & 37.436 & 37.584 \\
-Optimized RRT & 39.420 & 37.630 & 37.093 \\
-\bottomrule
-\end{tabular}
-\caption{Lap times for each planner across three laps.}
-\label{tab:lap-times}
-\end{table}
-
-Figure~\ref{fig:lap-times-plot} provides a visual comparison of the lap times, allowing us to analyze the consistency and performance evolution across laps. All planners exhibit similar total times due to the fixed propulsion force applied during simulation, yet small variations in trajectory length and smoothness, caused by the different planning strategies, account for the differences in lap times.
-
+    \centering
+    \begin{tabular}{lccc|c}
+    \toprule
+    \textbf{Planner} & \textbf{Lap 1 (s)} & \textbf{Lap 2 (s)} & \textbf{Lap 3 (s)} & \textbf{Average (s)} \\
+    \midrule
+    Central RRT* & 39.115 & 38.197 & \textbf{37.748} & 38.353 \\
+    Original Delaunay & 39.202 & 37.777 & \textbf{37.682} & 38.220 \\
+    Optimised Delaunay & 39.162 & \textbf{37.436} & 37.584 & \textbf{38.061} \\
+    Optimised RRT* & 39.420 & 37.630 & \textbf{37.093} & \textbf{38.048} \\
+    \bottomrule
+    \end{tabular}
+    \caption{Lap times and averages for each planner. Best lap per planner and top two average times are highlighted in bold.}
+    \label{tab:lap-times}
+    \end{table}
+    
+Figure~\ref{fig:lap-times-plot} gives a visual comparison of the lap times.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{Images/lap_time_table_plot_colored.png}
@@ -887,14 +1177,13 @@ Figure~\ref{fig:lap-times-plot} provides a visual comparison of the lap times, a
 \label{fig:lap-times-plot}
 \end{figure}
 
-\subsection{Path Quality Analysis}
+To evaluate the quality of the planned trajectories, 
+two primary metrics were considered: \textbf{average speed} and \textbf{path smoothness}. 
+These metrics are crucial in autonomous racing, where both time efficiency and stability at 
+high speeds are essential.
 
-To evaluate the quality of the planned trajectories, two primary metrics were considered: \textbf{average speed} and \textbf{path smoothness}. These metrics are crucial in autonomous racing, where both time efficiency and stability at high speeds are essential.
-
-\subsubsection*{Average Speed}
-
-All planners were tested using the same simulated conditions and speed controller, configured to maintain a consistent target velocity of approximately 31 km/h (8.6 m/s). Due to the path curvature and minor variations in the generated trajectories, the resulting average speeds remain very close across all methods. This ensures a fair comparison focused on the planners' structural differences rather than speed discrepancies.
-
+All planners were tested using the same simulated conditions and speed controller, 
+configured to maintain a consistent target velocity of approximately 31 km/h (8.6 m/s). 
 \begin{table}[H]
 \centering
 \begin{tabular}{|l|c|}
@@ -902,181 +1191,479 @@ All planners were tested using the same simulated conditions and speed controlle
 \textbf{Planner} & \textbf{Average Speed (m/s)} \\
 \hline
 Delaunay & 4.29 \\
-Delaunay Optimized & 4.32 \\
-RRT & 4.31 \\
-RRT Optimized & 4.30 \\
+Delaunay Optimised & 4.32 \\
+Central RRT* & 4.31 \\
+RRT* Optimised & 4.30 \\
 \hline
 \end{tabular}
 \caption{Average speed comparison across path planners}
+\label{averagespeed}
 \end{table}
 
-\subsubsection*{Path Smoothness}
-
-Smoothness was calculated using the average of absolute angular differences between consecutive path segments. This metric reflects the continuity and curvature of the trajectory, with lower values indicating smoother paths and thus better suitability for high-speed navigation. As expected, optimized versions of both planners produced smoother trajectories, especially the RRT Optimized, which yielded the lowest average angular change.
+Smoothness was calculated by averaging the absolute angular variance between successive path segments.
 
 \begin{table}[H]
-\centering
-\begin{tabular}{|l|c|}
-\hline
-\textbf{Planner} & \textbf{Average Smoothness (rad)} \\
-\hline
-Delaunay & 0.8405 \\
-Delaunay Optimized & 0.8226 \\
-RRT & 0.8043 \\
-RRT Optimized & 0.7885 \\
-\hline
-\end{tabular}
-\caption{Smoothness comparison of the generated paths}
-\end{table}
-
-Overall, although all planners operate under similar speed constraints, the RRT Optimized algorithm stands out in terms of path smoothness, potentially allowing safer and more efficient performance in dynamic racing scenarios.
-
-
-\subsection{Adaptability to Dynamic Obstacles}
-
-The ability to adapt to dynamic obstacles is a key requirement in real-world autonomous racing, where unexpected changes such as moving cones, debris, or other vehicles can occur. At this stage of the project, none of the implemented planners (Delaunay or RRT variants) incorporate active obstacle re-evaluation or online replanning mechanisms. All path evaluations were conducted in static environments without dynamic interference.
-
-Nevertheless, this capability is highly relevant for future development. The inherent structure of the RRT algorithm lends itself well to dynamic replanning, as new nodes can be rapidly explored in response to changes in the environment. In contrast, the Delaunay planner, which depends on a precomputed triangulation, may require substantial recomputation to adapt in real time.
-
-Therefore, incorporating dynamic obstacle handling—such as local replanning modules, obstacle prediction, or integration with LiDAR-based tracking systems—represents a valuable direction for future work. This would enhance the practical deployment of the proposed planners, especially in competitive or urban autonomous scenarios.
+    \centering
+    \begin{tabular}{|l|c|}
+    \hline
+    \textbf{Planner} & \textbf{Average Smoothness (rad)} \\
+    \hline
+    Delaunay & 0.8405 \\
+    Delaunay Optimised & 0.8226 \\
+    RRT & 0.8043 \\
+    RRT Optimised & 0.7885 \\
+    \hline
+    \end{tabular}
+    \caption{Smoothness comparison of the generated paths}
+    \label{smoothness}
+    \end{table}
 
 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|c|c|}
+    \hline 
+    \textbf{Planner} & \textbf{Avg. Lap Time (s)} & \textbf{Avg. Speed (m/s)} & \textbf{Smoothness (rad)} \\
+    \hline
+    Original Delaunay & 38.22 & 4.29 & 0.8405 \\
+    Optimised Delaunay & 38.06 & 4.32 & 0.8226 \\
+    Central RRT* & 38.35 & 4.31 & 0.8043 \\
+    Optimised RRT* & 38.05 & 4.30 & 0.7885 \\
+    \hline
+    \end{tabular}
+    \caption{Aggregate comparison of all planners.}
+    \label{tab:summary}
+    \end{table}
+        
+    
+\subsection{Results and Testing, Test 2}
 
-\section{Experimental Results}
+Based on the results of the initial tests, a second more extended simulation will be set up to analyse long-term
+performance and consistency. A total of 20 consecutive laps were executed and is performed only for the two top
+performers from the first round. The objective is to measure stability
+across multiple laps as well as to identify variations in the lap time and assess the repeatability
+the path planning logic during a longer session. The motor force for this test will be; \texttt{55 units} (39,9 km/h)
 
-The initial comparative tests provided valuable insight into the performance of the four planners. However, the relatively small scale of the evaluation—focused on a single lap under static conditions—limits the generalizability of the findings. To validate whether the observed differences remain consistent under more demanding scenarios, a more extensive experimental setup is proposed.
+Based on the previous analysis, the two best-performing planners in terms of average 
+speed and smoothness were the \textbf{Delaunay Optimised} and \textbf{RRT* Optimised} versions. 
+Both demonstrated competitive performance and path quality, making them suitable candidates for 
+further testing.
 
-Based on the previous analysis, the two best-performing planners in terms of average speed and smoothness were the \textbf{Delaunay Optimized} and \textbf{RRT Optimized} versions. Both demonstrated competitive performance and path quality, making them suitable candidates for further testing.
+The next phase of the evaluation involves a larger-scale simulation consisting of \textbf{20 consecutive laps} 
+using again a  a real world racing circuit. Specifically, the test will take place on the 
+track used during the FS-UK 2022 competition. The map of the circuit is shown in Figure~\ref{fig:track}.
 
-The next phase of the evaluation involves a larger-scale simulation consisting of \textbf{20 consecutive laps} using a detailed replica of a real-world racing circuit. Specifically, the test will take place on the track used during the FSUK 2022 competition. The map of the circuit is shown in Figure~\ref{fig:track}, located in the \texttt{Images/} directory as \texttt{Track.png}.
+The following graphs show our findings in terms of lap consistency, laptime distribution, and trajectory behavior.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{Images/Track.png}
+    \includegraphics[width=0.90\textwidth]{Images/Track.png}
     \caption{Circuit used for extended testing — FSUK 2022 layout}
     \label{fig:track}
 \end{figure}
 
-This setup will allow a more rigorous assessment of consistency, stability, and overall suitability of the planners for real-world deployment. Key metrics such as lap time distribution, route deviation, and failure rates will be logged and compared across the 20-lap session. The outcome will guide the final recommendation for planner integration into the OBRA autonomous vehicle system.
+This setup will allow a rigorous assessment of consistency, stability, 
+and overall suitability of the planners for real-world deployment. 
+The outcome will guide the final recommendation for planner integration 
+into the OBRA autonomous vehicle system.
 
-
-\subsection{Visualization of Results Through Graphs}
-
-To comprehensively understand the performance differences between the optimized Delaunay planner and the optimized RRT, we generated several visual comparisons based on a 20-lap test in the FSUK 2022 track. The following graphs illustrate and support our findings in terms of lap consistency, overall speed, and trajectory behavior.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.95\linewidth]{Images/Laptimecomparaison.png}
-    \caption{Lap time comparison between Delaunay Optimized and RRT Optimized.}
-\end{figure}
-
-Figure 1 shows the lap times for each of the 20 laps. Both planners exhibit similar average speeds, consistent with the fixed motor speed of approximately 31 km/h across all tests. However, the RRT planner displays more volatility in its lap times. While the Delaunay planner maintains a steady performance, with most laps oscillating around the mean, the RRT planner achieves several significantly faster laps, interspersed with others that are notably slower. This suggests that RRT, by nature of its randomized tree exploration, occasionally discovers highly efficient routes—"lucky branches"—but also suffers from suboptimal paths in some iterations.
-
-This behavior aligns with the theoretical characteristics of RRT. Its randomized sampling enables quick pathfinding and often explores new routes dynamically, which in turn can lead to high performance in certain laps. However, this comes at the cost of consistency, as seen in its broader spread of lap times.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Images/Laptimedistribution.png}
-    \caption{Lap time distribution histogram: comparison of mean, standard deviation, and outliers.}
-\end{figure}
-
-In Figure 2, the histogram illustrates the distribution of lap times for both planners. The Delaunay histogram follows a narrower and more symmetric shape, indicating greater consistency and a lower standard deviation. In contrast, the RRT distribution is wider and less predictable, with a few laps reaching exceptional performance (outliers below 19s), and others exceeding 21s. Quantitatively, the standard deviation for RRT was approximately \textbf{0.73 seconds}, while Delaunay's was lower, at around \textbf{0.43 seconds}. This validates that while RRT can be faster, it also introduces more performance uncertainty.
-
+Figure~\ref{fig:overlay} shows the lap times for each of the 20 laps.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{Images/RRTvsDELAUNAY.png}
-    \caption{Overlay of RRT and Delaunay trajectories across 20 laps.}
+    \caption{Overlay of RRT* and Delaunay trajectories across 20 laps.}
+    \label{fig:overlay}
 \end{figure}
 
-Finally, Figure 3 presents the actual trajectories of the two planners superimposed over the track layout. The Delaunay planner generates more regular and smooth paths, tightly following a consistent racing line throughout the circuit. This is a direct consequence of its geometry-based structure, which prioritizes predefined connectivity and efficient triangle meshes that promote stability. On the other hand, RRT paths, while feasible and often shorter in distance, show more fluctuations and sharper directional changes. These stem from its exploratory nature, which does not prioritize path smoothness unless specifically constrained.
+Figure~\ref{fig:distribution} illustrates the distribution of lap times for both planners. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Images/Laptimedistribution.png}
+    \caption{Lap time comparison between Delaunay Optimised and RRT* Optimised.}
+    \label{fig:distribution}
+\end{figure}
 
-Overall, the analysis reveals that both planners are valid options for autonomous racing, with comparable average performance. Delaunay offers robust and reliable navigation, ideal for scenarios where predictability and safety are paramount. RRT, however, excels in adaptability and speed potential, especially in less constrained environments. Nonetheless, its variability poses a challenge, and future improvements (such as post-processing smoothing or RRT* optimizations) may be necessary to harness its full capability in competition settings.
+At last, Figure~\ref{fig:laptime} compares the boxplot between the Delaunay Optimised and RRT* Optimised planners. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{Images/Laptimecomparaison.png}
+    \caption{Lap time distribution histogram comparing, average mean, standard deviation, and outliers.}
+    \label{fig:laptime}
+\end{figure}
+
+\section{Discussion}
+\subsection{Discussion, Test 1}
+\subsubsection*{Lap Time Comparison}
+
+Figure~\ref{fig:lap-times-plot} gives a visual comparison of the lap times, allowing us to analyse the
+consistency and evolution of performance over laps. All planners show similar total times
+since the same propulsion force is applied during simulation, yet minor variations in trajectory
+length and smoothness, born by the different planning strategies, account for the disparities in
+lap times \cite{reference6}.
+
+\subsubsection*{Average Speed}
+
+Due to the path curvature and minor variations in the generated trajectories, the resulting 
+average speeds remain very close across all methods, as shown in \ref{averagespeed}. This ensures a fair comparison focused on the planners' 
+structural differences rather than speed discrepancies.
+
+\subsubsection*{Path Smoothness}
+
+The metric reflects in \ref{smoothness}, trajectory continuity and curvature, with lower values indicating smoother paths and thus
+better suitability for high-speed navigation. As expected, the optimised versions of both planners produced
+smoother trajectories, being the RRT* Optimised considerably better, with the lowest average angular change.
 
 
-\subsection{Code Efficiency and Optimization Metrics}
+\subsection{Discussion, Test 2}
+To understand the differences in performance between the optimised Delaunay planner and the optimised RRT*, 
+several visual comparisons were then created after the 20-lap test on the FSUK 2022 track. 
 
-To complement the performance analysis of both planners, it is also important to evaluate their codebase and implementation characteristics, focusing on modularity, execution efficiency, and potential for scalability within the OBRA system.
+\subsubsection*{Lap time comparison}
+Figure~\ref{fig:overlay} shows the lap times for each of the 20 laps. Both planners exhibit similar average speeds, 
+consistent with the fixed motor speed of approximately 31 km/h across all tests. However, the RRT* planner 
+displays more volatility in its lap times. While the
+Delaunay planner shows steady performance, with most laps’ times clustering around the mean, the RRT* planner
+achieves several laps of much faster times with some interspersed
+with others that are notably slower. This 
+implies that due to its randomised tree exploration
+nature, occasionally detects highly efficient routes
+or "lucky branches" as well but also suffers from
+suboptimal paths in some iterations.
+This is exactly the theoretical characteristic of RRT*. Since its random sampling allows for
+fast pathfinding and frequently checks out new routes to dynamically find them,
+this could consequently lead to high performance in some laps
+but at the same time, a much lower degree of consistency.
 
-From a structural standpoint, both the Delaunay and RRT* planners follow the same modular architecture illustrated earlier in Figure~\ref{fig:modular_diagram}. The code for each planner is divided into initialization, planning logic, and path post-processing, making it easy to integrate, test, and maintain within the ROS2-based framework used by the OBRA team.
+\subsubsection*{Lap time distribution}
+Figure~\ref{fig:distribution} illustrates the distribution of lap times for both planners. 
+The Delaunay histogram follows a narrower and more symmetric shape, indicating greater consistency and a lower 
+standard deviation. The RRT* distribution is wider and less predictable, with a few laps reaching exceptional 
+performance (outliers below 38,5 s), and others exceeding 40s. Quantitatively, the standard deviation for RRT* was approximately 
+\textbf{0.73 seconds}, while Delaunay's was lower, at around \textbf{0.43 seconds}. This validates that while RRT* can be faster, 
+it also introduces more performance uncertainty.
 
-In terms of code size, the Delaunay optimized planner comprises approximately \textbf{250 lines}, while the RRT* implementation consists of around \textbf{200 lines}. This similarity reflects a shared emphasis on clarity and modular design, with no significant difference in terms of overall complexity or readability. Both codes are well-documented and follow consistent naming conventions, facilitating collaborative development and future updates.
+\subsubsection*{Lap time Overlay}
+At last, Figure~\ref{fig:laptime} compares the boxplot between the Delaunay Optimised and RRT* Optimised planners. 
+Delaunay exhibits a tighter interquartile range with most of the lap times concentrated between approximately 39.2 and 40.0 seconds, 
+with one outlier just under 38.5 seconds. RRT* exhibits a spread where the lap times are below 37.6 seconds and over 41 seconds. 
+Although the median lap time for the latter is slightly better, the larger variability demonstrates that occasional high-speed laps come with 
+a trade-off of reduced consistency.
 
-However, regarding runtime efficiency, some differences begin to emerge. The Delaunay planner demonstrates lower CPU usage under our current configuration. In contrast, the RRT* implementation—using parameters such as 25 nodes every 5 meters—incurs higher computational costs. This is expected given the sampling-based nature of RRT*, which involves iterative growth and optimization of a tree structure. Although this increased usage is not excessive, it does make the planner more sensitive to hardware limitations, especially on resource-constrained platforms. It is worth noting that with more capable hardware, the number of nodes and step size could be further refined to improve precision without significantly impacting performance.
+\subsubsection*{Code Efficiency and Optimisation Metrics}
 
-From a software maturity perspective, the Delaunay planner has reached a more stable and adapted state. It is currently well-aligned with the OBRA car’s software and hardware stack and has undergone multiple cycles of refinement and tuning. On the other hand, the RRT* planner is still in an early stage of development. This version was implemented from scratch during the current academic year and is undergoing its first rounds of validation. Despite this, it has already achieved performance metrics that in some cases rival and even surpass those of the Delaunay planner. This is a promising sign, suggesting that with continued refinement and tuning, the RRT* algorithm has strong potential to outperform its counterpart in future iterations.
+To complement the performance analysis of both planners, it is also important to evaluate their codebase and 
+implementation characteristics, focusing on modularity, execution efficiency, and potential for scalability within the OBRA system.
 
-In summary, while both planners exhibit similar levels of code organization and maintainability, the Delaunay planner currently holds a slight advantage in terms of integration and efficiency. Nevertheless, the RRT* planner has demonstrated impressive initial results, and its flexibility offers ample room for optimization, making it a strong candidate for long-term deployment and research exploration.
+From a structural standpoint, both the Delaunay and RRT* planners follow the same modular architecture illustrated earlier in 
+Figure~\ref{fig:path_planning_structure}. 
 
+In terms of code size, the Delaunay optimised planner comprises approximately \textbf{250 lines}, 
+while the RRT* implementation consists of around \textbf{200 lines}. 
+This similarity reflects a shared emphasis on clarity and modular design, with no significant difference in terms of overall complexity or readability. 
+
+However, regarding runtime efficiency, some differences begin to emerge. The Delaunay planner demonstrates lower 
+CPU usage under our current configuration. In contrast, the RRT* implementation, using parameters such as 25 nodes 
+every 5 meters, incurs higher computational costs. This is expected given the sampling-based nature of RRT*, which involves 
+iterative growth and optimisation of a tree structure \cite{reference3}.
+
+\section{Issues Encountered}
+
+Throughout the development and evaluation process, several challenges that affect the internal capabilities of the planners
+or the external conditions under which they operate were identified.
+These shall be classified into \textit{limitations}, being inherent aspects of the current implementations or testing scope, and
+\textit{constraints}, the conditions provided by the execution environment or simulation setup.
+Here's a table that sums up the main points from each category.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{6cm}|p{6cm}|}
+    \hline
+    \textbf{Limitations} & \textbf{Constraints} \\
+    \hline
+    RRT* is in early-stage development & High CPU usage and hardware dependence \\
+    \hline
+    Delaunay planner is more mature and integrated & Processing lag can cause vehicle deviation \\
+    \hline
+    Testing limited to simulated environments & Constant motor force limits dynamic behaviour \\
+    \hline
+    No hyperparameter tuning performed & Unity lacks physical realism for deployment evaluation \\
+    \hline
+    \end{tabular}
+    \caption{Summary list of identified limitations and constraints.}
+    \label{tab:limitations_constraints_summary}
+\end{table}
+
+\subsection{Limitations}
+
+From a software maturity perspective, the Delaunay planner has reached a more stable and adapted state. 
+It is currently well-aligned with the OBRA car’s software and hardware stack and has undergone multiple cycles 
+of refinement and tuning. On the other hand, the RRT* planner is still in an early stage of development.
+This version was implemented from scratch during the current academic year and is undergoing its first rounds of validation.
+Despite this, it has already achieved performance metrics that in some cases rival and even surpass those of the Delaunay planner. 
+This is a promising sign, suggesting that with continued refinement and tuning, the RRT* algorithm has strong potential to outperform its counterpart in future iterations.
+
+The present analysis has been done only in simulated settings. Actual testing on 
+the OBRA car is still to happen, which limits the evaluation of the planners' robustness under unpredictable physical 
+conditions like terrain vibration, sensor noise, or mechanical drift.
+
+The performance of both planners was measured using default parameters or manual parameters. No systematic hyperparameter 
+search was done, which might have unlocked further performance, especially for RRT*.
+
+\subsection{Constraints}
+
+The computational cost of the RRT* algorithm scales with the number of nodes and trajectories to be computed; this makes 
+it highly hardware-dependent \cite{reference3}. On simple consumer-type computers, the algorithm is very greedy in terms of CPU cycles, often saturating it completely. 
+This high processing overhead introduces perceptible lag in trajectory generation, which can slowly veer the car away from the ideal path.
+As a result, the vehicle may deviate from the racing line or even leave the track, compromising both stability and overall performance.
+
+A constant motor force was applied throughout all simulations. This made for an apples-to-apples 
+comparison but at the same time, it shackled the planners from being able to modulate speed dynamically for complex trajectories.
+
+The Unity environment is realistic, but it does not simulate physical effects such as tire slip, vibration feedback, 
+or fine-grain terrain interaction. These limitations reduce the fidelity of the evaluation when comparing to real-world deployment \cite{reference17}.
 
 
 \newpage
 
 \chapter{Professionalism}
 \section{Project Management}
-\subsection{Development Activities and Schedule}
-Project logs, reports, and Gantt charts.
 
-\subsection{Data Management}
-Storage and organization of research documents.
+The project was developed following a structured and professional flow based on the Agile style. 
+Tasks were organised into iterations which reflected real-world software engineering practices, adaptive 
+planning, early validation, and continuous improvement. Weekly supervisor meetings were set to be held early 
+in the project wherein progress, discoveries and challenges were shared. 
+Followed by questioning, clarification, and alignment on technical understanding. These meetings helped to keep the work on track, 
+making it meaningful and academically sharp, and giving timely feedback and redirection when needed. Version control practices were applied 
+all through the project. GitLab served as the main repository for source code and experimental results in line with industry-standard version control conventions.
+Additionally, a private GitHub repository was maintained for general documentation and backup of supplementary files.
 
-\subsection{Project Deliverables}
-Summary of key milestones.
+The complete workflow, structured into iterative development sprints, is shown in Figure~\ref{fig:agile_gantt}, which illustrates all 
+key phases and their overlap across the project timeline. Each iteration addressed a different stage of the system's life cycle, 
+from research and implementation to testing, validation, and integration. This approach allowed the project to remain flexible and 
+reactive to technical challenges while maintaining clear deliverables and deadlines throughout the academic year.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Images/gant.png}
+    \caption{Complete Project Timeline – Agile Workflow}
+    \label{fig:agile_gantt}
+\end{figure}
 
 \section{Risk Analysis}
-\subsection{Identified Risks and Mitigation Strategies}
-Discussion of risks encountered and strategies used.
+The project met risks in its inception, all of which were managed to minimise their impacts.
+Delays have been a challenge in getting the RRT* algorithm into the system. The
+refinement and rework of the Delaunay Path Planner became tenuous, causing the timeline for RRT* development to shift. 
+This was mitigated by prioritising the completion of Delaunay optimisation and using 
+Agile methodology to reallocate resources flexibly. The iterative nature of Agile has 
+allowed for overlapping tasks, ensuring that progress on other deliverables continues 
+without interruption.
 
-\subsection{Updated Project Plan Based on Risk Evaluation}
-Adjustments made due to identified risks.
+Another risk involved the integration challenges for Unity and ROS2. Making algorithms
+compatible with simulation tools involved more debugging and adjustment than
+expected. To handle this, testing was done step-by-step in Unity to identify
+problems early, and additional research on ROS2 compatibility was integrated into the development process.
 
-\section{Legal, Ethical, and Environmental Considerations}
-\subsection{Compliance with Professional Codes of Conduct}
-References to BCS, ACM, and industry standards.
+Looking into the future, there are risks that must be mitigated.
+One is the challenge of effectively comparing algorithm performance. To address this,
+clear metrics like computational speed, route quality, and adaptability have been
+defined. These now guide testing and analysis. Another risk is related to real-world
+implementations. While simulations in Unity provide a controlled environment,
+deploying in physical settings involves greater unpredictability.
 
-\subsection{Ethical and Environmental Impact of the Project}
-Analysis of social and environmental implications.
+There is also a risk of time constraints as deadlines approach. Regular progress 
+evaluations and adherence to the Gantt chart will ensure the project remains on track.
 
+\section{Professionalism}
+This work holds major legal, ethical, and social considerations. Autonomous
+car algorithms, can have potential real-world
+applications in sectors like transportation and logistics, raising safety,
+accountability, and access equity questions. This project will ensure
+that by aligning codes of conduct, like those from BCS (British Computer
+Society) and ACM (Association for Computing Machinery),  the project
+compliance with professional codes of conduct for work and accountability.
+Equity, Diversity, and Inclusion (EDI) has been factored in during the design.
+The plan serves inclusivity by making certain the algorithms can apply to many
+different situations and are available to all staff. Reports are circulated outside
+the group to enforce cooperation, irrespective of where they come from, or how
+skilled they may be.
+IP becomes another key consideration. All code and results get stored in private
+repositories for secure management and crediting to the OBRA team.
+Proper version control practices using GitHub can add another layer in protecting the
+integrity of the project at the same time maintaining transparency.
+By addressing these risks and professional considerations, the project technically
+attains the goals set for it while also ensuring that the outputs align with the prescribed ethical and legal standards.
+making it relevant and useful for the real-world autonomous systems.
 \newpage
 
-\chapter{Conclusion}
-\section{Summary of Findings}
-\subsection{Key Insights from the Algorithm Comparison}
-Main takeaways from testing and evaluation.
+\chapter{Conclusion and Future Work}
 
-\section{Future Work}
-\subsection{Improvements in RRT* Implementation}
-Potential refinements to enhance algorithm performance.
+This project developed and evaluated four path planning algorithms—Optimised Delaunay, 
+Central RRT*, and Optimised RRT*—alongside an existing Original Delaunay planner. 
+All four planners were compared in every detail that could be thought of within the limits of a 
+simulation environment in terms of lap time, average speed, and path smoothness. Results highlight 
+variation in terms of consistency, computational cost, and overall trajectory quality with Optimised 
+RRT* which shows much promise but also higher variability due to its sampling-based nature.
 
-\subsection{Real-World Applications}
-Application of findings to actual autonomous vehicle scenarios.
+Several enhancements are planned right now. These include implementing hyperparameter tuning for all planners, 
+improving the computational efficiency of RRT*, and adding the simulation environment with dynamic obstacles and 
+more realistic physics. Real-time performance monitoring and adaptive control mechanisms will also be added to decrease 
+lag and improve path fidelity. This, along with the issues found in the evaluation that need to be addressed, will set the direction for further development in this area.
 
-\newpage
+This work will leave the Optimised RRT* planner ready for deployment in the OBRA autonomous vehicle, 
+such deployment being aimed to have it ready for competition in the current season. Once it is fully 
+integrated into the ROS2 stack, track testing will be conducted to have it validated under real-world racing conditions. 
+Beyond the OBRA project, the adaptability and modular design of the planner make it applicable for wide use in other aspects of 
+autonomous systems; from other university teams to fast path planning or off-road autonomous vehicles  requiring fast and reliable path planning.
 
-\chapter{Bibliography}
-\bibliographystyle{IEEEtran}
-\begin{thebibliography}{4}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\begin{thebibliography}{28}
 
     \bibitem{reference1} LaValle, S. (2006) 'Rapidly exploring Random Trees: Overview', Available at: \url{https://lavalle.pl/rrt} (Accessed: 10 October 2024).
-    
+
     \bibitem{reference2} Bécsi, T. (2024) 'RRT-guided experience generation for reinforcement learning in autonomous lane keeping', Scientific Reports, 14, Article number: 24059. Available at: \url{https://www.nature.com/articles/s41598-024-73881-z} (Accessed: 16 October 2024).
-    
-    \bibitem{reference3} Muhsen, D.K., Raheem, F.A., and Sadiq, A.T. (2024) 'A Systematic Review of Rapidly Exploring Random Tree RRT Algorithm for Single and Multiple Robots', Cybernetics and Information Technologies, 24(3), pp. 78-101. Available at: \url{https://doi.org/10.2478/cait-2024-0026} (Accessed: 19 September 2024).
-    
+
+    \bibitem{reference3} Muhsen, D.K., Raheem, F.A., and Sadiq, A.T. (2024) 'A Systematic Review of Rapidly Exploring Random Tree RRT Algorithm for Single and Multiple Robots', Cybernetics and Information Technologies, 24(3), pp. 78–101. Available at: \url{https://doi.org/10.2478/cait-2024-0026} (Accessed: 19 September 2024).
+
     \bibitem{reference4} Fan, H., Huang, J., Huang, X., Zhu, H., and Su, H. (2024) 'BI-RRT*: An improved path planning algorithm for secure and trustworthy mobile robots systems', Heliyon, 24(e26403). Available at: \url{https://doi.org/10.1016/j.heliyon.2024.e26403} (Accessed: 10 October 2024).
-    
+
+    \bibitem{reference5} Zhao, H., Wu, Z., Li, Y., and Wang, J. (2021) 'Improved Bidirectional RRT* Path Planning Method for Smart Vehicles', Mathematical Problems in Engineering, pp. 1–14. doi: \url{10.1155/2021/6669728}.
+
+    \bibitem{reference6} Gasparetto, A., Boscariol, P., Lanzutti, A., and Vidoni, R. (2015) 'Path Planning and Trajectory Planning Algorithms: A General Overview', Journal of Intelligent \& Robotic Systems, pp. 1–33. doi: \url{10.1007/978-3-319-14705-5_1}.
+
+    \bibitem{reference7} Wang, H., Li, G., Hou, J., Chen, L., and Hu, N. (2022) 'A Path Planning Method for Underground Intelligent Vehicles Based on an Improved RRT* Algorithm', Electronics, vol. 11, no. 3, p. 294. doi: \url{10.3390/electronics11030294}.
+
+    \bibitem{reference8} Sánchez-Ibáñez, J.R., Pérez-del-Pulgar, C.J., and García-Cerezo, A. (2021) 'Path Planning for Autonomous Mobile Robots: A Review', Sensors, vol. 21, no. 23, p. 7898. doi: \url{10.3390/s21237898}.
+
+    \bibitem{reference9} Messer, C., Mathew, A.T., Mladenovic, N., and Renda, F. (2022) 'CTR DaPP: A Python Application for Design and Path Planning of Variable-strain Concentric Tube Robots', in Proceedings of the 2022 IEEE 5th International Conference on Soft Robotics (RoboSoft), Edinburgh, United Kingdom, pp. 14–20. doi: \url{10.1109/RoboSoft54090.2022.9762088}.
+
+    \bibitem{reference10} Kolski, S., Ferguson, D., Stachniss, C., and Siegwart, R. (2006) 'Autonomous Driving in Dynamic Environments', in Proceedings of the 2006 IEEE/RSJ International Conference on Intelligent Robots and Systems, pp. 1–10. doi: \url{10.3929/ethz-a-010079481}.
+
+    \bibitem{reference11} Lei, C., Li, J., Deng, Y., and Tan, X. (2025) 'RRT* ASV: Improved RRT* path planning method for Ackermann steering vehicles', *Expert Systems with Applications*, 127349. doi: \url{https://doi.org/10.1016/j.eswa.2024.127349}.
+
+    \bibitem{reference12} Machavaram, R. (2025) 'Intelligent path planning for autonomous ground vehicles in dynamic environments utilising adaptive Neuro-Fuzzy control', *Engineering Applications of Artificial Intelligence*, vol. 144, p. 110119. doi: \url{https://doi.org/10.1016/j.engappai.2024.110119}.
+
+    \bibitem{reference13} Yoon, Y., and Jo, A. (2025) 'Obstacle Avoidance Planning for Autonomous Vehicles Based on Neural Network-centric Path Sampling', *International Journal of Control, Automation and Systems*, vol. 23, no. 1, pp. 126–136.
+
+    \bibitem{reference14} Yan, Q., Liu, X., and Chang, Z. (2025, January) 'Research on path planning of intelligent vehicles', in *Fourth International Conference on Intelligent Traffic Systems and Smart City (ITSSC 2024)*, vol. 13422, pp. 227–232. SPIE. doi: \url{https://doi.org/10.1117/12.3193862}.
+
+    \bibitem{reference15} Bonci, A., Gaudeni, F., Giannini, M. C., \& Longhi, S. (2023). 'Robot operating system 2 (ros2)-based frameworks for increasing robot autonomy: A survey'. Applied Sciences, 13(23), 12796. Available at: \url{https://www.mdpi.com/2076-3417/13/23/12796} (Accessed: 10 April 2025).
+
+    \bibitem{reference16} Zhang, J., Keramat, F., Yu, X., Hernández, D. M., Queralta, J. P., \& Westerlund, T. (2022). 'Distributed robotic systems in the edge-cloud continuum with ros 2: A review on novel architectures and technology readiness'. In 2022 Seventh International Conference on Fog and Mobile Edge Computing (FMEC), pp. 1–8. IEEE. Available at: \url{https://ieeexplore.ieee.org/document/10062523} (Accessed: 10 April 2025).
+
+    \bibitem{reference17} Lidon, M. (2025). *Unity 3D*. Marcombo. Available at: \url{https://books.google.co.uk/books?id=4hdMEQAAQBAJ} (Accessed: 10 April 2025).
+
+    \bibitem{reference18} Cosentino, V., Luis, J., \& Cabot, J. (2016). 'Findings from GitHub: methods, datasets and limitations'. In Proceedings of the 13th International Conference on Mining Software Repositories, pp. 137–141. Available at: \url{https://dl.acm.org/doi/10.1145/2901739.2901776} (Accessed: 10 April 2025).
+
+    \bibitem{reference19} Anaya Orozco, J. A. (2023). 'Development of an intelligent driving assistance system implemented in Carla Simulator using deep learning techniques'. Available at: \url{https://openaccess.uoc.edu/handle/10609/151871} (Accessed: 10 April 2025).
+
+    \bibitem{reference20} Stojanovic, U., Stefanovic, S., Ferenc, G., \& Rikalo, A. (2023). 'Analysis of protocols used for visualization in automotive industry'. In 2023 Zooming Innovation in Consumer Technologies Conference (ZINC), pp. 34–38. IEEE. Available at: \url{https://ieeexplore.ieee.org/document/10174226} (Accessed: 10 April 2025).
+
+    \bibitem{reference21} Dimes, T. (2015). *Conceptos Básicos de Scrum: Desarrollo de software Agile y manejo de proyectos Agile*. Babelcube Inc. Available at: \url{https://books.google.co.uk/books?id=ETuXBgAAQBAJ} (Accessed: 10 April 2025).
+
+    \bibitem{reference22} Schön, E. M., Cuaresma, M. J. E., \& Thomaschewski, J. (2015). 'Agile values and their implementation in practice'. IJIMAI, 3(5), 61–66. Available at: \url{https://dialnet.unirioja.es/servlet/articulo?codigo=5574114} (Accessed: 10 April 2025).
+
+    \bibitem{reference23} Maylor, H. (2001). 'Beyond the Gantt chart: Project management moving on'. European Management Journal, 19(1), 92–100. Available at: \url{https://www.sciencedirect.com/science/article/abs/pii/S0263237300000748} (Accessed: 10 April 2025).
+
+    \bibitem{reference24} Spinellis, D. (2012). 'Git'. IEEE Software, 29(3), 100–101. Available at: \url{https://ieeexplore.ieee.org/document/6188603} (Accessed: 10 April 2025).
+
+    \bibitem{reference25} Faedo, N., Olaya, S., \& Ringwood, J. V. (2017). 'Optimal control, MPC and MPC-like algorithms for wave energy systems: An overview'. IFAC Journal of Systems and Control, 1, 37–56. Available at: \url{https://www.sciencedirect.com/science/article/abs/pii/S2468601817301104} (Accessed: 10 April 2025).
+
+    \bibitem{reference26} Terven, J., Córdova-Esparza, D. M., \& Romero-González, J. A. (2023). 'A comprehensive review of YOLO architectures in computer vision: From YOLOv1 to YOLOv8 and YOLO-NAS'. Machine Learning and Knowledge Extraction, 5(4), 1680–1716. Available at: \url{https://www.mdpi.com/2504-4990/5/4/83} (Accessed: 10 April 2025).
+
+    \bibitem{reference27} Li, N., Ho, C. P., Xue, J., Lim, L. W., Chen, G., Fu, Y. H., \& Lee, L. Y. T. (2022). 'A progress review on solid‐state LiDAR and nanophotonics‐based LiDAR sensors'. Laser \& Photonics Reviews, 16(11), 2100511. Available at: \url{https://onlinelibrary.wiley.com/doi/full/10.1002/lpor.202100511} (Accessed: 10 April 2025).
+
+    \bibitem{reference28} M. (n.d.) 'INSTALLATION, USER GUIDE EPAS200. Signal, 1, 12V'. Available at: \url{https://verktygsboden.se/pub_docs/files/pdf/510489_web-eng.pdf} (Accessed: 10 April 2025).
+
 \end{thebibliography}
 
 \newpage
- 
-\chapter{Appendices}
-\section{Supplementary Data}
-\subsection{Source Code Repository (GitHub/GitLab)}
-Reference link to the source code.
 
-\subsection{ROS2 + Unity Configuration Details}
-Technical setup instructions.
+\chapter*{Appendices}
+\addcontentsline{toc}{chapter}{Appendices}
 
-\subsection{Raw Simulation Results}
-Unprocessed data from testing and evaluation. Ensure that all mathematical expressions are properly enclosed within `$...$` for inline math or `\[...\]` for display math. For example, write `$x + y = z$` instead of `x + y = z`.
+\section*{Project Resources and Collaboration Tools}
+
+\begin{sloppypar}
+\begin{itemize}
+    \item \textbf{OBRA Google Drive (General):} \url{https://drive.google.com/drive/folders/1PJJ9WDlBVsmB9_E81npI4J_tWklCWItl}
+    \item \textbf{OBRA GitLab Repository:} \url{https://gitlab.com/obr-a}
+    \item \textbf{OBRA Notion Workspace:} \url{https://www.notion.so/obrfs/b553f06fd226442d8eddd2a9e5dc948e?v=f93069a4a8924713a7a678499dd1d600}
+    \item \textbf{Google Drive (Source Code Repository):} \url{https://drive.google.com/drive/folders/1fjY3LXoTjxvqfo_bUNF9ldG_N9tUg6Z1}
+\end{itemize}
+\end{sloppypar}
+\vspace{1cm}
+
+\section*{Test Data (Evaluation Spreadsheets)}
+
+\subsection*{Test 1 – Initial Evaluation}
+
+\begin{sloppypar}
+\begin{itemize}
+    \item \textbf{Optimised RRT*, Test 1:} 
+    \url{https://docs.google.com/spreadsheets/d/1Hflg-0c11Foes9rWotRjMGlmyDkUXsbocwtoqCTyV04}
+    \item \textbf{Centralised RRT*, Test 1:} 
+    \url{https://docs.google.com/spreadsheets/d/1UtO9-96W1TL7amiqlDs73XpOER85b0WC9LzurQ5vuTw}
+    \item \textbf{First Delaunay, Test 1:} 
+    \url{https://docs.google.com/spreadsheets/d/1RE5HQW3Mfr_vLLbLiu77zVJ3KOZYvl2is9XPWYzEz6w}
+    \item \textbf{Optimised Delaunay, Test 1:} 
+    \url{https://docs.google.com/spreadsheets/d/1qtTJDs7F7v8KeOePAsJuQ0d0kz0dZ-zMxXOCbLvtHVA}
+\end{itemize}
+\end{sloppypar}
+
+\subsection*{Test 2 – Extended Evaluation}
+
+\begin{sloppypar}
+\begin{itemize}
+    \item \textbf{Optimised RRT*, Test 2:} \url{https://docs.google.com/spreadsheets/d/1-8y5JaA1zK3Kicl6RU-dMbVzh05mFdwLpf413T367SA}
+    \item \textbf{Optimised Delaunay, Test 2:} \url{https://docs.google.com/spreadsheets/d/1pFUELd9smZ1aSYQmFJCxN3-qXLLO2R8HyIlrvhJW1U8}
+\end{itemize}
+\end{sloppypar}
+
+\vspace{1cm}
+
+\section*{Notes}
+
+All mentioned collaborative working environments (Google Drive OBRA, GitLab, and Notion) need to be accessed with OBRA team credentials.
+But the source code repository and raw test data spreadsheets are made available to everyone through the provided direct links.
+The raw data spreadsheets include timestamped records of the vehicle's position during testing runs. 
+Each row corresponds to a recorded point in the trajectory, with time in seconds, spatial coordinates (X, Y, Z), lap ID, and the data source. 
+This example is taken from the file \textit{Optimised Delaunay, Test 2}, which logs the path followed during simulation: 
+
+\begin{table}[H]
+    \centering
+    \scriptsize
+    \begin{tabular}{|l|c|c|c|c|c|}
+    \hline
+    \textbf{Source} & \textbf{Lap} & \textbf{Time (s)} & \textbf{X} & \textbf{Y} & \textbf{Z} \\
+    \hline
+    RaceLine & 1 & 42.59 & 91.14 & 0 & -182.17 \\
+    RaceLine & 1 & 42.60 & 90.98 & 0 & -182.11 \\
+    RaceLine & 1 & 42.62 & 90.98 & 0 & -182.11 \\
+    RaceLine & 1 & 42.63 & 90.82 & 0 & -182.06 \\
+    RaceLine & 1 & 42.65 & 90.66 & 0 & -182.00 \\
+    RaceLine & 1 & 42.66 & 90.50 & 0 & -181.95 \\
+    RaceLine & 1 & 42.68 & 90.50 & 0 & -181.95 \\
+    RaceLine & 1 & 42.69 & 90.34 & 0 & -181.89 \\
+    RaceLine & 1 & 42.70 & 90.18 & 0 & -181.82 \\
+    RaceLine & 1 & 42.72 & 90.18 & 0 & -181.82 \\
+    RaceLine & 1 & 42.73 & 90.02 & 0 & -181.76 \\
+    RaceLine & 1 & 42.75 & 89.86 & 0 & -181.70 \\
+    RaceLine & 1 & 42.78 & 89.70 & 0 & -181.64 \\
+    RaceLine & 1 & 42.80 & 89.38 & 0 & -181.52 \\
+    RaceLine & 1 & 42.83 & 89.22 & 0 & -181.46 \\
+    RaceLine & 1 & 42.86 & 89.06 & 0 & -181.40 \\
+    RaceLine & 1 & 42.89 & 88.74 & 0 & -181.29 \\
+    RaceLine & 1 & 42.91 & 88.57 & 0 & -181.23 \\
+    RaceLine & 1 & 42.93 & 88.41 & 0 & -181.18 \\
+    RaceLine & 1 & 42.96 & 88.08 & 0 & -181.09 \\
+    \hline
+    \end{tabular}
+    \caption{Example of raw path data from \textit{Optimised Delaunay, Test 2}.}
+    \label{tab:rawdata_example_full}
+    \end{table}
 
 \end{document}

@@ -1,85 +1,63 @@
 \contentsline {chapter}{Glossary}{4}{chapter*.2}%
-\contentsline {chapter}{Abstract}{6}{chapter*.3}%
-\contentsline {chapter}{Acknowledgements}{7}{chapter*.4}%
-\contentsline {chapter}{\numberline {1}Introduction}{8}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Background}{8}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Aim}{8}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Objectives}{9}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Product Overview}{10}{section.1.4}%
-\contentsline {subsection}{\numberline {1.4.1}Scope}{10}{subsection.1.4.1}%
-\contentsline {subsection}{\numberline {1.4.2}Audience}{10}{subsection.1.4.2}%
-\contentsline {chapter}{\numberline {2}Background Review}{11}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Related Literature}{11}{section.2.1}%
-\contentsline {chapter}{\numberline {3}Methodology}{17}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Research and Software Development Process}{17}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Application of Agile Methodology, aqui meto el diagrama de Agile}{17}{subsection.3.1.1}%
-\contentsline {section}{\numberline {3.2}Development Phases}{17}{section.3.2}%
-\contentsline {chapter}{\numberline {4}Technology}{19}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Implementation Tools and Resources}{19}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Workspace}{20}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}OBRA WS}{20}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}ADS-wsgraph}{21}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Perception}{22}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Localisation \& Mapping}{23}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Path Planning}{24}{subsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.2.6}Control}{25}{subsection.4.2.6}%
-\contentsline {subsection}{\numberline {4.2.7}Hardware and Sensors}{26}{subsection.4.2.7}%
-\contentsline {section}{\numberline {4.3}Simulation and Testing Tools}{27}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Code Development}{28}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Path Planning Folder Structure}{28}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Local Planner (local\_planner.py)}{28}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}State Management (new\_states.py)}{29}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Utility Functions (utils.py)}{30}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Initial Path Planner: Old Delaunay Implementation}{31}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Delaunay Path Planner Optimization and Rewriting}{31}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Structural Simplification}{31}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Efficient Midpoint Calculation}{32}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Enhanced Cone Clustering for Smoother Paths}{33}{subsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.3.4}Comparison of Old vs. New Implementation}{33}{subsection.5.3.4}%
-\contentsline {section}{\numberline {5.4}Development of RRT*}{34}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Motivation for Switching from Delaunay to RRT*}{34}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}RRT vs. RRT*: Key Differences}{35}{subsection.5.4.2}%
-\contentsline {subsection}{\numberline {5.4.3}Initial RRT* Planner: Centerline Trajectory}{36}{subsection.5.4.3}%
-\contentsline {subsubsection}{Node Expansion and Distance Selection}{37}{section*.18}%
-\contentsline {subsubsection}{Collision Detection and Safety Constraints}{37}{section*.18}%
-\contentsline {subsubsection}{Path Retracing and Smoothing}{38}{section*.18}%
-\contentsline {subsection}{\numberline {5.4.4}Final RRT* Planner: Fastest Trajectory}{38}{subsection.5.4.4}%
-\contentsline {subsection}{\numberline {5.4.5}Final Considerations}{40}{subsection.5.4.5}%
-\contentsline {chapter}{\numberline {6}Version Management}{42}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Source Code and Data Management}{42}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}GitLab Repository Structure (Aquí puedes incluir una imagen del esquema del repositorio)}{43}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Source Code Repository Link}{43}{subsection.6.1.2}%
-\contentsline {chapter}{\numberline {7}Results}{44}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Results and Testing}{44}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}Simulation Setup}{44}{subsection.7.1.1}%
-\contentsline {subsection}{\numberline {7.1.2}Test Scenarios}{45}{subsection.7.1.2}%
-\contentsline {section}{\numberline {7.2}Performance Metrics}{46}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Computation Time Evaluation}{46}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}Path Quality Analysis}{47}{subsection.7.2.2}%
-\contentsline {subsection}{\numberline {7.2.3}Adaptability to Dynamic Obstacles}{48}{subsection.7.2.3}%
-\contentsline {section}{\numberline {7.3}Experimental Results}{48}{section.7.3}%
-\contentsline {subsection}{\numberline {7.3.1}Visualization of Results Through Graphs}{49}{subsection.7.3.1}%
-\contentsline {subsection}{\numberline {7.3.2}Code Efficiency and Optimization Metrics}{52}{subsection.7.3.2}%
-\contentsline {chapter}{\numberline {8}Professionalism}{54}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Project Management}{54}{section.8.1}%
-\contentsline {subsection}{\numberline {8.1.1}Development Activities and Schedule}{54}{subsection.8.1.1}%
-\contentsline {subsection}{\numberline {8.1.2}Data Management}{54}{subsection.8.1.2}%
-\contentsline {subsection}{\numberline {8.1.3}Project Deliverables}{54}{subsection.8.1.3}%
-\contentsline {section}{\numberline {8.2}Risk Analysis}{54}{section.8.2}%
-\contentsline {subsection}{\numberline {8.2.1}Identified Risks and Mitigation Strategies}{54}{subsection.8.2.1}%
-\contentsline {subsection}{\numberline {8.2.2}Updated Project Plan Based on Risk Evaluation}{54}{subsection.8.2.2}%
-\contentsline {section}{\numberline {8.3}Legal, Ethical, and Environmental Considerations}{54}{section.8.3}%
-\contentsline {subsection}{\numberline {8.3.1}Compliance with Professional Codes of Conduct}{54}{subsection.8.3.1}%
-\contentsline {subsection}{\numberline {8.3.2}Ethical and Environmental Impact of the Project}{54}{subsection.8.3.2}%
-\contentsline {chapter}{\numberline {9}Conclusion}{55}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Summary of Findings}{55}{section.9.1}%
-\contentsline {subsection}{\numberline {9.1.1}Key Insights from the Algorithm Comparison}{55}{subsection.9.1.1}%
-\contentsline {section}{\numberline {9.2}Future Work}{55}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Improvements in RRT* Implementation}{55}{subsection.9.2.1}%
-\contentsline {subsection}{\numberline {9.2.2}Real-World Applications}{55}{subsection.9.2.2}%
-\contentsline {chapter}{\numberline {10}Bibliography}{56}{chapter.10}%
-\contentsline {chapter}{\numberline {11}Appendices}{58}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Supplementary Data}{58}{section.11.1}%
-\contentsline {subsection}{\numberline {11.1.1}Source Code Repository (GitHub/GitLab)}{58}{subsection.11.1.1}%
-\contentsline {subsection}{\numberline {11.1.2}ROS2 + Unity Configuration Details}{58}{subsection.11.1.2}%
-\contentsline {subsection}{\numberline {11.1.3}Raw Simulation Results}{58}{subsection.11.1.3}%
+\contentsline {chapter}{Acknowledgements}{6}{chapter*.4}%
+\contentsline {chapter}{\numberline {1}Introduction}{7}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Background}{7}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Aim}{7}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objectives}{8}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Product Overview}{8}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Scope}{8}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Audience}{9}{subsection.1.4.2}%
+\contentsline {chapter}{\numberline {2}Background Review}{10}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Existing approaches}{10}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Related Literature}{10}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Originality}{11}{subsection.2.2.1}%
+\contentsline {chapter}{\numberline {3}Methodology}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Application of Agile Methodology}{13}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Iteration Breakdown}{14}{section.3.2}%
+\contentsline {section}{\numberline {3.3}People Involved}{15}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Technology}{16}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Implementation Tools and Resources}{16}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Workspace}{16}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}OBRA WS}{16}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}ADS-wsgraph}{17}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Perception}{18}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Localisation \& Mapping}{19}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Path Planning}{20}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Control}{21}{subsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.2.7}Hardware and Sensors}{21}{subsection.4.2.7}%
+\contentsline {section}{\numberline {4.3}Simulation and Testing Tools}{22}{section.4.3}%
+\contentsline {chapter}{\numberline {5}System Code Implementation}{24}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Path Planning Folder Structure}{24}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Local Planner (local\_planner.py)}{25}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}State Management (new\_states.py)}{25}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Utility Functions (utils.py)}{27}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Initial Path Planner: Old Delaunay Implementation}{27}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Delaunay Path Planner Optimisation and Rewriting}{27}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Structural Simplification}{28}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Efficient Midpoint Calculation}{29}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Enhanced Cone Clustering for Smoother Paths}{29}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Comparison of Old vs. New Implementation}{30}{subsection.5.3.4}%
+\contentsline {section}{\numberline {5.4}Development of RRT*}{30}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Motivation for Switching from Delaunay to RRT*}{30}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}RRT vs. RRT*: Key Differences}{32}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Initial RRT* Planner: Centerline Trajectory}{32}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Final RRT* Planner: Fastest Trajectory}{35}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.5}Final Considerations}{36}{subsection.5.4.5}%
+\contentsline {section}{\numberline {5.5}Version Management}{37}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Testing and Evaluation}{39}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Results and Testing}{39}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Results and Testing, Test 1}{41}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Results and Testing, Test 2}{43}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Discussion}{46}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Discussion, Test 1}{46}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Discussion, Test 2}{46}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Issues Encountered}{48}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Limitations}{48}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Constraints}{49}{subsection.6.3.2}%
+\contentsline {chapter}{\numberline {7}Professionalism}{50}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Project Management}{50}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Risk Analysis}{51}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Professionalism}{52}{section.7.3}%
+\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{53}{chapter.8}%
+\contentsline {chapter}{Bibliography}{54}{section*.26}%
+\contentsline {chapter}{Appendices}{58}{chapter*.28}%
